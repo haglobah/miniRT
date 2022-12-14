@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:57:19 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/14 12:57:31 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2022/12/14 16:17:52 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,19 @@ int	minirt(int argc, char **argv, mlx_t *mlx, mlx_image_t *g_img)
 {
 	t_parse		*p;
 
-	p = parse_file(argc, argv);
-	if (p == NULL)
-	{
-		ft_printf("Parsing failed. Did you supply a *.rt file?\n");
-		return (EXIT_FAILURE);
-	}
+	p = NULL;
+	// p = parse_file(argc, argv);
+	// if (p == NULL)
+	// {
+	// 	ft_printf("Parsing failed. Did you supply a *.rt file?\n");
+	// 	return (EXIT_FAILURE);
+	// }
+	(void)argc;
+	(void)argv;
 	g_img = mlx_new_image(mlx, WIDTH, HEIGHT);
-	rayrtace(g_img, p);
-	free_all(&p);
+	raytrace(g_img, p);
+	// free_all(&p);
+	return (0);
 }
 
 int32_t	main(int argc, char *argv[])
@@ -42,6 +46,7 @@ int32_t	main(int argc, char *argv[])
 	mlx_image_t	*g_img;
 
 	mlx = mlx_init(WIDTH, HEIGHT, "FDF", true);
+	g_img = NULL;
 	if (!mlx)
 		return (EXIT_FAILURE);
 	if (minirt(argc, argv, mlx, g_img) == EXIT_FAILURE)
