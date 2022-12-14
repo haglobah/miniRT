@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/12/14 12:24:11 by bhagenlo          #+#    #+#              #
+#    Updated: 2022/12/14 12:37:24 by bhagenlo         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME := miniRT
 
 SRCS := minirt.c
@@ -14,6 +26,12 @@ CFLAGS := -Wall -Wextra -Werror # -I../LeakSanitizer/include -L../LeakSanitizer 
 LIBFT := libft
 LFT := $(LIBFT)/libft.a
 
+MLX42 := MLX42
+LMLX := $(MLX42)/libmlx42.a
+MLXFLAGS := -I include -lglfw -L "/Users/$(USER)/.brew/opt/glfw/lib/"
+
+BREW := /Users/$(USER)/.brew
+
 RM := rm -rf
 
 all : $(NAME)
@@ -24,8 +42,19 @@ $(LIBFT) :
 $(LFT) : $(LIBFT)
 	$(MAKE) -C $(LIBFT)
 
-$(NAME) : $(MAIN) $(SRCS) Makefile $(NAME).h $(LFT)
-	$(CC) $(CFLAGS) $(MAIN) $(SRCS) $(LFT) -o $(NAME)
+$(BREW) : 
+	curl -fsSL https://rawgit.com/kube/42homebrew/master/install.sh | zsh
+
+$(MLX42) : 
+	git clone https://github.com/codam-coding-college/MLX42.git
+
+$(LMLX) : $(MLX42) $(BREW)
+	brew update
+	brew install glfw
+	$(MAKE) -C $(MLX42)
+
+$(NAME) : $(MAIN) $(SRCS) Makefile minirt.h $(LFT) $(LMLX)
+	$(CC) $(CFLAGS) $(MAIN) $(SRCS) $(LFT) $(LMLX) $(MLXFLAGS) -o $(NAME)
 
 clean :
 	@$(RM) $(OBJS) $(MO) $(TOBJS)
