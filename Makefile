@@ -6,13 +6,13 @@
 #    By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 12:24:11 by bhagenlo          #+#    #+#              #
-#    Updated: 2022/12/14 12:37:24 by bhagenlo         ###   ########.fr        #
+#    Updated: 2022/12/14 12:59:10 by bhagenlo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := miniRT
 
-SRCS := minirt.c
+SRCS := minirt.c parse.c
 MAIN = main.c
 OBJS = $(SRCS:.c=.o)
 MO = main.o
