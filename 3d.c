@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/14 16:59:58 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2022/12/14 17:24:00 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,17 @@ t_3d	*sum_3d(t_3d v, t_3d w)
 	return (new);
 }
 
-t_3d	*scalar(double k, t_3d v)
+t_3d	*sum4_3d(t_3d v, t_3d w, t_3d u, t_3d z)
+{
+	t_3d	*new;
+
+	new = mk_3d(v.x + w.x + u.x + z.x, 
+				v.y + w.y + u.y + z.y,
+				v.z + w.z + u.z + z.z);
+	return (new);
+}
+
+t_3d	*mul(double k, t_3d v)
 {
 	t_3d	*new;
 
@@ -72,7 +82,7 @@ t_3d	*mk_unit(t_3d v)
 	double vlen;
 
 	vlen = sqrt(len_squared(v));
-	return (scalar(1.0 / vlen, v));
+	return (mul(1.0 / vlen, v));
 }
 
 void	print3d(char *s, t_3d v)
