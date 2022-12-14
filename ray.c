@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:25:40 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/14 16:19:02 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2022/12/14 17:15:33 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,14 @@ int	color_ray(t_ray r)
 	double	t;
 	uint32_t clr;
 
+	// print3d("orig", r.pos);
+	// print3d("dir ", r.dir);
 	unit = mk_unit(r.dir);
+	// print3d("unit", *unit);
 	t = 0.5 * (unit->y + 1.0);
-	clr = (1 - t) * dcolor(1.0, 1.0, 1.0) + t * dcolor(0.5, 0.7, 1.0);
+	// printf("t: %f\n", t);
+	t_clr	s = (t_clr){255, 255, 255};
+	t_clr	e = (t_clr){127, 180, 255};
+	clr = color(s, e, t);
 	return (clr);
 }

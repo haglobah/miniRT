@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/14 16:17:41 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2022/12/14 17:13:26 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@
 # include "MLX42/include/MLX42/MLX42.h"
 
 # include <math.h>
+# include <stdio.h>
 
-# define WIDTH 1280
-# define HEIGHT 720
+# define WIDTH 1600
+# define HEIGHT 900
 
 typedef double t_d;
 
@@ -44,6 +45,7 @@ double	dot(t_3d v, t_3d w);
 t_3d	*cross(t_3d v, t_3d w);
 double	len(t_3d v);
 t_3d	*mk_unit(t_3d v);
+void	print3d(char *s, t_3d v);
 
 typedef struct s_ray
 {
@@ -64,9 +66,10 @@ typedef struct s_color
 
 }	t_clr;
 
+int	color(t_clr s, t_clr e, double percent);
 uint32_t	dcolor(double r, double g, double b);
 uint32_t	colora(u_int8_t r, u_int8_t g, u_int8_t b, u_int8_t a);
-uint32_t	color(u_int8_t r, u_int8_t g, u_int8_t b);
+uint32_t	rgb(u_int8_t r, u_int8_t g, u_int8_t b);
 
 typedef struct s_minirt
 {

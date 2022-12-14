@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/14 16:12:02 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2022/12/14 16:53:07 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	raytrace(mlx_image_t *img, t_parse *p)
 	t_3d	origin = (t_3d){0, 0, 0};
 	t_3d	vw = (t_3d){viewport_width, 0, 0};
 	t_3d	vh = (t_3d){0, viewport_height, 0};
-	t_3d	lower_left_corner = (t_3d){-viewport_width, 
-									   -viewport_height,
+	t_3d	lower_left_corner = (t_3d){-(viewport_width / 2), 
+									   -(viewport_height / 2),
 									   -focal_length};
 
 	int i = -1;

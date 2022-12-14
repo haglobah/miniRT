@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/14 15:58:28 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2022/12/14 16:59:58 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_3d	*cross(t_3d v, t_3d w)
 	return (new);
 }
 
-double	len(t_3d v)
+double	len_squared(t_3d v)
 {
 	return (v.x * v.x + v.y * v.y + v.z * v.z);
 }
@@ -71,6 +71,11 @@ t_3d	*mk_unit(t_3d v)
 {
 	double vlen;
 
-	vlen = sqrt(len(v));
-	return (scalar(1 / vlen, v));
+	vlen = sqrt(len_squared(v));
+	return (scalar(1.0 / vlen, v));
+}
+
+void	print3d(char *s, t_3d v)
+{
+	printf("%s: (%f %f %f)\n", s, v.x, v.y, v.z);
 }
