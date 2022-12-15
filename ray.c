@@ -51,8 +51,13 @@ uint32_t	cons_sphere_clr(t_3d unit)
 {
 	t_3d	*result;
 
-	result = mul(0.5, *sum_3d(unit, (t_3d){1, 1, 1}));
-	return (dcolor(result->x, result->y, result->z));
+	// print3d("UNIT", unit);
+	unit.x += 1;
+	unit.y += 1;
+	unit.z += 1;
+	result = mul(0.5, unit);
+	// print3d("R G B", *result);
+	return (dcolor(result->x, result->z, result->y));
 }
 
 int	color_ray(t_ray r)
@@ -64,7 +69,9 @@ int	color_ray(t_ray r)
 	t = hit_sphere((t_3d){0, 0, -1}, 0.5, r);
 	if (t > 0.0)
 	{
-		unit = mk_unit(*sum_3d(at(r, t), (t_3d){0, 0, 1}));
+		unit = at(r, t);
+		unit->z -= -1;
+		unit = mk_unit(*unit);
 		clr = cons_sphere_clr(*unit);
 		return (clr);
 	}
