@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/14 18:15:43 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2022/12/15 12:35:57 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <math.h>
 # include <fcntl.h> 
 # include <stdio.h>
+# include <stdbool.h>
 
 # define WIDTH 400
 # define HEIGHT 225
@@ -77,7 +78,7 @@ typedef	struct s_alight
 {
 	t_d		range;
 	t_clr	color;
-} t_alight;
+} t_ambient;
 
 typedef struct s_light
 {
@@ -95,9 +96,9 @@ typedef struct	s_cam
 
 typedef struct s_sphere
 {
-	t_3d	 	pos;
-	t_d			diameter;
-	t_clr		color;
+	t_3d	pos;
+	t_d		diameter;
+	t_clr	color;
 } t_sphere;
 
 typedef struct s_plane
@@ -118,21 +119,28 @@ typedef struct s_cyl
 
 typedef struct s_minirt
 {
-	t_alight	*alight;
-	t_light		*light;
+	t_ambient	*amb;
+	t_light		*l;
 	t_cam		*cam;
-	t_sphere	*spheres;
-	t_plane		*planes;
-	t_cyl		*cylinders;	
+	t_sphere	*sp;
+	t_plane		*pl;
+	t_cyl		*cyl;	
 }	t_mrt;
 
-t_mrt	*parse_file(int argc, char **argv);
-
+//minirt.c
+char	***lex(argc, argv);
+t_mrt	*parse(char ***sens);
 void	raytrace(mlx_image_t *img, t_mrt *p);
 
 
 //utils.c
+int		s_isneq(char *s1, char *s2, int n);
+int		s_iseq(char *s1, char *s2);
 void	ft_free(void *ptr);
 void	free_all(t_mrt *m);
+int		strslen(char **strs);
+int		free_strs(char **sp);
+void	prints(char **slist);
+void	printsens(char ***sentence_list);
 
 #endif
