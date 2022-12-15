@@ -26,11 +26,11 @@ int	minirt(int argc, char **argv, mlx_t *mlx, mlx_image_t *g_img)
 	t_mrt		*m;
 	char	***sens;
 
-	sens = lex(argc, argv);
-	printsens(sens);
-	m = parse(sens);
-	if (!m)
-		return (EXIT_FAILURE);
+	// sens = lex(argc, argv);
+	// printsens(sens);
+	// m = parse(sens);
+	// if (!m)
+	// 	return (EXIT_FAILURE);
 	// if (p == NULL)
 	// {
 	// 	ft_printf("Parsing failed. Did you supply a *.rt file?\n");

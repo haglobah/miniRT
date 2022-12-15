@@ -56,7 +56,7 @@ typedef struct s_ray
 
 }	t_ray;
 
-t_3d	at(t_ray ray, double t);
+t_3d	*at(t_ray ray, double t);
 t_ray	*mk_ray(t_3d pos, t_3d dir);
 void	del_ray(t_ray *r);
 int		color_ray(t_ray r);
@@ -130,7 +130,7 @@ typedef struct s_minirt
 }	t_mrt;
 
 //minirt.c
-char	***lex(int argc, char **argv);
+char	***lex(int argc,char **argv);
 t_mrt	*parse(char ***sens);
 void	raytrace(mlx_image_t *img, t_mrt *p);
 
