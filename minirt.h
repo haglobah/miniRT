@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/14 18:15:43 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2022/12/15 11:55:18 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,5 +133,8 @@ void	raytrace(mlx_image_t *img, t_mrt *p);
 //utils.c
 void	ft_free(void *ptr);
 void	free_all(t_mrt *m);
+int	strslen(char **strs);
+int	free_strs(char **sp);
+void	prints(char **slist);
 
 #endif

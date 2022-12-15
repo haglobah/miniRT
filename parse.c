@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 12:56:20 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/14 15:21:41 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2022/12/15 11:58:41 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,33 +24,32 @@ bool	open_file(char *infile, int *fd)
 // 	return (NULL);
 // }
 
-char	***lex_file(char *file)
+char	***file_to_sens(char *file)
 {
 	int		i;
 	char	**lines;
-	char	***words;
+	char	***sens;
 
 	if (!file)
 		return (NULL);
 	lines = ft_split(file, '\n');
-	i = -1;
-	while (lines[++i])
-		continue;		
-	words = ft_calloc(i + 1, sizeof(char **));
+	sens = ft_calloc(strslen(lines) + 1, sizeof(char **));
 	i = -1;
 	while (lines[++i])
 	{
-		words[i] = ft_split(lines[i], ' ');
+		sens[i] = ft_split(lines[i], ' ');
 	}
-	return (words);
+	free_strs(lines);
+	return (sens);
 }
 
-char	***read_file_all(int fd)
+char	***lex(int fd)
 {
 	char	*file;
 	char	*tmp;
 
 	tmp = get_next_line(fd);
+	file = NULL;
 	while (tmp)
 	{
 		if (!file)
@@ -65,25 +64,20 @@ char	***read_file_all(int fd)
 		}
 		tmp = get_next_line(fd);
 	}
-	return (lex_file(file));
+	return (file_to_sens(file));
 }
 
 t_mrt	*parse_file(int argc, char **argv)
 {
 	int		fd;
-	char	***file;
+	char	***sens;
 	t_mrt	*parsed_input;
 
 	if (argc != 2 || !open_file(argv[1], &fd))
 		return (NULL);
-	file = read_file_all(fd);
-	int	j = -1;
-	while (file[++j])
-	{
-		int i = -1;
-		while (file[j][++i])
-			printf("%s ", file[j][i]);
-		printf("\n");
-	}
+	sens = lex(fd);
+	int i = -1;
+	while (sens[++i] != NULL)
+		prints(sens[i]);
 	return (NULL);
 }
