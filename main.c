@@ -23,10 +23,11 @@ void	key_hook(void *param)
 
 int	minirt(int argc, char **argv, mlx_t *mlx, mlx_image_t *g_img)
 {
-	t_parse		*p;
+	t_mrt		*m;
 
-	p = NULL;
-	// p = parse_file(argc, argv);
+	m = parse_file(argc, argv);
+	if (!m)
+		return (EXIT_FAILURE);
 	// if (p == NULL)
 	// {
 	// 	ft_printf("Parsing failed. Did you supply a *.rt file?\n");
@@ -35,7 +36,7 @@ int	minirt(int argc, char **argv, mlx_t *mlx, mlx_image_t *g_img)
 	(void)argc;
 	(void)argv;
 	g_img = mlx_new_image(mlx, WIDTH, HEIGHT);
-	raytrace(g_img, p);
+	raytrace(g_img, m);
 	// free_all(&p);
 	return (0);
 }

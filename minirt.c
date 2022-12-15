@@ -29,10 +29,10 @@ void	put_pxl(mlx_image_t *img, int pxl_x, int pxl_y, int color)
 	mlx_put_pixel(img, pxl_x, pxl_y, color);
 }
 
-void	raytrace(mlx_image_t *img, t_parse *p)
+void	raytrace(mlx_image_t *img, t_mrt *m)
 {
 
-	(void)p;
+	(void)m;
 	double	aspect_ratio = WIDTH / HEIGHT;
 	
 	double	viewport_height = 2.0;

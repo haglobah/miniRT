@@ -21,7 +21,7 @@ TOBJS = $(TESTS:.c=.o)
 TEST = $(NAME)_test
 
 CC := cc
-CFLAGS := -Wall -Wextra -Werror # -I../LeakSanitizer/include -L../LeakSanitizer -llsan -lc++
+CFLAGS := -Wall -Wextra  #-Werror # -I../LeakSanitizer/include -L../LeakSanitizer -llsan -lc++
 
 LIBFT := libft
 LFT := $(LIBFT)/libft.a
@@ -66,7 +66,7 @@ re : fclean
 	@$(MAKE) all
 
 run : all
-	./$(NAME)
+	./$(NAME) test.rt
 
 lsan : CFLAGS += -I../LeakSanitizer/include -L../LeakSanitizer -llsan -lc++
 lsan :

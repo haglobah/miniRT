@@ -17,6 +17,8 @@
 # include "MLX42/include/MLX42/MLX42.h"
 
 # include <math.h>
+# include <fcntl.h> 
+# include <stdio.h>
 
 # define WIDTH 1280
 # define HEIGHT 720
@@ -25,7 +27,6 @@ typedef double t_d;
 
 typedef struct s_parse
 {
-
 } t_parse;
 
 typedef struct s_3d_vector
@@ -68,12 +69,62 @@ uint32_t	dcolor(double r, double g, double b);
 uint32_t	colora(u_int8_t r, u_int8_t g, u_int8_t b, u_int8_t a);
 uint32_t	color(u_int8_t r, u_int8_t g, u_int8_t b);
 
+typedef	struct s_alight
+{
+	t_d		range;
+	t_clr	color;
+} t_alight;
+
+typedef struct s_light
+{
+	t_3d	pos;
+	t_d		range;
+	t_clr	color;
+} t_light;
+
+typedef struct	s_cam
+{
+	t_3d	pos;
+	t_3d	dir;
+	int		fov;
+} t_cam;
+
+typedef struct s_sphere
+{
+	t_3d	 	pos;
+	t_d			diameter;
+	t_clr		color;
+} t_sphere;
+
+typedef struct s_plane
+{
+	t_3d	pos;
+	t_3d	dir;
+	t_clr	color;
+} t_plane;
+
+typedef struct s_cyl
+{
+	t_3d	pos;
+	t_3d	dir;
+	t_d		diameter;
+	t_d		height;
+	t_clr	color;
+} t_cyl;
+
 typedef struct s_minirt
 {
-	
+	t_alight	*alight;
+	t_light		*light;
+	t_cam		*cam;
+	t_sphere	*spheres;
+	t_plane		*planes;
+	t_cyl		*cylinders;	
 }	t_mrt;
 
-void	raytrace(mlx_image_t *img, t_parse *p);
+t_mrt	*parse_file(int argc, char **argv);
+
+void	raytrace(mlx_image_t *img, t_mrt *p);
 
 
 //utils.c
