@@ -29,7 +29,7 @@
 
 u_int32_t	get_light(int start, int end, double percentage)
 {
-	return ((int)((1 - percentage) * start + percentage * end));
+	return ((int)((1 - percentage) * end + percentage * start));
 }
 
 int	color(t_clr s, t_clr e, double percent)

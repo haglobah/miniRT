@@ -33,7 +33,7 @@ void	raytrace(mlx_image_t *img, t_mrt *m)
 {
 
 	(void)m;
-	double	aspect_ratio = WIDTH / HEIGHT;
+	double	aspect_ratio = (double) WIDTH / (double) HEIGHT;
 	
 	double	viewport_height = 2.0;
 	double	viewport_width = viewport_height * aspect_ratio;

@@ -25,9 +25,9 @@ int	minirt(int argc, char **argv,mlx_image_t *g_img)
 {
 	t_mrt		*m;
 
-	m = parse_file(argc, argv);
-	if (!m)
-		return (EXIT_FAILURE);
+	// m = parse_file(argc, argv);
+	// if (!m)
+	// 	return (EXIT_FAILURE);
 	// if (p == NULL)
 	// {
 	// 	ft_printf("Parsing failed. Did you supply a *.rt file?\n");

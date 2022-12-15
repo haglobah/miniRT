@@ -32,7 +32,7 @@ void	del_ray(t_ray *r)
 	// ft_free(r->dir);
 }
 
-bool	hit_sphere(t_3d center, double radius, t_ray r)
+double	hit_sphere(t_3d center, double radius, t_ray r)
 {
 	t_3d	oc;
 
@@ -41,7 +41,18 @@ bool	hit_sphere(t_3d center, double radius, t_ray r)
     double b = 2.0 * dot(oc, r.dir);
     double c = dot(oc, oc) - radius*radius;
     double discriminant = b*b - 4*a*c;
-    return (discriminant > 0);
+	if (discriminant < 0)
+		return (-1.0);
+    else
+		return (-b - sqrt(discriminant) / (2.0 * a));
+}
+
+uint32_t	cons_sphere_clr(t_3d unit)
+{
+	t_3d	*result;
+
+	result = mul(0.5, *sum_3d(unit, (t_3d){1, 1, 1}));
+	return (dcolor(result->x, result->y, result->z));
 }
 
 int	color_ray(t_ray r)
@@ -50,8 +61,13 @@ int	color_ray(t_ray r)
 	double	t;
 	uint32_t clr;
 
-	if (hit_sphere((t_3d){0, 0, -1}, 0.5, r))
-		return (dcolor(1.0, 0, 0));
+	t = hit_sphere((t_3d){0, 0, -1}, 0.5, r);
+	if (t > 0.0)
+	{
+		unit = mk_unit(*sum_3d(at(r, t), (t_3d){0, 0, 1}));
+		clr = cons_sphere_clr(*unit);
+		return (clr);
+	}
 	unit = mk_unit(r.dir);
 	t = 0.5 * (unit->y + 1.0);
 	t_clr	s = (t_clr){255, 255, 255};
