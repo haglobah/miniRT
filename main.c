@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:57:19 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/15 11:26:14 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2022/12/15 11:37:00 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	minirt(int argc, char **argv, mlx_t *mlx, mlx_image_t *g_img)
 	// }
 	(void)argc;
 	(void)argv;
-	g_img = mlx_new_image(mlx, WIDTH, HEIGHT);
+	// g_img = mlx_new_image(mlx, WIDTH, HEIGHT);
 	raytrace(g_img, m);
 	// free_all(&p);
 	return (0);
