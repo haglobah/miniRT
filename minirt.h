@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/15 12:35:57 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2022/12/15 13:47:09 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ typedef struct s_minirt
 }	t_mrt;
 
 //minirt.c
-char	***lex(argc, argv);
+char	***lex(int argc, char **argv);
 t_mrt	*parse(char ***sens);
 void	raytrace(mlx_image_t *img, t_mrt *p);
 
@@ -139,6 +139,7 @@ void	ft_free(void *ptr);
 void	free_all(t_mrt *m);
 int		strslen(char **strs);
 int		free_strs(char **sp);
+void	printns(char **slist);
 void	prints(char **slist);
 void	printsens(char ***sentence_list);
 
