@@ -35,10 +35,14 @@ char	***lex_file(char *file)
 	lines = ft_split(file, '\n');
 	i = -1;
 	while (lines[++i])
+		continue;		
+	words = ft_calloc(i + 1, sizeof(char **));
+	i = -1;
+	while (lines[++i])
 	{
-		
+		words[i] = ft_split(lines[i], ' ');
 	}
-
+	return (words);
 }
 
 char	***read_file_all(int fd)
@@ -73,8 +77,13 @@ t_mrt	*parse_file(int argc, char **argv)
 	if (argc != 2 || !open_file(argv[1], &fd))
 		return (NULL);
 	file = read_file_all(fd);
-	if (!check_file(file))
-		return (NULL);
-	printf("%s\n", line);
+	int	j = -1;
+	while (file[++j])
+	{
+		int i = -1;
+		while (file[j][++i])
+			printf("%s ", file[j][i]);
+		printf("\n");
+	}
 	return (NULL);
 }

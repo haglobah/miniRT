@@ -21,7 +21,7 @@ void	key_hook(void *param)
 		mlx_close_window(param);
 }
 
-int	minirt(int argc, char **argv, mlx_image_t *g_img)
+int	minirt(int argc, char **argv,mlx_image_t *g_img)
 {
 	t_mrt		*m;
 
@@ -35,7 +35,7 @@ int	minirt(int argc, char **argv, mlx_image_t *g_img)
 	// }
 	(void)argc;
 	(void)argv;
-	g_img = mlx_new_image(mlx, WIDTH, HEIGHT);
+	// g_img = mlx_new_image(mlx, WIDTH, HEIGHT);
 	raytrace(g_img, m);
 	// free_all(&p);
 	return (0);
