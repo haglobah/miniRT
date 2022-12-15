@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/14 16:12:02 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2022/12/14 18:14:14 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	raytrace(mlx_image_t *img, t_mrt *m)
 	t_3d	origin = (t_3d){0, 0, 0};
 	t_3d	vw = (t_3d){viewport_width, 0, 0};
 	t_3d	vh = (t_3d){0, viewport_height, 0};
-	t_3d	lower_left_corner = (t_3d){-viewport_width, 
-									   -viewport_height,
+	t_3d	lower_left_corner = (t_3d){-(viewport_width / 2), 
+									   -(viewport_height / 2),
 									   -focal_length};
 
 	int i = -1;
@@ -56,9 +56,10 @@ void	raytrace(mlx_image_t *img, t_mrt *m)
 			t_d h = (t_d)i / (WIDTH);
 			t_d v = (t_d)j / (HEIGHT);
 			t_ray *r = mk_ray(origin,
-				*sum_3d(lower_left_corner, 
-					*sum_3d( *scalar(h, vw) , 
-						*sum_3d( *scalar(v, vh), *scalar(-1, origin)))));
+				*sum4_3d(lower_left_corner,
+						*mul(h, vw),
+						*mul(v, vh), 
+						*mul(-1, origin)));
 			put_pxl(img, i, j, color_ray(*r));
 		}
 	}
