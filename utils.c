@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:13:53 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/15 11:59:39 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2022/12/15 12:28:57 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,21 @@ void	ft_free(void *ptr)
 	{
 		// ft_printf("%s: freeing a NULL pointer/a pointer twice.\n");
 	}
+}
+
+int	s_isneq(char *s1, char *s2, int n)
+{
+	if (!s1)
+	{
+		ft_printf("There is no token.\n");
+		return (0);
+	}
+	return (!ft_strncmp(s1, s2, n));
+}
+
+int	s_iseq(char *s1, char *s2)
+{
+	return (!ft_strcmp(s1, s2));
 }
 
 int	strslen(char **strs)
@@ -69,6 +84,17 @@ void	prints(char **slist)
 	while (slist[++i])
 	{
 		ft_printf("'%s'\n", slist[i]);
+	}
+}
+
+void	printsens(char ***sentence_list)
+{
+	int	i;
+
+	i = -1;
+	while (sentence_list[++i])
+	{
+		prints(sentence_list[i]);
 	}
 }
 

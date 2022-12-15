@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:57:19 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/15 11:37:00 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2022/12/15 12:09:40 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,11 @@ void	key_hook(void *param)
 int	minirt(int argc, char **argv, mlx_t *mlx, mlx_image_t *g_img)
 {
 	t_mrt		*m;
+	char	***sens;
 
-	m = parse_file(argc, argv);
+	sens = lex(argc, argv);
+	printsens(sens);
+	m = parse(sens);
 	if (!m)
 		return (EXIT_FAILURE);
 	// if (p == NULL)

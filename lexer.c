@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 12:56:20 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/15 11:58:41 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2022/12/15 12:34:29 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,14 @@ char	***file_to_sens(char *file)
 	return (sens);
 }
 
-char	***lex(int fd)
+char	***lex(int argc, char **argv)
 {
+	int		fd;
 	char	*file;
 	char	*tmp;
 
+	if (argc != 2 || !open_file(argv[1], &fd))
+		return (NULL);
 	tmp = get_next_line(fd);
 	file = NULL;
 	while (tmp)
@@ -65,19 +68,4 @@ char	***lex(int fd)
 		tmp = get_next_line(fd);
 	}
 	return (file_to_sens(file));
-}
-
-t_mrt	*parse_file(int argc, char **argv)
-{
-	int		fd;
-	char	***sens;
-	t_mrt	*parsed_input;
-
-	if (argc != 2 || !open_file(argv[1], &fd))
-		return (NULL);
-	sens = lex(fd);
-	int i = -1;
-	while (sens[++i] != NULL)
-		prints(sens[i]);
-	return (NULL);
 }
