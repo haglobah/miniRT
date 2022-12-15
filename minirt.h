@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/15 13:47:09 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2022/12/15 14:11:59 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,12 @@ typedef struct s_color
 
 }	t_clr;
 
+//color.c
 int			color(t_clr s, t_clr e, double percent);
 uint32_t	dcolor(double r, double g, double b);
 uint32_t	colora(u_int8_t r, u_int8_t g, u_int8_t b, u_int8_t a);
 uint32_t	rgb(u_int8_t r, u_int8_t g, u_int8_t b);
+void		printclr(t_clr clr);
 
 typedef	struct s_alight
 {

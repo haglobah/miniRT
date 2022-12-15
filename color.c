@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:49:15 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/14 17:14:23 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2022/12/15 14:24:04 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,14 @@
 // {
 // 	return ((clr >> 8) & 0xFF);
 // }
+
+void	printclr(t_clr clr)
+{
+	printf("r: %i,", clr.r);
+	printf("g: %i,", clr.g);
+	printf("b: %i", clr.b);
+	printf("\n");
+}
 
 u_int32_t	get_light(int start, int end, double percentage)
 {
@@ -51,7 +59,7 @@ uint32_t	dcolor(double r, double g, double b)
 				  (u_int8_t)(b * 255)));
 }
 
-uint32_t	colora(u_int8_t r, u_int8_t g, u_int8_t b, u_int8_t a)
+uint32_t	rgba(u_int8_t r, u_int8_t g, u_int8_t b, u_int8_t a)
 {
 	return ((r << 24) | (g << 16) | (b << 8) | a);
 }

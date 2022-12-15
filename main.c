@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:57:19 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/15 12:09:40 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2022/12/15 15:37:37 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int32_t	main(int argc, char *argv[])
 	mlx_t		*mlx;
 	mlx_image_t	*g_img;
 
-	mlx = mlx_init(WIDTH, HEIGHT, "FDF", true);
+	mlx = mlx_init(WIDTH, HEIGHT, "miniRT", true);
 	g_img = NULL;
 	if (!mlx)
 		return (EXIT_FAILURE);
