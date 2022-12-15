@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:25:40 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/14 18:09:52 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2022/12/15 11:18:45 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ void	del_ray(t_ray *r)
 
 bool	hit_sphere(t_3d center, double radius, t_ray r)
 {
-	t_3d	oc;
+	t_3d	a_c;
 
-    oc = *sum_3d(r.pos,  *mul(-1, center));
+    a_c = *sum_3d(r.pos,  *mul(-1, center));
     double a = dot(r.dir, r.dir);
-    double b = 2.0 * dot(oc, r.dir);
-    double c = dot(oc, oc) - radius*radius;
+    double b = 2.0 * dot(a_c, r.dir);
+    double c = dot(a_c, a_c) - radius*radius;
     double discriminant = b*b - 4*a*c;
     return (discriminant > 0);
 }

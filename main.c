@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:57:19 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/14 17:01:57 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2022/12/15 11:26:14 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	key_hook(void *param)
 		mlx_close_window(param);
 }
 
-int	minirt(int argc, char **argv, mlx_image_t *g_img)
+int	minirt(int argc, char **argv, mlx_t *mlx, mlx_image_t *g_img)
 {
 	t_mrt		*m;
 
@@ -51,7 +51,7 @@ int32_t	main(int argc, char *argv[])
 	if (!mlx)
 		return (EXIT_FAILURE);
 	g_img = mlx_new_image(mlx, WIDTH, HEIGHT);
-	if (minirt(argc, argv, g_img) == EXIT_FAILURE)
+	if (minirt(argc, argv, mlx, g_img) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	mlx_image_to_window(mlx, g_img, 0, 0);
 	mlx_loop_hook(mlx, &key_hook, mlx);
