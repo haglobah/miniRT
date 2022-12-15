@@ -21,8 +21,8 @@
 # include <stdio.h>
 # include <stdbool.h>
 
-# define WIDTH 1600
-# define HEIGHT 900
+# define WIDTH 400
+# define HEIGHT 225
 
 typedef double t_d;
 
@@ -56,6 +56,7 @@ typedef struct s_ray
 
 }	t_ray;
 
+t_3d	at(t_ray ray, double t);
 t_ray	*mk_ray(t_3d pos, t_3d dir);
 void	del_ray(t_ray *r);
 int		color_ray(t_ray r);

@@ -77,6 +77,11 @@ double	len_squared(t_3d v)
 	return (v.x * v.x + v.y * v.y + v.z * v.z);
 }
 
+t_3d	at(t_ray ray, double t)
+{
+	return (*sum_3d(ray.pos, *mul(t, ray.dir)));
+}
+
 t_3d	*mk_unit(t_3d v)
 {
 	double vlen;
