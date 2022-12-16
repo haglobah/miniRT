@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:25:40 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/15 11:18:45 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2022/12/16 13:28:14 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,29 +34,31 @@ void	del_ray(t_ray *r)
 
 double	hit_sphere(t_3d center, double radius, t_ray r)
 {
-	t_3d	a_c;
+	t_3d	oc;
+	double	a;
+	double	half_b;
+	double	c;
+    double	discriminant;
 
-    a_c = *sum_3d(r.pos,  *mul(-1, center));
-    double a = dot(r.dir, r.dir);
-    double b = 2.0 * dot(a_c, r.dir);
-    double c = dot(a_c, a_c) - radius*radius;
-    double discriminant = b*b - 4*a*c;
+	oc = *sum_3d(r.pos, *mul(-1, center));
+	a = len_squared(r.dir);
+	half_b = dot(oc, r.dir);
+	c = len_squared(oc) - pow(radius, 2);
+	discriminant = pow(half_b, 2) - (a * c);
 	if (discriminant < 0)
 		return (-1.0);
-    else
-		return (-b - sqrt(discriminant) / (2.0 * a));
+	else
+		return (-half_b - (sqrt(discriminant) / a));
 }
 
 uint32_t	cons_sphere_clr(t_3d unit)
 {
 	t_3d	*result;
 
-	// print3d("UNIT", unit);
-	unit.x += 1;
-	unit.y += 1;
-	unit.z += 1;
-	result = mul(0.5, unit);
-	// print3d("R G B", *result);
+	unit.x += 1.0;
+	unit.y += 1.0;
+	unit.z += 1.0;
+	result = mul((1.0/2.0), unit);
 	return (dcolor(result->x, result->z, result->y));
 }
 

@@ -79,7 +79,12 @@ double	len_squared(t_3d v)
 
 t_3d	*at(t_ray ray, double t)
 {
-	return (sum_3d(ray.pos, *mul(t, ray.dir)));
+	t_3d	*dir;
+	t_3d	*ret;
+
+	dir = mul(t, ray.dir);
+	ret = sum_3d(*dir, ray.pos);
+	return (ret);
 }
 
 t_3d	*mk_unit(t_3d v)
@@ -93,4 +98,10 @@ t_3d	*mk_unit(t_3d v)
 void	print3d(char *s, t_3d v)
 {
 	printf("%s: (%f %f %f)\n", s, v.x, v.y, v.z);
+}
+
+void	printray(char *s, t_ray v)
+{
+	printf("%s DIR: (%f %f %f)\n", s, v.dir.x, v.dir.y, v.dir.z);
+	printf("%s POS: (%f %f %f)\n", s, v.pos.x, v.pos.y, v.pos.z);
 }

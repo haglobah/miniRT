@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/15 14:11:59 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2022/12/16 13:26:15 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ t_3d	*sum4_3d(t_3d v, t_3d w, t_3d u, t_3d z);
 t_3d	*mul(double k, t_3d v);
 double	dot(t_3d v, t_3d w);
 t_3d	*cross(t_3d v, t_3d w);
+double	len_squared(t_3d v);
 double	len(t_3d v);
 t_3d	*mk_unit(t_3d v);
 void	print3d(char *s, t_3d v);
@@ -60,6 +61,7 @@ t_3d	*at(t_ray ray, double t);
 t_ray	*mk_ray(t_3d pos, t_3d dir);
 void	del_ray(t_ray *r);
 int		color_ray(t_ray r);
+void	printray(char *s, t_ray v);
 
 typedef struct s_color
 {
@@ -134,6 +136,16 @@ char	***lex(int argc,char **argv);
 t_mrt	*parse(char ***sens);
 void	raytrace(mlx_image_t *img, t_mrt *p);
 
+//sphere.c
+typedef struct s_hit_record
+{
+	t_3d 	*point;
+	t_3d	*normal;
+	double	*t;
+} t_hrecord;
+
+// bool		hit_sphere(t_3d center, double radius, t_ray r, double t_min, double t_max, t_hrecord *rec);
+uint32_t	cons_sphere_clr(t_3d unit);
 
 //utils.c
 int		s_isneq(char *s1, char *s2, int n);
