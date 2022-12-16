@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:25:40 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/16 13:28:14 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/12/16 14:07:47 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,24 @@ int	color_ray(t_ray r)
 {
 	t_3d	*unit;
 	double	t;
+	double	t2;
 	uint32_t clr;
 
+
+	// Hier eher loop für mehrere Gegenstände
 	t = hit_sphere((t_3d){0, 0, -1}, 0.5, r);
 	if (t > 0.0)
 	{
 		unit = at(r, t);
+		unit->z -= -1;
+		unit = mk_unit(*unit);
+		clr = cons_sphere_clr(*unit);
+		return (clr);
+	}
+	t2 = hit_sphere((t_3d){0, -100.5, -1}, 100, r);
+	if (t2 > 0.0)
+	{
+		unit = at(r, t2);
 		unit->z -= -1;
 		unit = mk_unit(*unit);
 		clr = cons_sphere_clr(*unit);

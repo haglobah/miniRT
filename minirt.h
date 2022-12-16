@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/16 13:26:15 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/12/16 14:03:35 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,14 +135,6 @@ typedef struct s_minirt
 char	***lex(int argc,char **argv);
 t_mrt	*parse(char ***sens);
 void	raytrace(mlx_image_t *img, t_mrt *p);
-
-//sphere.c
-typedef struct s_hit_record
-{
-	t_3d 	*point;
-	t_3d	*normal;
-	double	*t;
-} t_hrecord;
 
 // bool		hit_sphere(t_3d center, double radius, t_ray r, double t_min, double t_max, t_hrecord *rec);
 uint32_t	cons_sphere_clr(t_3d unit);
