@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   3d.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/14 17:24:00 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2022/12/17 14:47:54 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+# include <time.h>
 
 t_3d	*mk_3d(double x, double y, double z)
 {
@@ -23,6 +24,21 @@ t_3d	*mk_3d(double x, double y, double z)
 	new->y = y;
 	new->z = z;
 	// add_to_free_list(new);
+	return (new);
+}
+
+t_3d	*mk_random_3d(void)
+{
+	t_3d	*new;
+	double	x;
+	double	y;
+	double	z;
+
+	srand(time(NULL));
+	x = (double) rand() / RAND_MAX * 2 - 1;
+	y = (double) rand() / RAND_MAX * 2 - 1;
+	z = (double) rand() / RAND_MAX * 2 - 1;
+	new = mk_3d(x, y ,z);
 	return (new);
 }
 
