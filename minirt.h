@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/16 14:32:32 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/12/17 12:29:33 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include <stdio.h>
 # include <stdbool.h>
 
-# define WIDTH 1600
-# define HEIGHT 900
+# define WIDTH 400
+# define HEIGHT 225
 
 typedef double t_d;
 

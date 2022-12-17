@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:49:15 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/15 14:24:04 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2022/12/17 12:56:17 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	printclr(t_clr clr)
 
 u_int32_t	get_light(int start, int end, double percentage)
 {
-	return ((int)((1 - percentage) * end + percentage * start));
+	return ((int)((1 - percentage) * start + percentage * end));
 }
 
 int	color(t_clr s, t_clr e, double percent)
@@ -54,7 +54,7 @@ int	color(t_clr s, t_clr e, double percent)
 
 uint32_t	dcolor(double r, double g, double b)
 {
-	return (rgb((u_int8_t)(r * 255), 
+	return (rgb((u_int8_t)(r * 255),
 				  (u_int8_t)(g * 255),
 				  (u_int8_t)(b * 255)));
 }
