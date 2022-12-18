@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/17 13:22:35 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/12/18 14:43:52 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,20 @@ void	put_pxl(mlx_image_t *img, int pxl_x, int pxl_y, int color)
 
 void	raytrace(mlx_image_t *img, t_mrt *m)
 {
-
+	t_cam		*cam;
+	t_sphere	*sphere;
 	(void)m;
+	
+	cam = ft_calloc(1, sizeof(t_cam));
+	sphere = ft_calloc(1, sizeof(t_sphere));
+	cam->pos = (t_3d){0, 0, 0};
+	cam->dir = (t_3d){0, 0, -1};
+	cam->fov = 1.0;
+
+	sphere->pos = (t_3d){0, 0, -0.67};
+	sphere->diameter = 0.54;
+
+	
 	double	aspect_ratio = (double) WIDTH / (double) HEIGHT;
 	
 	double	viewport_height = 2.0;
@@ -60,7 +72,7 @@ void	raytrace(mlx_image_t *img, t_mrt *m)
 						*mul(h, horizontal),
 						*mul(v, vertical), 
 						*mul(-1, origin)));
-			put_pxl(img, i, j, color_ray(*r));
+			put_pxl(img, i, j, color_ray(*r, sphere));
 		}
 	}
 	return ;

@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/17 14:47:54 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/12/18 13:59:06 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ t_3d	*at(t_ray ray, double t)
 	t_3d	*ret;
 
 	dir = mul(t, ray.dir);
-	ret = sum_3d(*dir, ray.pos);
+	ret = sum_3d(*dir, (t_3d){0, 0, 0});
 	return (ret);
 }
 
