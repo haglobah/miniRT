@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:25:40 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/18 14:41:37 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/12/21 10:28:28 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,15 @@ double	hit_sphere(t_3d center, double radius, t_ray r)
 		return ((-half_b - sqrt(discriminant)) / a);
 }
 
-uint32_t	cons_sphere_clr(t_3d unit, t_d reflection)
+uint32_t	cons_sphere_clr(t_clr color, double coeff)
 {
 	t_3d	*result;
+	t_3d	clr;
 
-	unit.x += 1.0;
-	unit.y += 1.0;
-	unit.z += 1.0;
-	result = mul(reflection, (t_3d){0.9 * 255, 0.2 * 255, 0.3 * 255});
+	clr.x = color.r;
+	clr.y = color.g;
+	clr.z = color.b;
+	result = mul(coeff, clr);
 	return (rgb(result->x, result->y, result->z));
 }
 
@@ -69,15 +70,22 @@ int	color_ray(t_ray r, t_sphere *sphere)
 	double	t;
 	double	t2;
 	uint32_t clr;
+	t_light	*light;
+	t_ambient *ambient;
 
+	light = ft_calloc(1, sizeof(t_light));
+	ambient = ft_calloc(1, sizeof(t_ambient));
+
+	light->pos = *mk_unit(*mk_3d(-40.0, 50, -60));
+	
 	// Hier eher loop für mehrere Gegenstände
 	t = hit_sphere(sphere->pos, sphere->diameter, r);
 	if (t > 0.0)
 	{
 		t_3d *thit = at(r, t);
 		t_3d *unit_vektor = mk_unit(*sum_3d(*thit, *mul(-1.0, sphere->pos)));
-		double	reflection = -dot(r.dir, *unit_vektor);
-		clr = cons_sphere_clr(*unit_vektor, reflection);
+		double	coeff = -dot(light->pos, *unit_vektor);
+		clr = cons_sphere_clr(sphere->color, coeff);
 		return (clr);
 	}
 	// t2 = hit_sphere((t_3d){0, 100.5, -1}, 100, r);

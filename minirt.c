@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/18 14:43:52 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/12/21 10:11:21 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,18 @@ void	raytrace(mlx_image_t *img, t_mrt *m)
 	
 	cam = ft_calloc(1, sizeof(t_cam));
 	sphere = ft_calloc(1, sizeof(t_sphere));
+	
 	cam->pos = (t_3d){0, 0, 0};
 	cam->dir = (t_3d){0, 0, -1};
 	cam->fov = 1.0;
 
 	sphere->pos = (t_3d){0, 0, -0.67};
 	sphere->diameter = 0.54;
+	sphere->color = (t_clr){0.9 * 255, 0.2 * 255, 0.3 * 255};
 
-	
 	double	aspect_ratio = (double) WIDTH / (double) HEIGHT;
-	
 	double	viewport_height = 2.0;
 	double	viewport_width = viewport_height * aspect_ratio;
-
 	double	focal_length = 0.5;
 
 	t_3d	origin = (t_3d){0, 0, 0};

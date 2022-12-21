@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/18 14:05:40 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/12/21 10:13:58 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include <stdio.h>
 # include <stdbool.h>
 
-# define WIDTH 400
-# define HEIGHT 225
+# define WIDTH 1200
+# define HEIGHT 675
 
 typedef double t_d;
 
@@ -137,7 +137,7 @@ t_mrt	*parse(char ***sens);
 void	raytrace(mlx_image_t *img, t_mrt *p);
 
 // bool		hit_sphere(t_3d center, double radius, t_ray r, double t_min, double t_max, t_hrecord *rec);
-uint32_t	cons_sphere_clr(t_3d unit, t_d reflection);
+uint32_t	cons_sphere_clr(t_clr color, double coeff);
 
 //utils.c
 int		s_isneq(char *s1, char *s2, int n);
