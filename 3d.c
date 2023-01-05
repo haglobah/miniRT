@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/18 13:59:06 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/05 10:43:43 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,4 +120,15 @@ void	printray(char *s, t_ray v)
 {
 	printf("%s DIR: (%f %f %f)\n", s, v.dir.x, v.dir.y, v.dir.z);
 	printf("%s POS: (%f %f %f)\n", s, v.pos.x, v.pos.y, v.pos.z);
+}
+
+t_3d	*normalize_vector(t_3d *vec)
+{
+	double len = len_squared(*vec);
+
+	vec->x /= len;
+	vec->y /= len;
+	vec->z /= len; 
+
+	return (vec);
 }

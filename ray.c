@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:25:40 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/21 10:28:28 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/05 11:41:13 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ double	hit_sphere(t_3d center, double radius, t_ray r)
 	discriminant = pow(half_b, 2) - (a * c);
 	if (discriminant < 0)
 		return (-1.0);
-	else
+	else 
 		return ((-half_b - sqrt(discriminant)) / a);
 }
 
@@ -55,11 +55,14 @@ uint32_t	cons_sphere_clr(t_clr color, double coeff)
 {
 	t_3d	*result;
 	t_3d	clr;
+	double	ambience = 0.2;
+	double	diffuse = 0.7;
 
 	clr.x = color.r;
 	clr.y = color.g;
 	clr.z = color.b;
-	result = mul(coeff, clr);
+
+	result = sum_3d(*mul(coeff, clr), *sum_3d(*mul(ambience, clr), *mul(diffuse, clr)));
 	return (rgb(result->x, result->y, result->z));
 }
 
@@ -72,7 +75,7 @@ int	color_ray(t_ray r, t_sphere *sphere)
 	uint32_t clr;
 	t_light	*light;
 	t_ambient *ambient;
-
+      
 	light = ft_calloc(1, sizeof(t_light));
 	ambient = ft_calloc(1, sizeof(t_ambient));
 
@@ -84,7 +87,7 @@ int	color_ray(t_ray r, t_sphere *sphere)
 	{
 		t_3d *thit = at(r, t);
 		t_3d *unit_vektor = mk_unit(*sum_3d(*thit, *mul(-1.0, sphere->pos)));
-		double	coeff = -dot(light->pos, *unit_vektor);
+		double	coeff = -dot(light->pos, *unit_vektor); 
 		clr = cons_sphere_clr(sphere->color, coeff);
 		return (clr);
 	}
@@ -100,6 +103,6 @@ int	color_ray(t_ray r, t_sphere *sphere)
 	// t_clr	s = (t_clr){255, 255, 255};
 	// t_clr	e = (t_clr){127, 180, 255};
 	// clr = color(s, e, t);
-	clr = rgb(0, 0, 0);
+	clr = rgb(0, 0, 0); // -> background
 	return (clr);
 }

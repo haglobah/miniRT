@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/21 10:13:58 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/05 11:21:50 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ double	len_squared(t_3d v);
 double	len(t_3d v);
 t_3d	*mk_unit(t_3d v);
 void	print3d(char *s, t_3d v);
+t_3d	*normalize_vector(t_3d *vec);
 
 typedef struct s_ray
 {
