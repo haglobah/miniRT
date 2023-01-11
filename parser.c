@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 12:34:46 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/11 14:33:33 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/11 14:47:01 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ bool	parse_ambient(t_mrt *m, char **line)
 		return (false);
 	if (parse_rgb(line[2], &clr) == false)
 		return (false);
+	m->amb = mk_amb(ratio, &clr);
 	// printclr(clr);
 	// printf("%s as double: %f\n", line[1], ratio);
 }
@@ -129,6 +130,7 @@ bool	parse_camera(t_mrt *m, char **line)
 		return (false);
 	if (parse_double(line[3], &fov) == false)
 		return (false);
+	m->cam = mk_cam(&pos, &dir, fov);
 	// printclr(clr);
 	// printf("%s as double: %f\n", line[1], ratio);
 }
@@ -147,6 +149,7 @@ bool	parse_light(t_mrt *m, char **line)
 		return (false);
 	if (parse_rgb(line[3], &clr) == false)
 		return (false);
+	m->l = mk_l(&pos, &clr, brightness);
 	// printclr(clr);
 	// printf("%s as double: %f\n", line[1], ratio);
 }
@@ -165,6 +168,7 @@ bool	parse_sphere(t_mrt *m, char **line)
 		return (false);
 	if (parse_rgb(line[3], &clr) == false)
 		return (false);
+	m->sp = mk_sp(&pos, diameter, &clr);
 	// printclr(clr);
 	// printf("%s as double: %f\n", line[1], ratio);
 }
@@ -183,6 +187,7 @@ bool	parse_plane(t_mrt *m, char **line)
 		return (false);
 	if (parse_rgb(line[3], &clr) == false)
 		return (false);
+	m->pl = mk_pl(&pos, &normal, &clr);
 	// printclr(clr);
 	// printf("%s as double: %f\n", line[1], ratio);
 }
@@ -207,6 +212,7 @@ bool	parse_cylinder(t_mrt *m, char **line)
 		return (false);
 	if (parse_rgb(line[5], &clr) == false)
 		return (false);
+	m->cyl = mk_cyl(&pos, &normal, diameter, height, &clr);
 	// printclr(clr);
 	// printf("%s as double: %f\n", line[1], ratio);
 }
