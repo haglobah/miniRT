@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/11 12:06:57 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/11 14:11:19 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,6 @@
 # define HEIGHT 675
 
 typedef double t_d;
-
-typedef struct s_parse
-{
-} t_parse;
 
 typedef struct s_3d_vector
 {
@@ -78,7 +74,7 @@ uint32_t	colora(u_int8_t r, u_int8_t g, u_int8_t b, u_int8_t a);
 uint32_t	rgb(u_int8_t r, u_int8_t g, u_int8_t b);
 void		printclr(t_clr clr);
 
-typedef	struct s_alight
+typedef	struct s_ambient_light
 {
 	t_d		range;
 	t_clr	color;
@@ -124,12 +120,20 @@ typedef struct s_cyl
 typedef struct s_minirt
 {
 	t_ambient	*amb;
-	t_light		*l;
 	t_cam		*cam;
+	t_light		*l;
 	t_sphere	*sp;
 	t_plane		*pl;
-	t_cyl		*cyl;	
+	t_cyl		*cyl;
 }	t_mrt;
+
+//data.c 
+t_ambient	*mk_amb(t_d ratio, t_3d *clr);
+t_cam		*mk_cam(t_3d *pos, t_3d *dir, t_d fov);
+t_light		*mk_l(t_3d *pos, t_3d *clr, t_d brightness);
+t_sphere	*mk_sp(t_3d *pos, t_d diameter, t_3d *clr);
+t_plane		*mk_pl(t_3d *pos, t_3d *normal, t_3d *clr);
+t_cyl		*mk_cyl(t_3d *pos, t_3d *normal, t_d diameter, t_d height, t_3d *clr);
 
 //minirt.c
 int		color_ray(t_ray r, t_sphere *sphere);

@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 12:34:46 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/15 15:56:54 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/11 13:57:40 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ bool	parse_point(char *s, t_3d *p)
 	double z;
 
 	xyz = ft_split(s, ',');
-	printns(xyz);
+	// printns(xyz);
 	if (strslen(xyz) != 3)
 		return (ft_free(xyz), false);
 	if (parse_double(xyz[0], &x) == false)
@@ -133,7 +133,83 @@ bool	parse_camera(t_mrt *m, char **line)
 	// printf("%s as double: %f\n", line[1], ratio);
 }
 
+bool	parse_light(t_mrt *m, char **line)
+{
+	t_3d	pos;
+	t_3d	clr;
+	double	brightness;
 
+	if (!s_iseq(line[0], "L"))
+		return (false);
+	if (parse_point(line[1], &pos) == false)
+		return (false);
+	if (parse_double(line[2], &brightness) == false)
+		return (false);
+	if (parse_rgb(line[3], &clr) == false)
+		return (false);
+	// printclr(clr);
+	// printf("%s as double: %f\n", line[1], ratio);
+}
+
+bool	parse_sphere(t_mrt *m, char **line)
+{
+	t_3d	pos;
+	double	diameter;
+	t_3d	clr;
+
+	if (!s_iseq(line[0], "sp"))
+		return (false);
+	if (parse_point(line[1], &pos) == false)
+		return (false);
+	if (parse_double(line[2], &diameter) == false)
+		return (false);
+	if (parse_rgb(line[3], &clr) == false)
+		return (false);
+	// printclr(clr);
+	// printf("%s as double: %f\n", line[1], ratio);
+}
+
+bool	parse_plane(t_mrt *m, char **line)
+{
+	t_3d	pos;
+	t_3d	normal;
+	t_3d	clr;
+
+	if (!s_iseq(line[0], "sp"))
+		return (false);
+	if (parse_point(line[1], &pos) == false)
+		return (false);
+	if (parse_point(line[2], &normal) == false)
+		return (false);
+	if (parse_rgb(line[3], &clr) == false)
+		return (false);
+	// printclr(clr);
+	// printf("%s as double: %f\n", line[1], ratio);
+}
+
+bool	parse_cylinder(t_mrt *m, char **line)
+{
+	t_3d	pos;
+	t_3d	normal;
+	double	diameter;
+	double	height;
+	t_3d	clr;
+
+	if (!s_iseq(line[0], "sp"))
+		return (false);
+	if (parse_point(line[1], &pos) == false)
+		return (false);
+	if (parse_point(line[2], &normal) == false)
+		return (false);
+	if (parse_double(line[3], &diameter) == false)
+		return (false);
+	if (parse_double(line[4], &height) == false)
+		return (false);
+	if (parse_rgb(line[5], &clr) == false)
+		return (false);
+	// printclr(clr);
+	// printf("%s as double: %f\n", line[1], ratio);
+}
 
 bool	parse_line(t_mrt *m, char **line)
 {
@@ -141,14 +217,14 @@ bool	parse_line(t_mrt *m, char **line)
 		return (true);
 	else if (parse_camera(m, line) == true)
 		return (true);
-	// else if (parse_light(m, line) == true)
-	// 	return (true);
-	// else if (parse_sphere(m, line) == true)
-	// 	return (true);
-	// else if (parse_plane(m, line) == true)
-	// 	return (true);
-	// else if (parse_cylinder(m, line) == true)
-	// 	return (true);
+	else if (parse_light(m, line) == true)
+		return (true);
+	else if (parse_sphere(m, line) == true)
+		return (true);
+	else if (parse_plane(m, line) == true)
+		return (true);
+	else if (parse_cylinder(m, line) == true)
+		return (true);
 	return (false);
 }
 

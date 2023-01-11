@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:57:19 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/15 15:37:37 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/11 13:47:15 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,14 @@ int	minirt(int argc, char **argv, mlx_t *mlx, mlx_image_t *g_img)
 	t_mrt		*m;
 	char	***sens;
 
-	// sens = lex(argc, argv);
-	// printsens(sens);
-	// m = parse(sens);
-	// if (!m)
-	// 	return (EXIT_FAILURE);
-	// if (p == NULL)
-	// {
-	// 	ft_printf("Parsing failed. Did you supply a *.rt file?\n");
-	// 	return (EXIT_FAILURE);
-	// }
-	(void)argc;
-	(void)argv;
+	sens = lex(argc, argv);
+	if (!sens)
+	{
+		ft_printf("Parsing failed. Did you supply a *.rt file?\n");
+		return (EXIT_FAILURE);
+	}
+	printsens(sens);
+	m = parse(sens);
 	// g_img = mlx_new_image(mlx, WIDTH, HEIGHT);
 	raytrace(g_img, m);
 	// free_all(&p);
