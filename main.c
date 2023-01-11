@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:57:19 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/11 13:47:15 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/11 15:45:16 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	minirt(int argc, char **argv, mlx_t *mlx, mlx_image_t *g_img)
 	printsens(sens);
 	m = parse(sens);
 	// g_img = mlx_new_image(mlx, WIDTH, HEIGHT);
-	raytrace(g_img, m);
+	// raytrace(g_img, m);
 	// free_all(&p);
 	return (0);
 }

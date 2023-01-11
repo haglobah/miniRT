@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/11 14:46:16 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/11 15:48:55 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int			color(t_clr s, t_clr e, double percent);
 uint32_t	dcolor(double r, double g, double b);
 uint32_t	colora(u_int8_t r, u_int8_t g, u_int8_t b, u_int8_t a);
 uint32_t	rgb(u_int8_t r, u_int8_t g, u_int8_t b);
-void		printclr(t_clr clr);
+void		print_clr(t_clr clr);
 
 typedef	struct s_ambient_light
 {
@@ -134,6 +134,7 @@ t_light		*mk_l(t_3d *pos, t_clr *clr, t_d brightness);
 t_sphere	*mk_sp(t_3d *pos, t_d diameter, t_clr *clr);
 t_plane		*mk_pl(t_3d *pos, t_3d *normal, t_clr *clr);
 t_cyl		*mk_cyl(t_3d *pos, t_3d *normal, t_d diameter, t_d height, t_clr *clr);
+void		print_mrt(t_mrt *m);
 
 //minirt.c
 int		color_ray(t_ray r, t_sphere *sphere);

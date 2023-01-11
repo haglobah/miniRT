@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:12:49 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/11 14:41:17 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/11 15:56:06 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,61 @@ t_cyl		*mk_cyl(t_3d *pos, t_3d *normal, t_d diameter, t_d height, t_clr *clr)
 	cyl->height = height;
 	cyl->color = *clr;
 	return (cyl);
+}
+
+void	print_amb(t_ambient *amb)
+{
+	printf("[A]:\nRange: %f\n", amb->range);
+	print_clr(amb->color);
+}
+
+void	print_cam(t_cam *cam)
+{
+	printf("[C]:\n");
+	print3d("POS: ", *cam->pos);
+	print3d("DIR: ", *cam->dir);
+	printf("FOV: %f\n", cam->fov);
+}
+
+void	print_l(t_light *l)
+{
+	printf("[L]:\n");
+	print3d("POS: ", *l->pos);
+	printf("Range: %f\n", l->range);
+	print_clr(l->color);
+}
+
+void	print_sp(t_sphere *s)
+{
+	printf("[S]:\n");
+	print3d("POS: ", *s->pos);
+	printf("Diameter: %f\n", s->diameter);
+	print_clr(s->color);
+}
+
+void	print_pl(t_plane *p)
+{
+	printf("[P]:\n");
+	print3d("POS: ", *p->pos);
+	print3d("NORMAL: ", *p->normal);
+	print_clr(p->color);
+}
+
+void	print_cyl(t_cyl *c)
+{
+	printf("[CYL]:\n");
+	print3d("POS: ", *c->pos);
+	print3d("NORMAL: ", *c->normal);
+	printf("DIAMETER: %f\nHEIGHT: %f\n", c->diameter, c->height);
+	print_clr(c->color);
+}
+
+void	print_mrt(t_mrt *m)
+{
+	print_amb(m->amb);
+	print_cam(m->cam);
+	print_l(m->l);
+	print_sp(m->sp);
+	print_pl(m->pl);
+	print_cyl(m->cyl);
 }

@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:49:15 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/18 14:09:21 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/11 15:33:43 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@
 // 	return ((clr >> 8) & 0xFF);
 // }
 
-void	printclr(t_clr clr)
+void	print_clr(t_clr clr)
 {
+	printf("Color: ");
 	printf("r: %i,", clr.r);
 	printf("g: %i,", clr.g);
 	printf("b: %i", clr.b);
