@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/11 14:11:19 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/11 14:46:16 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,38 +80,38 @@ typedef	struct s_ambient_light
 	t_clr	color;
 } t_ambient;
 
+typedef struct	s_cam
+{
+	t_3d	*pos;
+	t_3d	*dir;
+	t_d		fov;
+} t_cam;
+
 typedef struct s_light
 {
-	t_3d	pos;
+	t_3d	*pos;
 	t_d		range;
 	t_clr	color;
 } t_light;
 
-typedef struct	s_cam
-{
-	t_3d	pos;
-	t_3d	dir;
-	int		fov;
-} t_cam;
-
 typedef struct s_sphere
 {
-	t_3d	pos;
+	t_3d	*pos;
 	t_d		diameter;
 	t_clr	color;
 } t_sphere;
 
 typedef struct s_plane
 {
-	t_3d	pos;
-	t_3d	dir;
+	t_3d	*pos;
+	t_3d	*normal;
 	t_clr	color;
 } t_plane;
 
 typedef struct s_cyl
 {
-	t_3d	pos;
-	t_3d	dir;
+	t_3d	*pos;
+	t_3d	*normal;
 	t_d		diameter;
 	t_d		height;
 	t_clr	color;
@@ -128,12 +128,12 @@ typedef struct s_minirt
 }	t_mrt;
 
 //data.c 
-t_ambient	*mk_amb(t_d ratio, t_3d *clr);
+t_ambient	*mk_amb(t_d ratio, t_clr *clr);
 t_cam		*mk_cam(t_3d *pos, t_3d *dir, t_d fov);
-t_light		*mk_l(t_3d *pos, t_3d *clr, t_d brightness);
-t_sphere	*mk_sp(t_3d *pos, t_d diameter, t_3d *clr);
-t_plane		*mk_pl(t_3d *pos, t_3d *normal, t_3d *clr);
-t_cyl		*mk_cyl(t_3d *pos, t_3d *normal, t_d diameter, t_d height, t_3d *clr);
+t_light		*mk_l(t_3d *pos, t_clr *clr, t_d brightness);
+t_sphere	*mk_sp(t_3d *pos, t_d diameter, t_clr *clr);
+t_plane		*mk_pl(t_3d *pos, t_3d *normal, t_clr *clr);
+t_cyl		*mk_cyl(t_3d *pos, t_3d *normal, t_d diameter, t_d height, t_clr *clr);
 
 //minirt.c
 int		color_ray(t_ray r, t_sphere *sphere);

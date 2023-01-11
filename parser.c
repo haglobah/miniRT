@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 12:34:46 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/11 13:57:40 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/11 14:33:33 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ bool	parse_point(char *s, t_3d *p)
 		return (ft_free(xyz), false);
 	if (parse_double(xyz[2], &z) == false)
 		return (ft_free(xyz), false);
-	*p = (t_3d){x, y, z};
+	p = mk_3d(x, y ,z);
 	return (true);
 }
 
@@ -136,7 +136,7 @@ bool	parse_camera(t_mrt *m, char **line)
 bool	parse_light(t_mrt *m, char **line)
 {
 	t_3d	pos;
-	t_3d	clr;
+	t_clr	clr;
 	double	brightness;
 
 	if (!s_iseq(line[0], "L"))
@@ -155,7 +155,7 @@ bool	parse_sphere(t_mrt *m, char **line)
 {
 	t_3d	pos;
 	double	diameter;
-	t_3d	clr;
+	t_clr	clr;
 
 	if (!s_iseq(line[0], "sp"))
 		return (false);
@@ -173,7 +173,7 @@ bool	parse_plane(t_mrt *m, char **line)
 {
 	t_3d	pos;
 	t_3d	normal;
-	t_3d	clr;
+	t_clr	clr;
 
 	if (!s_iseq(line[0], "sp"))
 		return (false);
@@ -193,7 +193,7 @@ bool	parse_cylinder(t_mrt *m, char **line)
 	t_3d	normal;
 	double	diameter;
 	double	height;
-	t_3d	clr;
+	t_clr	clr;
 
 	if (!s_iseq(line[0], "sp"))
 		return (false);
