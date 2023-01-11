@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 12:34:46 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/11 15:54:31 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/11 15:58:28 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ bool	parse_rgb(char *s, t_clr *clr)
 	*clr = (t_clr){(uint8_t)r, (uint8_t)g, (uint8_t)b};
 }
 
-bool	parse_point(char *s, t_3d *p)
+bool	parse_point(char *s, t_3d **p)
 {
 	char	**xyz;
 	double x;
@@ -96,7 +96,7 @@ bool	parse_point(char *s, t_3d *p)
 		return (ft_free(xyz), false);
 	if (parse_double(xyz[2], &z) == false)
 		return (ft_free(xyz), false);
-	p = mk_3d(x, y ,z);
+	*p = mk_3d(x, y ,z);
 	return (true);
 }
 
@@ -124,9 +124,9 @@ bool	parse_camera(t_mrt *m, char **line)
 
 	if (!s_iseq(line[0], "C"))
 		return (false);
-	if (parse_point(line[1], pos) == false)
+	if (parse_point(line[1], &pos) == false)
 		return (false);
-	if (parse_point(line[2], dir) == false)
+	if (parse_point(line[2], &dir) == false)
 		return (false);
 	if (parse_double(line[3], &fov) == false)
 		return (false);
@@ -143,7 +143,7 @@ bool	parse_light(t_mrt *m, char **line)
 
 	if (!s_iseq(line[0], "L"))
 		return (false);
-	if (parse_point(line[1], pos) == false)
+	if (parse_point(line[1], &pos) == false)
 		return (false);
 	if (parse_double(line[2], &brightness) == false)
 		return (false);
@@ -162,7 +162,7 @@ bool	parse_sphere(t_mrt *m, char **line)
 
 	if (!s_iseq(line[0], "sp"))
 		return (false);
-	if (parse_point(line[1], pos) == false)
+	if (parse_point(line[1], &pos) == false)
 		return (false);
 	if (parse_double(line[2], &diameter) == false)
 		return (false);
@@ -181,7 +181,7 @@ bool	parse_plane(t_mrt *m, char **line)
 
 	if (!s_iseq(line[0], "sp"))
 		return (false);
-	if (parse_point(line[1], pos) == false)
+	if (parse_point(line[1], &pos) == false)
 		return (false);
 	if (parse_point(line[2], &normal) == false)
 		return (false);
@@ -202,7 +202,7 @@ bool	parse_cylinder(t_mrt *m, char **line)
 
 	if (!s_iseq(line[0], "sp"))
 		return (false);
-	if (parse_point(line[1], pos) == false)
+	if (parse_point(line[1], &pos) == false)
 		return (false);
 	if (parse_point(line[2], &normal) == false)
 		return (false);
