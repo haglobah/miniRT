@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/05 11:40:36 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/11 13:20:24 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	raytrace(mlx_image_t *img, t_mrt *m)
 	
 	cam->pos = (t_3d){0, 0, 3.5};
 	cam->dir = (t_3d){0, 0, -1};
-	cam->fov = 1.0;
+	cam->fov = 3.0;
 
 	sphere->pos = (t_3d){0, 0, 0};
 	sphere->diameter = 0.3;
@@ -57,7 +57,7 @@ void	raytrace(mlx_image_t *img, t_mrt *m)
 			double	u = (i / (double) WIDTH) - 0.5;
 			double	v = (j / (double) HEIGHT) - 0.5;
 			u = u * aspect_ratio;
-			t_3d	*direction = normalize_vector(sum_3d(*mul(-1, cam->pos), *mk_3d(u, v, cam->fov)));
+			t_3d	*direction = mk_unit(*sum_3d(*mul(cam->fov, (t_3d){v, u, 0}), *mul(-1, cam->pos)));
 			t_ray	*r = mk_ray(cam->pos, *direction);
 			put_pxl(img, i, j, color_ray(*r, sphere));
 		}

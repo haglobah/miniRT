@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/05 10:43:43 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/11 12:31:21 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ t_3d	*at(t_ray ray, double t)
 	t_3d	*ret;
 
 	dir = mul(t, ray.dir);
-	ret = sum_3d(*dir, (t_3d){0, 0, 0});
+	ret = sum_3d(*dir, ray.pos); // cam position
 	return (ret);
 }
 
@@ -125,7 +125,7 @@ void	printray(char *s, t_ray v)
 t_3d	*normalize_vector(t_3d *vec)
 {
 	double len = len_squared(*vec);
-
+	
 	vec->x /= len;
 	vec->y /= len;
 	vec->z /= len; 
