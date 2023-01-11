@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:12:49 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/11 15:56:06 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/11 16:07:25 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,8 @@ void	print_sp(t_sphere *s)
 void	print_pl(t_plane *p)
 {
 	printf("[P]:\n");
-	print3d("POS: ", *p->pos);
-	print3d("NORMAL: ", *p->normal);
+	// print3d("POS: ", *p->pos);
+	// print3d("NORMAL: ", *p->normal);
 	print_clr(p->color);
 }
 
@@ -128,10 +128,10 @@ void	print_cyl(t_cyl *c)
 
 void	print_mrt(t_mrt *m)
 {
-	print_amb(m->amb);
-	print_cam(m->cam);
-	print_l(m->l);
-	print_sp(m->sp);
+	// print_amb(m->amb);
+	// print_cam(m->cam);
+	// print_l(m->l);
+	// print_sp(m->sp);
 	print_pl(m->pl);
 	print_cyl(m->cyl);
 }
