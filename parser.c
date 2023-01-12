@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 12:34:46 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/12 13:13:19 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/12 13:37:19 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ bool	parse_sphere(t_mrt *m, char **line)
 	t_3d	*pos;
 	double	diameter;
 	t_clr	clr;
-	static	int i;
+	static int	i;
 
 	if (!s_iseq(line[0], "sp"))
 		return (false);
@@ -171,8 +171,6 @@ bool	parse_sphere(t_mrt *m, char **line)
 		return (false);
 	if (parse_rgb(line[3], &clr) == false)
 		return (false);
-	if (i == 0)
-		m->sp = (t_sphere *)ft_calloc(20, sizeof(t_sphere));
 	mk_sp(pos, diameter, &clr, &m->sp[i]);
 	printf("\n\n");
 	print3d("SPHERE POS: ", *m->sp[i].pos);
@@ -186,6 +184,7 @@ bool	parse_plane(t_mrt *m, char **line)
 	t_3d	*pos;
 	t_3d	*normal;
 	t_clr	clr;
+	static int	i;
 
 	if (!s_iseq(line[0], "pl"))
 		return (false);
@@ -195,7 +194,7 @@ bool	parse_plane(t_mrt *m, char **line)
 		return (false);
 	if (parse_rgb(line[3], &clr) == false)
 		return (false);
-	m->pl = mk_pl(pos, normal, &clr);
+	m->pl = mk_pl(pos, normal, &clr, &m->pl[i]);
 	// print_clr(clr);
 	// printf("%s as double: %f\n", line[1], ratio);
 }
@@ -207,6 +206,7 @@ bool	parse_cylinder(t_mrt *m, char **line)
 	double	diameter;
 	double	height;
 	t_clr	clr;
+	static int	i;
 
 	if (!s_iseq(line[0], "cy"))
 		return (false);
@@ -220,7 +220,7 @@ bool	parse_cylinder(t_mrt *m, char **line)
 		return (false);
 	if (parse_rgb(line[5], &clr) == false)
 		return (false);
-	m->cyl = mk_cyl(pos, normal, diameter, height, &clr);
+	m->cyl = mk_cyl(pos, normal, diameter, height, &clr, &m->cyl[i]);
 	// print_clr(clr);
 	// printf("%s as double: %f\n", line[1], ratio);
 }
@@ -280,7 +280,7 @@ t_mrt	*parse(char ***sens)
 	int		i;
 
 	count_bodies(bodies, sens);
-	m = mk_mrt();
+	m = mk_mrt(bodies);
 	if (m == NULL)
 		return (NULL);
 	i = -1;
