@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:12:49 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/12 09:30:00 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/12 09:32:21 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,10 +128,16 @@ void	print_cyl(t_cyl *c)
 
 void	print_mrt(t_mrt *m)
 {
-	print_amb(m->amb);
-	print_cam(m->cam);
-	print_l(m->l);
-	print_sp(m->sp);
-	print_pl(m->pl);
-	print_cyl(m->cyl);
+	if (m->amb)
+		print_amb(m->amb);
+	if (m->cam)
+		print_cam(m->cam);
+	if (m->l)
+		print_l(m->l);
+	if (m->sp)
+		print_sp(m->sp);
+	if (m->pl)
+		print_pl(m->pl);
+	if (m->cyl)
+		print_cyl(m->cyl);
 }
