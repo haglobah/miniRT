@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/12 15:04:06 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:34:55 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,12 @@ void	del_3d(t_3d *v);
 t_3d	*sum_3d(t_3d v, t_3d w);
 t_3d	*sum4_3d(t_3d v, t_3d w, t_3d u, t_3d z);
 t_3d	*mul(double k, t_3d v);
+t_3d	*sub_3d(t_3d v, t_3d w);
 double	dot(t_3d v, t_3d w);
 t_3d	*cross(t_3d v, t_3d w);
 double	len_squared(t_3d v);
+double	sq(double a);
+double	dist(t_3d v, t_3d w);
 double	len(t_3d v);
 t_3d	*mk_unit(t_3d v);
 void	print3d(char *s, t_3d v);
@@ -54,6 +57,7 @@ typedef struct s_ray
 
 }	t_ray;
 
+//ray.c
 t_3d	*at(t_ray ray, double t);
 t_ray	*mk_ray(t_3d pos, t_3d dir);
 void	del_ray(t_ray *r);
@@ -73,6 +77,15 @@ uint32_t	dcolor(double r, double g, double b);
 uint32_t	colora(u_int8_t r, u_int8_t g, u_int8_t b, u_int8_t a);
 uint32_t	rgb(u_int8_t r, u_int8_t g, u_int8_t b);
 void		print_clr(t_clr clr);
+
+typedef struct s_hit
+{
+	t_3d	pos;
+	t_3d	normal;
+	t_d		t;
+	t_clr	clr;
+
+}	t_hit;
 
 typedef	struct s_ambient_light
 {
@@ -140,7 +153,7 @@ void	fill_cyl(t_3d *pos, t_3d *normal, t_d diameter, t_d height, t_clr *clr, t_c
 void		print_mrt(t_mrt *m);
 
 //minirt.c
-int		trace_ray(t_ray r, t_mrt *m);
+int		trace_ray(t_ray *r, t_mrt *m);
 char	***lex(int argc,char **argv);
 t_mrt	*parse(char ***sens);
 void	draw_scene(mlx_image_t *img, t_mrt *p);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3d.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/11 12:31:21 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:12:27 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,6 @@ t_3d	*mk_3d(double x, double y, double z)
 	new->y = y;
 	new->z = z;
 	// add_to_free_list(new);
-	return (new);
-}
-
-t_3d	*mk_random_3d(void)
-{
-	t_3d	*new;
-	double	x;
-	double	y;
-	double	z;
-
-	srand(time(NULL));
-	x = (double) rand() / RAND_MAX * 2 - 1;
-	y = (double) rand() / RAND_MAX * 2 - 1;
-	z = (double) rand() / RAND_MAX * 2 - 1;
-	new = mk_3d(x, y ,z);
 	return (new);
 }
 
@@ -73,6 +58,14 @@ t_3d	*mul(double k, t_3d v)
 	return (new);
 }
 
+t_3d	*sub_3d(t_3d v, t_3d w)
+{
+	t_3d	*new;
+
+	new = sum_3d(v, *mul(-1, w));
+	return (new);
+}
+
 double	dot(t_3d v, t_3d w)
 {
 	return (v.x * w.x + v.y * w.y + v.z * w.z);
@@ -91,6 +84,23 @@ t_3d	*cross(t_3d v, t_3d w)
 double	len_squared(t_3d v)
 {
 	return (v.x * v.x + v.y * v.y + v.z * v.z);
+}
+
+double	sq(double a)
+{
+	return (a * a);
+}
+
+double	dist(t_3d v, t_3d w)
+{
+	double	res;
+
+	res = sqrt( sq(v.x - w.x)
+			  + sq(v.y - w.y)
+			  + sq(v.z - w.z));
+	if (res < 0.0)
+		return (-res);
+	return (res);
 }
 
 t_3d	*at(t_ray ray, double t)
@@ -120,15 +130,4 @@ void	printray(char *s, t_ray v)
 {
 	printf("%s DIR: (%f %f %f)\n", s, v.dir.x, v.dir.y, v.dir.z);
 	printf("%s POS: (%f %f %f)\n", s, v.pos.x, v.pos.y, v.pos.z);
-}
-
-t_3d	*normalize_vector(t_3d *vec)
-{
-	double len = len_squared(*vec);
-	
-	vec->x /= len;
-	vec->y /= len;
-	vec->z /= len; 
-
-	return (vec);
 }

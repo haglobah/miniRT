@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:25:40 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/12 15:17:59 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:35:18 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,26 +32,7 @@ void	del_ray(t_ray *r)
 	// ft_free(r->dir);
 }
 
-double	hit_sphere(t_3d center, double radius, t_ray r)
-{
-	t_3d	oc;
-	double	a;
-	double	half_b;
-	double	c;
-    double	discriminant;
-
-	oc = *sum_3d(r.pos, *mul(-1, center));
-	a = len_squared(r.dir);
-	half_b = dot(oc, r.dir);
-	c = len_squared(oc) - pow(radius, 2);
-	discriminant = pow(half_b, 2) - (a * c);
-	if (discriminant < 0)
-		return (-1.0);
-	else 
-		return ((-half_b - sqrt(discriminant)) / a);
-}
-
-uint32_t	cons_sphere_clr(t_clr color, double coeff)
+uint32_t	shade(t_clr color, double coeff)
 {
 	t_3d	*result;
 	t_3d	clr;
@@ -75,22 +56,105 @@ uint32_t	cons_sphere_clr(t_clr color, double coeff)
 	return (rgb(result->x, result->y, result->z));
 }
 
-int	trace_ray(t_ray r, t_mrt *m)
+uint32_t	compute_clr(t_mrt *m, t_hit *h)
+{
+	double		coeff;
+	uint32_t	clr;
+
+	coeff = -dot(*mk_unit(*m->l->pos), h->normal);
+	clr = shade(h->clr, coeff);
+	return (clr);
+}
+
+double	hitpoint_sphere(t_3d center, double radius, t_ray r)
+{
+	t_3d	oc;
+	double	a;
+	double	half_b;
+	double	c;
+    double	discriminant;
+
+	oc = *sum_3d(r.pos, *mul(-1, center));
+	a = len_squared(r.dir);
+	half_b = dot(oc, r.dir);
+	c = len_squared(oc) - pow(radius, 2);
+	discriminant = pow(half_b, 2) - (a * c);
+	if (discriminant < 0)
+		return (-1.0);
+	else 
+		return ((-half_b - sqrt(discriminant)) / a);
+}
+
+void	update_hit(t_hit *h, t_sphere *sp, double t, t_ray *r, t_clr clr)
+{
+	h->pos = *at(*r, t);
+	h->normal = *mk_unit(*sub_3d(*at(*r, t), *sp->pos));
+	h->t = t;
+	h->clr = clr;
+}
+
+void	hit_sphere(t_sphere *sp, t_ray *r, t_hit *h)
+{
+	double	lo;
+	double	hi;
+	double	t;
+
+	t = hitpoint_sphere(*sp->pos, sp->diameter, *r);
+	if (t <= 0.0)
+		return ;
+	else
+	{
+		if (t < h->t)
+			update_hit(h, sp, t, r, sp->color);
+	}
+}
+
+void	hit_plane(t_plane *pl, t_ray *r, t_hit *h)
+{
+	double	lo;
+	double	hi;
+	double	t;
+
+	(void)pl;
+	(void)r;
+	(void)h;
+}
+
+void	hit_cylinder(t_cyl *cyl, t_ray *r, t_hit *h)
+{
+	double	lo;
+	double	hi;
+	double	t;
+
+	(void)cyl;
+	(void)r;
+	(void)h;
+}
+
+int	trace_ray(t_ray *r, t_mrt *m)
 {
 	uint32_t clr;
 	double	t;
+	t_hit	h;
+	int		i;
 	// double	t2;
 	
 	// Hier eher loop für mehrere Gegenstände
-	t = hit_sphere(*m->sp[0].pos, m->sp[0].diameter, r);
-	if (t > 0.0)
+	i = -1;
+	while (++i < m->sp_count)
 	{
-		t_3d *thit = at(r, t);
-		t_3d *surface_normal = mk_unit(*sum_3d(*thit, *mul(-1.0, *m->sp[0].pos)));
-		double	coeff = -dot(*mk_unit(*m->l->pos), *surface_normal);
-		clr = cons_sphere_clr(m->sp[0].color, coeff);
-		return (clr);
+		hit_sphere(&m->sp[i], r, &h);
 	}
-	clr = rgb(0, 0, 0); // -> background
+	i = -1;
+	while (++i < m->pl_count)
+	{
+		hit_plane(&m->pl[i], r, &h);
+	}
+	i = -1;
+	while (++i < m->cyl_count)
+	{
+		hit_cylinder(&m->cyl[i], r, &h);
+	}
+	clr = compute_clr(m, &h);
 	return (clr);
 }

@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/12 15:15:57 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:50:46 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	draw_pxl(mlx_image_t *img, t_mrt *m, int x, int y)
 			(t_3d){viewport_width, viewport_height, 0}),
 		*mul(-1, *m->cam->pos)));
 	r = mk_ray(*m->cam->pos, *direction);
-	pxl_clr = trace_ray(*r, m);
+	pxl_clr = trace_ray(r, m);
 	put_pxl(img, x, y, pxl_clr);
 }
 
