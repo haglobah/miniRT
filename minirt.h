@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/12 14:10:11 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:04:06 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,10 +140,10 @@ void	fill_cyl(t_3d *pos, t_3d *normal, t_d diameter, t_d height, t_clr *clr, t_c
 void		print_mrt(t_mrt *m);
 
 //minirt.c
-int		color_ray(t_ray r, t_mrt *m);
+int		trace_ray(t_ray r, t_mrt *m);
 char	***lex(int argc,char **argv);
 t_mrt	*parse(char ***sens);
-void	raytrace(mlx_image_t *img, t_mrt *p);
+void	draw_scene(mlx_image_t *img, t_mrt *p);
 
 // bool		hit_sphere(t_3d center, double radius, t_ray r, double t_min, double t_max, t_hrecord *rec);
 uint32_t	cons_sphere_clr(t_clr color, double coeff);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:25:40 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/12 14:12:05 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:17:59 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,44 +75,22 @@ uint32_t	cons_sphere_clr(t_clr color, double coeff)
 	return (rgb(result->x, result->y, result->z));
 }
 
-int	color_ray(t_ray r, t_mrt *m)
+int	trace_ray(t_ray r, t_mrt *m)
 {
 	uint32_t clr;
 	double	t;
 	// double	t2;
 	
 	// Hier eher loop für mehrere Gegenstände
-	t = hit_sphere(*m->sp[1].pos, m->sp[1].diameter, r);
+	t = hit_sphere(*m->sp[0].pos, m->sp[0].diameter, r);
 	if (t > 0.0)
 	{
 		t_3d *thit = at(r, t);
-		t_3d *surface_normal = mk_unit(*sum_3d(*thit, *mul(-1.0, *m->sp[1].pos)));
+		t_3d *surface_normal = mk_unit(*sum_3d(*thit, *mul(-1.0, *m->sp[0].pos)));
 		double	coeff = -dot(*mk_unit(*m->l->pos), *surface_normal);
-		clr = cons_sphere_clr(m->sp[1].color, coeff);
+		clr = cons_sphere_clr(m->sp[0].color, coeff);
 		return (clr);
 	}
-
-	// t_sphere *second_sphere;
-
-	// second_sphere = ft_calloc(1, sizeof(t_sphere));
-	// second_sphere->pos = mk_3d(0, -1, 0);
-	// second_sphere->diameter = 0.3;
-	// second_sphere->color = (t_clr){0.9 * 255, 0.2 * 255, 0.3 * 255};
-	// t2 = hit_sphere(*second_sphere->pos, second_sphere->diameter, r);
-	// if (t2 > 0.0)
-	// {
-	// 	t_3d *thit2 = at(r, t2);
-	// 	t_3d *surface_normal2 = mk_unit(*sum_3d(*thit2, *mul(-1.0, *second_sphere->pos)));
-	// 	double	coeff = -dot(*light->pos, *surface_normal2);
-	// 	// printf("COEFF: %f\n", coeff);
-	// 	clr = cons_sphere_clr(second_sphere->color, coeff);
-	// 	return (clr);
-	// }
-	// unit = mk_unit(r.dir);
-	// t = 0.5 * (unit->y + 1.0);
-	// t_clr	s = (t_clr){255, 255, 255};
-	// t_clr	e = (t_clr){127, 180, 255};
-	// clr = color(s, e, t);
 	clr = rgb(0, 0, 0); // -> background
 	return (clr);
 }

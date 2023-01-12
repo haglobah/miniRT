@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/12 09:44:45 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:15:57 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,28 @@ void	put_pxl(mlx_image_t *img, int pxl_x, int pxl_y, int color)
 	mlx_put_pixel(img, pxl_x, pxl_y, color);
 }
 
-void	raytrace(mlx_image_t *img, t_mrt *m)
+void	draw_pxl(mlx_image_t *img, t_mrt *m, int x, int y)
+{
+	double	aspect_ratio;
+	double	viewport_height;
+	double	viewport_width;
+	t_3d	*direction;
+	t_ray	*r;
+	u_int32_t	pxl_clr;
+	
+	aspect_ratio = (double) WIDTH / (double) HEIGHT;
+	viewport_width = ((x / (double) WIDTH) - 0.5) * aspect_ratio;
+	viewport_height = (y / (double) HEIGHT) - 0.5;
+	direction = mk_unit(*sum_3d(
+		*mul(m->cam->fov, 
+			(t_3d){viewport_width, viewport_height, 0}),
+		*mul(-1, *m->cam->pos)));
+	r = mk_ray(*m->cam->pos, *direction);
+	pxl_clr = trace_ray(*r, m);
+	put_pxl(img, x, y, pxl_clr);
+}
+
+void	draw_scene(mlx_image_t *img, t_mrt *m)
 {
 	double	aspect_ratio = (double) WIDTH / (double) HEIGHT;
 
@@ -39,12 +60,7 @@ void	raytrace(mlx_image_t *img, t_mrt *m)
 		int i = -1;
 		while (++i < WIDTH)
 		{
-			double	u = (i / (double) WIDTH) - 0.5;
-			double	v = (j / (double) HEIGHT) - 0.5;
-			u = u * aspect_ratio;
-			t_3d	*direction = mk_unit(*sum_3d(*mul(m->cam->fov, (t_3d){v, u, 0}), *mul(-1, *m->cam->pos)));
-			t_ray	*r = mk_ray(*m->cam->pos, *direction);
-			put_pxl(img, i, j, color_ray(*r, m));
+			draw_pxl(img, m, i, j);
 		}
 	}
 	return ;

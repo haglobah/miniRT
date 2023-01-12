@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:57:19 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/12 14:21:34 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:16:39 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	minirt(int argc, char **argv, mlx_t *mlx, mlx_image_t *g_img)
 	if (!m)
 		return (EXIT_FAILURE);
 	// g_img = mlx_new_image(mlx, WIDTH, HEIGHT);
-	raytrace(g_img, m);
+	draw_scene(g_img, m);
 	// free_all(&p);
 	return (0);
 }
