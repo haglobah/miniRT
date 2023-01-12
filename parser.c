@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 12:34:46 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/11 16:06:37 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/12 09:30:19 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ bool	parse_plane(t_mrt *m, char **line)
 	t_3d	*normal;
 	t_clr	clr;
 
-	if (!s_iseq(line[0], "sp"))
+	if (!s_iseq(line[0], "pl"))
 		return (false);
 	if (parse_point(line[1], &pos) == false)
 		return (false);
@@ -200,7 +200,7 @@ bool	parse_cylinder(t_mrt *m, char **line)
 	double	height;
 	t_clr	clr;
 
-	if (!s_iseq(line[0], "sp"))
+	if (!s_iseq(line[0], "cy"))
 		return (false);
 	if (parse_point(line[1], &pos) == false)
 		return (false);
