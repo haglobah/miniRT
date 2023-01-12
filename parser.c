@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 12:34:46 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/12 13:49:46 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/12 14:05:03 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,30 @@ bool	parse_double(char *s, double *d)
 	return (true);
 }
 
+bool	parse_double_range(char *s, double *d, double lo, double hi)
+{
+	parse_double(s, d);
+	if (*d <= hi && *d >= lo)
+		return (true);
+	else
+	{
+		printf("Sorry, %s is not in the specified range: [%f, %f]\n", s, lo, hi);
+		return (false);
+	}
+}
+
+bool	parse_int_range(char *s, int *n, int lo, int hi)
+{
+	ft_parse_int(s, n);
+	if (*n <= hi && *n >= lo)
+		return (true);
+	else
+	{
+		printf("Sorry, %s is not in the specified range: [%i, %i]\n", s, lo, hi);
+		return (false);
+	}
+}
+
 bool	parse_rgb(char *s, t_clr *clr)
 {
 	char	**rgb;
@@ -80,6 +104,7 @@ bool	parse_rgb(char *s, t_clr *clr)
 	if (ft_parse_int(rgb[2], &b) == false)
 		return (ft_free(rgb), false);
 	*clr = (t_clr){(uint8_t)r, (uint8_t)g, (uint8_t)b};
+	return (true);
 }
 
 bool	parse_point(char *s, t_3d **p)
@@ -114,6 +139,7 @@ bool	parse_ambient(t_mrt *m, char **line)
 	if (parse_rgb(line[2], &clr) == false)
 		return (false);
 	m->amb = mk_amb(ratio, &clr);
+	return (true);
 	// print_clr(clr);
 	// printf("%s as double: %f\n", line[1], ratio);
 }
@@ -133,6 +159,7 @@ bool	parse_camera(t_mrt *m, char **line)
 	if (parse_double(line[3], &fov) == false)
 		return (false);
 	m->cam = mk_cam(pos, dir, fov);
+	return (true);
 	// print_clr(clr);
 	// printf("%s as double: %f\n", line[1], ratio);
 }
@@ -152,6 +179,7 @@ bool	parse_light(t_mrt *m, char **line)
 	if (parse_rgb(line[3], &clr) == false)
 		return (false);
 	m->l = mk_l(pos, &clr, brightness);
+	return (true);
 	// print_clr(clr);
 	// printf("%s as double: %f\n", line[1], ratio);
 }
@@ -172,6 +200,7 @@ bool	parse_sphere(t_mrt *m, char **line)
 	if (parse_rgb(line[3], &clr) == false)
 		return (false);
 	mk_sp(pos, diameter, &clr, &m->sp[i++]);
+	return (true);
 	// print_clr(clr);
 	// printf("%s as double: %f\n", line[1], ratio);
 }
@@ -192,7 +221,7 @@ bool	parse_plane(t_mrt *m, char **line)
 	if (parse_rgb(line[3], &clr) == false)
 		return (false);
 	mk_pl(pos, normal, &clr, &m->pl[i++]);
-	
+	return (true);
 	// print_clr(clr);
 	// printf("%s as double: %f\n", line[1], ratio);
 }
@@ -219,6 +248,7 @@ bool	parse_cylinder(t_mrt *m, char **line)
 	if (parse_rgb(line[5], &clr) == false)
 		return (false);
 	mk_cyl(pos, normal, diameter, height, &clr, &m->cyl[i++]);
+	return (true);
 	// print_clr(clr);
 	// printf("%s as double: %f\n", line[1], ratio);
 }

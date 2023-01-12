@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:49:15 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/11 15:33:43 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/12 14:03:11 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@
 void	print_clr(t_clr clr)
 {
 	printf("Color: ");
-	printf("r: %i,", clr.r);
-	printf("g: %i,", clr.g);
+	printf("r: %i, ", clr.r);
+	printf("g: %i, ", clr.g);
 	printf("b: %i", clr.b);
 	printf("\n");
 }
