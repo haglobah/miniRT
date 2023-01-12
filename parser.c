@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 12:34:46 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/12 14:05:03 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/12 14:23:37 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,12 @@ bool	parse_double_range(char *s, double *d, double lo, double hi)
 		return (true);
 	else
 	{
-		printf("Sorry, %s is not in the specified range: [%f, %f]\n", s, lo, hi);
+		printf("Sorry, %s is not in the specified range: [%.1f, %.1f]\n", s, lo, hi);
 		return (false);
 	}
 }
 
-bool	parse_int_range(char *s, int *n, int lo, int hi)
+bool	ft_parse_int_range(char *s, int *n, int lo, int hi)
 {
 	ft_parse_int(s, n);
 	if (*n <= hi && *n >= lo)
@@ -97,11 +97,11 @@ bool	parse_rgb(char *s, t_clr *clr)
 	rgb = ft_split(s, ',');
 	if (strslen(rgb) != 3)
 		return (ft_free(rgb), false);
-	if (ft_parse_int(rgb[0], &r) == false)
+	if (ft_parse_int_range(rgb[0], &r, 0, 255) == false)
 		return (ft_free(rgb), false);
-	if (ft_parse_int(rgb[1], &g) == false)
+	if (ft_parse_int_range(rgb[1], &g, 0, 255) == false)
 		return (ft_free(rgb), false);
-	if (ft_parse_int(rgb[2], &b) == false)
+	if (ft_parse_int_range(rgb[2], &b, 0, 255) == false)
 		return (ft_free(rgb), false);
 	*clr = (t_clr){(uint8_t)r, (uint8_t)g, (uint8_t)b};
 	return (true);
@@ -127,6 +127,26 @@ bool	parse_point(char *s, t_3d **p)
 	return (true);
 }
 
+bool	parse_normalized(char *s, t_3d **p)
+{
+	char	**xyz;
+	double x;
+	double y;
+	double z;
+
+	xyz = ft_split(s, ',');
+	if (strslen(xyz) != 3)
+		return (ft_free(xyz), false);
+	if (parse_double_range(xyz[0], &x, -1, 1) == false)
+		return (ft_free(xyz), false);
+	if (parse_double_range(xyz[1], &y, -1, 1) == false)
+		return (ft_free(xyz), false);
+	if (parse_double_range(xyz[2], &z, -1, 1) == false)
+		return (ft_free(xyz), false);
+	*p = mk_3d(x, y ,z);
+	return (true);
+}
+
 bool	parse_ambient(t_mrt *m, char **line)
 {
 	double	ratio;
@@ -134,7 +154,7 @@ bool	parse_ambient(t_mrt *m, char **line)
 
 	if (!s_iseq(line[0], "A"))
 		return (false);
-	if (parse_double(line[1], &ratio) == false)
+	if (parse_double_range(line[1], &ratio, 0, 1) == false)
 		return (false);
 	if (parse_rgb(line[2], &clr) == false)
 		return (false);
@@ -154,9 +174,9 @@ bool	parse_camera(t_mrt *m, char **line)
 		return (false);
 	if (parse_point(line[1], &pos) == false)
 		return (false);
-	if (parse_point(line[2], &dir) == false)
+	if (parse_normalized(line[2], &dir) == false)
 		return (false);
-	if (parse_double(line[3], &fov) == false)
+	if (parse_double_range(line[3], &fov, 0, 180) == false)
 		return (false);
 	m->cam = mk_cam(pos, dir, fov);
 	return (true);
@@ -174,7 +194,7 @@ bool	parse_light(t_mrt *m, char **line)
 		return (false);
 	if (parse_point(line[1], &pos) == false)
 		return (false);
-	if (parse_double(line[2], &brightness) == false)
+	if (parse_double_range(line[2], &brightness, 0, 1) == false)
 		return (false);
 	if (parse_rgb(line[3], &clr) == false)
 		return (false);
@@ -195,11 +215,11 @@ bool	parse_sphere(t_mrt *m, char **line)
 		return (false);
 	if (parse_point(line[1], &pos) == false)
 		return (false);
-	if (parse_double(line[2], &diameter) == false)
+	if (parse_double_range(line[2], &diameter, 0, 1e10) == false)
 		return (false);
 	if (parse_rgb(line[3], &clr) == false)
 		return (false);
-	mk_sp(pos, diameter, &clr, &m->sp[i++]);
+	fill_sp(pos, diameter, &clr, &m->sp[i++]);
 	return (true);
 	// print_clr(clr);
 	// printf("%s as double: %f\n", line[1], ratio);
@@ -216,11 +236,11 @@ bool	parse_plane(t_mrt *m, char **line)
 		return (false);
 	if (parse_point(line[1], &pos) == false)
 		return (false);
-	if (parse_point(line[2], &normal) == false)
+	if (parse_normalized(line[2], &normal) == false)
 		return (false);
 	if (parse_rgb(line[3], &clr) == false)
 		return (false);
-	mk_pl(pos, normal, &clr, &m->pl[i++]);
+	fill_pl(pos, normal, &clr, &m->pl[i++]);
 	return (true);
 	// print_clr(clr);
 	// printf("%s as double: %f\n", line[1], ratio);
@@ -239,15 +259,15 @@ bool	parse_cylinder(t_mrt *m, char **line)
 		return (false);
 	if (parse_point(line[1], &pos) == false)
 		return (false);
-	if (parse_point(line[2], &normal) == false)
+	if (parse_normalized(line[2], &normal) == false)
 		return (false);
-	if (parse_double(line[3], &diameter) == false)
+	if (parse_double_range(line[3], &diameter, 0, 1e10) == false)
 		return (false);
-	if (parse_double(line[4], &height) == false)
+	if (parse_double_range(line[4], &height, 0, 1e10) == false)
 		return (false);
 	if (parse_rgb(line[5], &clr) == false)
 		return (false);
-	mk_cyl(pos, normal, diameter, height, &clr, &m->cyl[i++]);
+	fill_cyl(pos, normal, diameter, height, &clr, &m->cyl[i++]);
 	return (true);
 	// print_clr(clr);
 	// printf("%s as double: %f\n", line[1], ratio);
@@ -314,7 +334,11 @@ t_mrt	*parse(char ***sens)
 	i = -1;
 	while (sens[++i])
 	{
-		parse_line(m, sens[i]);
+		if (!parse_line(m, sens[i]))
+		{
+			// del_mrt(m);
+			return (NULL);
+		}
 		// printf("here\n");
 	}
 	free_sens(sens);

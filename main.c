@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:57:19 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/12 09:58:00 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/12 14:21:34 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	minirt(int argc, char **argv, mlx_t *mlx, mlx_image_t *g_img)
 {
 	t_mrt		*m;
 	char	***sens;
+	(void)	mlx;
 
 	sens = lex(argc, argv);
 	if (!sens)
@@ -33,6 +34,8 @@ int	minirt(int argc, char **argv, mlx_t *mlx, mlx_image_t *g_img)
 		return (EXIT_FAILURE);
 	}
 	m = parse(sens);
+	if (!m)
+		return (EXIT_FAILURE);
 	// g_img = mlx_new_image(mlx, WIDTH, HEIGHT);
 	raytrace(g_img, m);
 	// free_all(&p);

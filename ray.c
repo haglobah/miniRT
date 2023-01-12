@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:25:40 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/12 12:45:14 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/12 14:12:05 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,9 @@ uint32_t	cons_sphere_clr(t_clr color, double coeff)
 
 int	color_ray(t_ray r, t_mrt *m)
 {
-	t_3d	*unit;
-	t_3d	*thit;
 	uint32_t clr;
 	double	t;
-	double	t2;
+	// double	t2;
 	
 	// Hier eher loop für mehrere Gegenstände
 	t = hit_sphere(*m->sp[1].pos, m->sp[1].diameter, r);

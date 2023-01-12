@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:12:49 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/12 13:45:00 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/12 14:10:58 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_ambient	*mk_amb(t_d ratio, t_clr *clr)
 	return (ambient);
 }
 
-t_cam		*mk_cam(t_3d *pos, t_3d *dir, t_d fov)
+t_cam	*mk_cam(t_3d *pos, t_3d *dir, t_d fov)
 {
 	t_cam	*cam;
 
@@ -33,7 +33,7 @@ t_cam		*mk_cam(t_3d *pos, t_3d *dir, t_d fov)
 	return (cam);
 }
 
-t_light		*mk_l(t_3d *pos, t_clr *clr, t_d brightness)
+t_light	*mk_l(t_3d *pos, t_clr *clr, t_d brightness)
 {
 	t_light	*light;
 
@@ -44,21 +44,21 @@ t_light		*mk_l(t_3d *pos, t_clr *clr, t_d brightness)
 	return (light);
 }
 
-t_sphere	*mk_sp(t_3d *pos, t_d diameter, t_clr *clr, t_sphere *sphere)
+void	fill_sp(t_3d *pos, t_d diameter, t_clr *clr, t_sphere *sphere)
 {
 	sphere->pos = pos;
 	sphere->color = *clr;
 	sphere->diameter = diameter;
 }
 
-t_plane		*mk_pl(t_3d *pos, t_3d *normal, t_clr *clr, t_plane *plane)
+void	fill_pl(t_3d *pos, t_3d *normal, t_clr *clr, t_plane *plane)
 {
 	plane->pos = pos;
 	plane->normal = normal;
 	plane->color = *clr;
 }
 
-t_cyl		*mk_cyl(t_3d *pos, t_3d *normal, t_d diameter, t_d height, t_clr *clr, t_cyl *cyl)
+void	fill_cyl(t_3d *pos, t_3d *normal, t_d diameter, t_d height, t_clr *clr, t_cyl *cyl)
 {
 	cyl->pos = pos;
 	cyl->normal = normal;
