@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:12:49 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/12 12:35:44 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/12 13:15:09 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,36 +46,25 @@ t_light		*mk_l(t_3d *pos, t_clr *clr, t_d brightness)
 
 t_sphere	*mk_sp(t_3d *pos, t_d diameter, t_clr *clr, t_sphere *sphere)
 {
-	// t_sphere *sphere;
-	
 	sphere->pos = pos;
 	sphere->color = *clr;
 	sphere->diameter = diameter;
-	// return (sphere);
 }
 
-t_plane		*mk_pl(t_3d *pos, t_3d *normal, t_clr *clr)
+t_plane		*mk_pl(t_3d *pos, t_3d *normal, t_clr *clr, t_plane *plane)
 {
-	t_plane	*plane;
-
-	plane = (t_plane *)ft_calloc(1, sizeof(t_plane));
 	plane->pos = pos;
 	plane->normal = normal;
 	plane->color = *clr;
-	return (plane);
 }
 
-t_cyl		*mk_cyl(t_3d *pos, t_3d *normal, t_d diameter, t_d height, t_clr *clr)
+t_cyl		*mk_cyl(t_3d *pos, t_3d *normal, t_d diameter, t_d height, t_clr *clr, t_cyl *cyl)
 {
-	t_cyl	*cyl;
-
-	cyl = (t_cyl *)ft_calloc(1, sizeof(t_cyl));
 	cyl->pos = pos;
 	cyl->normal = normal;
 	cyl->diameter = diameter;
 	cyl->height = height;
 	cyl->color = *clr;
-	return (cyl);
 }
 
 void	print_amb(t_ambient *amb)

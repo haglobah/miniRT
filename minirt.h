@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/12 12:47:22 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/12 13:16:40 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,9 @@ typedef struct s_minirt
 	t_sphere	*sp;
 	t_plane		*pl;
 	t_cyl		*cyl;
+	int			sp_count;
+	int			pl_count;
+	int			cyl_count;
 }	t_mrt;
 
 //data.c 
@@ -132,8 +135,8 @@ t_ambient	*mk_amb(t_d ratio, t_clr *clr);
 t_cam		*mk_cam(t_3d *pos, t_3d *dir, t_d fov);
 t_light		*mk_l(t_3d *pos, t_clr *clr, t_d brightness);
 t_sphere	*mk_sp(t_3d *pos, t_d diameter, t_clr *clr, t_sphere *sphere);
-t_plane		*mk_pl(t_3d *pos, t_3d *normal, t_clr *clr);
-t_cyl		*mk_cyl(t_3d *pos, t_3d *normal, t_d diameter, t_d height, t_clr *clr);
+t_plane		*mk_pl(t_3d *pos, t_3d *normal, t_clr *clr, t_plane *plane);
+t_cyl		*mk_cyl(t_3d *pos, t_3d *normal, t_d diameter, t_d height, t_clr *clr, t_cyl *cyl);
 void		print_mrt(t_mrt *m);
 
 //minirt.c

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 12:34:46 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/12 12:44:56 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/12 13:13:19 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_mrt	*mk_mrt()
+t_mrt	*mk_mrt(int *bodies)
 {
 	t_mrt	*m;
 
@@ -20,9 +20,12 @@ t_mrt	*mk_mrt()
 	m->amb = NULL;
 	m->l = NULL;
 	m->cam = NULL;
-	m->sp = NULL;
-	m->pl = NULL;
-	m->cyl = NULL;
+	m->sp = ft_calloc(bodies[0], sizeof(t_sphere));
+	m->pl = ft_calloc(bodies[1], sizeof(t_plane));
+	m->cyl = ft_calloc(bodies[2], sizeof(t_cyl));
+	m->sp_count = bodies[0];
+	m->pl_count = bodies[1];
+	m->cyl_count = bodies[2];
 	return (m);
 }
 
@@ -251,11 +254,32 @@ void	free_sens(char ***sens)
 	free(sens);
 }
 
+void	count_bodies(int *bodies, char ***sens)
+{
+	int	i;
+
+	bodies[0] = 0;
+	bodies[1] = 0;
+	bodies[2] = 0;
+	i = -1;
+	while (sens[++i])
+	{
+		if (s_iseq("sp", sens[i][0]))
+			bodies[0]++;
+		if (s_iseq("pl", sens[i][0]))
+			bodies[1]++;
+		if (s_iseq("cy", sens[i][0]))
+			bodies[2]++;
+	}
+}
+
 t_mrt	*parse(char ***sens)
 {
+	int		bodies[3];
 	t_mrt	*m;
 	int		i;
 
+	count_bodies(bodies, sens);
 	m = mk_mrt();
 	if (m == NULL)
 		return (NULL);
