@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 12:34:46 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/12 13:44:26 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/12 13:49:46 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,8 @@ bool	parse_plane(t_mrt *m, char **line)
 		return (false);
 	if (parse_rgb(line[3], &clr) == false)
 		return (false);
-	m->pl = mk_pl(pos, normal, &clr, &m->pl[i++]);
+	mk_pl(pos, normal, &clr, &m->pl[i++]);
+	
 	// print_clr(clr);
 	// printf("%s as double: %f\n", line[1], ratio);
 }
@@ -217,7 +218,7 @@ bool	parse_cylinder(t_mrt *m, char **line)
 		return (false);
 	if (parse_rgb(line[5], &clr) == false)
 		return (false);
-	m->cyl = mk_cyl(pos, normal, diameter, height, &clr, &m->cyl[i++]);
+	mk_cyl(pos, normal, diameter, height, &clr, &m->cyl[i++]);
 	// print_clr(clr);
 	// printf("%s as double: %f\n", line[1], ratio);
 }
