@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:12:49 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/12 09:32:21 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/12 12:35:44 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,14 @@ t_light		*mk_l(t_3d *pos, t_clr *clr, t_d brightness)
 	return (light);
 }
 
-t_sphere	*mk_sp(t_3d *pos, t_d diameter, t_clr *clr)
+t_sphere	*mk_sp(t_3d *pos, t_d diameter, t_clr *clr, t_sphere *sphere)
 {
-	t_sphere	*sphere;
-
-	sphere = (t_sphere *)ft_calloc(1, sizeof(t_sphere));
+	// t_sphere *sphere;
+	
 	sphere->pos = pos;
 	sphere->color = *clr;
 	sphere->diameter = diameter;
-	return (sphere);
+	// return (sphere);
 }
 
 t_plane		*mk_pl(t_3d *pos, t_3d *normal, t_clr *clr)

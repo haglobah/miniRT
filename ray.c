@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:25:40 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/12 09:49:03 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/12 12:45:14 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,13 @@ int	color_ray(t_ray r, t_mrt *m)
 	double	t2;
 	
 	// Hier eher loop für mehrere Gegenstände
-	t = hit_sphere(*m->sp->pos, m->sp->diameter, r);
+	t = hit_sphere(*m->sp[1].pos, m->sp[1].diameter, r);
 	if (t > 0.0)
 	{
 		t_3d *thit = at(r, t);
-		t_3d *surface_normal = mk_unit(*sum_3d(*thit, *mul(-1.0, *m->sp->pos)));
+		t_3d *surface_normal = mk_unit(*sum_3d(*thit, *mul(-1.0, *m->sp[1].pos)));
 		double	coeff = -dot(*mk_unit(*m->l->pos), *surface_normal);
-		clr = cons_sphere_clr(m->sp->color, coeff);
+		clr = cons_sphere_clr(m->sp[1].color, coeff);
 		return (clr);
 	}
 

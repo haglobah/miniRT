@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 12:34:46 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/12 10:20:05 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/12 12:44:56 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,6 @@ bool	parse_rgb(char *s, t_clr *clr)
 	int b;
 
 	rgb = ft_split(s, ',');
-	printf("CLR STRING: %s\n", s);
-	ft_parse_int("10", &r);
-	printf("PARSED INT: %d\n", r);
 	if (strslen(rgb) != 3)
 		return (ft_free(rgb), false);
 	if (ft_parse_int(rgb[0], &r) == false)
@@ -79,12 +76,7 @@ bool	parse_rgb(char *s, t_clr *clr)
 		return (ft_free(rgb), false);
 	if (ft_parse_int(rgb[2], &b) == false)
 		return (ft_free(rgb), false);
-	printf("RED: %d, GREEN: %d, BLUE: %d\n", r, g, b);
-	r *= -1;
-	g *= -1;
-	b *= -1;
 	*clr = (t_clr){(uint8_t)r, (uint8_t)g, (uint8_t)b};
-	print_clr(*clr);
 }
 
 bool	parse_point(char *s, t_3d **p)
@@ -166,6 +158,7 @@ bool	parse_sphere(t_mrt *m, char **line)
 	t_3d	*pos;
 	double	diameter;
 	t_clr	clr;
+	static	int i;
 
 	if (!s_iseq(line[0], "sp"))
 		return (false);
@@ -175,8 +168,12 @@ bool	parse_sphere(t_mrt *m, char **line)
 		return (false);
 	if (parse_rgb(line[3], &clr) == false)
 		return (false);
-	print_clr(clr);
-	m->sp = mk_sp(pos, diameter, &clr);
+	if (i == 0)
+		m->sp = (t_sphere *)ft_calloc(20, sizeof(t_sphere));
+	mk_sp(pos, diameter, &clr, &m->sp[i]);
+	printf("\n\n");
+	print3d("SPHERE POS: ", *m->sp[i].pos);
+	i++;
 	// print_clr(clr);
 	// printf("%s as double: %f\n", line[1], ratio);
 }
