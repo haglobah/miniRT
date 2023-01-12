@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/11 15:46:25 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/12 09:44:45 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,6 @@ void	put_pxl(mlx_image_t *img, int pxl_x, int pxl_y, int color)
 
 void	raytrace(mlx_image_t *img, t_mrt *m)
 {
-	t_cam		*cam;
-	t_sphere	*sphere;
-	(void)m;
-	
-	// cam = ft_calloc(1, sizeof(t_cam));
-	// sphere = ft_calloc(1, sizeof(t_sphere));
-	
-	// cam->pos = (t_3d){0, 0, 3.5};
-	// cam->dir = (t_3d){0, 0, -1};
-	// cam->fov = 3.0;
-
-	// sphere->pos = (t_3d){0, 0, 0};
-	// sphere->diameter = 0.3;
-	// sphere->color = (t_clr){0.9 * 255, 0.2 * 255, 0.3 * 255};
-
 	double	aspect_ratio = (double) WIDTH / (double) HEIGHT;
 
 	int j = HEIGHT - 1;
@@ -57,9 +42,9 @@ void	raytrace(mlx_image_t *img, t_mrt *m)
 			double	u = (i / (double) WIDTH) - 0.5;
 			double	v = (j / (double) HEIGHT) - 0.5;
 			u = u * aspect_ratio;
-			// t_3d	*direction = mk_unit(*sum_3d(*mul(cam->fov, (t_3d){v, u, 0}), *mul(-1, cam->pos)));
-			// t_ray	*r = mk_ray(cam->pos, *direction);
-			// put_pxl(img, i, j, color_ray(*r, sphere));
+			t_3d	*direction = mk_unit(*sum_3d(*mul(m->cam->fov, (t_3d){v, u, 0}), *mul(-1, *m->cam->pos)));
+			t_ray	*r = mk_ray(*m->cam->pos, *direction);
+			put_pxl(img, i, j, color_ray(*r, m));
 		}
 	}
 	return ;

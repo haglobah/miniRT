@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/11 15:48:55 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/12 09:45:49 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ t_cyl		*mk_cyl(t_3d *pos, t_3d *normal, t_d diameter, t_d height, t_clr *clr);
 void		print_mrt(t_mrt *m);
 
 //minirt.c
-int		color_ray(t_ray r, t_sphere *sphere);
+int		color_ray(t_ray r, t_mrt *m);
 char	***lex(int argc,char **argv);
 t_mrt	*parse(char ***sens);
 void	raytrace(mlx_image_t *img, t_mrt *p);

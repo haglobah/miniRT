@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 12:34:46 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/12 09:30:19 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/12 10:20:05 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,9 @@ bool	parse_rgb(char *s, t_clr *clr)
 	int b;
 
 	rgb = ft_split(s, ',');
+	printf("CLR STRING: %s\n", s);
+	ft_parse_int("10", &r);
+	printf("PARSED INT: %d\n", r);
 	if (strslen(rgb) != 3)
 		return (ft_free(rgb), false);
 	if (ft_parse_int(rgb[0], &r) == false)
@@ -76,7 +79,12 @@ bool	parse_rgb(char *s, t_clr *clr)
 		return (ft_free(rgb), false);
 	if (ft_parse_int(rgb[2], &b) == false)
 		return (ft_free(rgb), false);
+	printf("RED: %d, GREEN: %d, BLUE: %d\n", r, g, b);
+	r *= -1;
+	g *= -1;
+	b *= -1;
 	*clr = (t_clr){(uint8_t)r, (uint8_t)g, (uint8_t)b};
+	print_clr(*clr);
 }
 
 bool	parse_point(char *s, t_3d **p)
@@ -87,7 +95,6 @@ bool	parse_point(char *s, t_3d **p)
 	double z;
 
 	xyz = ft_split(s, ',');
-	// printns(xyz);
 	if (strslen(xyz) != 3)
 		return (ft_free(xyz), false);
 	if (parse_double(xyz[0], &x) == false)
@@ -168,6 +175,7 @@ bool	parse_sphere(t_mrt *m, char **line)
 		return (false);
 	if (parse_rgb(line[3], &clr) == false)
 		return (false);
+	print_clr(clr);
 	m->sp = mk_sp(pos, diameter, &clr);
 	// print_clr(clr);
 	// printf("%s as double: %f\n", line[1], ratio);
@@ -234,6 +242,18 @@ bool	parse_line(t_mrt *m, char **line)
 	return (false);
 }
 
+void	free_sens(char ***sens)
+{
+	int	i;
+
+	i = -1;
+	while(sens[++i])
+	{
+		free_strs(sens[i]);
+	}
+	free(sens);
+}
+
 t_mrt	*parse(char ***sens)
 {
 	t_mrt	*m;
@@ -248,7 +268,7 @@ t_mrt	*parse(char ***sens)
 		parse_line(m, sens[i]);
 		// printf("here\n");
 	}
-	//free_sens();
+	free_sens(sens);
 	print_mrt(m);
 	return (m);
 }
