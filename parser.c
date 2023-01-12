@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 12:34:46 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/12 13:37:19 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/12 13:44:26 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ t_mrt	*mk_mrt(int *bodies)
 	m->amb = NULL;
 	m->l = NULL;
 	m->cam = NULL;
-	m->sp = ft_calloc(bodies[0], sizeof(t_sphere));
-	m->pl = ft_calloc(bodies[1], sizeof(t_plane));
-	m->cyl = ft_calloc(bodies[2], sizeof(t_cyl));
+	m->sp = ft_calloc(bodies[0] + 1, sizeof(t_sphere));
+	m->pl = ft_calloc(bodies[1] + 1, sizeof(t_plane));
+	m->cyl = ft_calloc(bodies[2] + 1, sizeof(t_cyl));
 	m->sp_count = bodies[0];
 	m->pl_count = bodies[1];
 	m->cyl_count = bodies[2];
@@ -171,10 +171,7 @@ bool	parse_sphere(t_mrt *m, char **line)
 		return (false);
 	if (parse_rgb(line[3], &clr) == false)
 		return (false);
-	mk_sp(pos, diameter, &clr, &m->sp[i]);
-	printf("\n\n");
-	print3d("SPHERE POS: ", *m->sp[i].pos);
-	i++;
+	mk_sp(pos, diameter, &clr, &m->sp[i++]);
 	// print_clr(clr);
 	// printf("%s as double: %f\n", line[1], ratio);
 }
@@ -194,7 +191,7 @@ bool	parse_plane(t_mrt *m, char **line)
 		return (false);
 	if (parse_rgb(line[3], &clr) == false)
 		return (false);
-	m->pl = mk_pl(pos, normal, &clr, &m->pl[i]);
+	m->pl = mk_pl(pos, normal, &clr, &m->pl[i++]);
 	// print_clr(clr);
 	// printf("%s as double: %f\n", line[1], ratio);
 }
@@ -220,7 +217,7 @@ bool	parse_cylinder(t_mrt *m, char **line)
 		return (false);
 	if (parse_rgb(line[5], &clr) == false)
 		return (false);
-	m->cyl = mk_cyl(pos, normal, diameter, height, &clr, &m->cyl[i]);
+	m->cyl = mk_cyl(pos, normal, diameter, height, &clr, &m->cyl[i++]);
 	// print_clr(clr);
 	// printf("%s as double: %f\n", line[1], ratio);
 }
