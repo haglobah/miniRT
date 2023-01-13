@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/13 13:50:00 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/13 14:23:36 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ t_camera	*mk_camera(t_mrt *m, t_window *w, t_3d *vup)
 					 *mul(0.5, *c->vertical),
 					 /* focus_dist*/*c->w);
 	focal_length = 1.0;
+	return (c);
 }
 
 void	draw_pxl(mlx_image_t *img, t_mrt *m, t_camera *c, int x, int y)
