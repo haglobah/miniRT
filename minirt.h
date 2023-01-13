@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/12 16:34:55 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/13 12:54:11 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_color
 	u_int8_t r;
 	u_int8_t g;
 	u_int8_t b;
+	u_int8_t a;
 
 }	t_clr;
 
@@ -77,6 +78,10 @@ uint32_t	dcolor(double r, double g, double b);
 uint32_t	colora(u_int8_t r, u_int8_t g, u_int8_t b, u_int8_t a);
 uint32_t	rgb(u_int8_t r, u_int8_t g, u_int8_t b);
 void		print_clr(t_clr clr);
+t_clr	*mk_clr(uint8_t r, uint8_t g, uint8_t b);
+void	del_clr(t_clr *v);
+t_clr	*sum_clr(t_clr v, t_clr w);
+t_clr	*mul_clr(double k, t_clr v);
 
 typedef struct s_hit
 {
@@ -87,9 +92,10 @@ typedef struct s_hit
 
 }	t_hit;
 
+
 typedef	struct s_ambient_light
 {
-	t_d		range;
+	t_d		ratio;
 	t_clr	color;
 } t_ambient;
 
@@ -103,7 +109,7 @@ typedef struct	s_cam
 typedef struct s_light
 {
 	t_3d	*pos;
-	t_d		range;
+	t_d		brightness;
 	t_clr	color;
 } t_light;
 
@@ -152,6 +158,17 @@ void	fill_pl(t_3d *pos, t_3d *normal, t_clr *clr, t_plane *plane);
 void	fill_cyl(t_3d *pos, t_3d *normal, t_d diameter, t_d height, t_clr *clr, t_cyl *cyl);
 void		print_mrt(t_mrt *m);
 
+typedef struct s_camera
+{
+	t_3d	*pos;
+	t_3d	*dir;
+	t_3d	*vup;
+	t_d		vfov;
+} t_camera;
+
+//camera.c 
+t_camera	*mk_camera(t_mrt *m);
+
 //minirt.c
 int		trace_ray(t_ray *r, t_mrt *m);
 char	***lex(int argc,char **argv);
@@ -160,6 +177,19 @@ void	draw_scene(mlx_image_t *img, t_mrt *p);
 
 // bool		hit_sphere(t_3d center, double radius, t_ray r, double t_min, double t_max, t_hrecord *rec);
 uint32_t	cons_sphere_clr(t_clr color, double coeff);
+
+//hit.c
+double	hitpoint_sphere(t_3d center, double radius, t_ray r);
+void	update_hit(t_hit *h, t_sphere *sp, double t, t_ray *r, t_clr clr);
+bool	did_hit(t_hit *h);
+void	hit_sphere(t_sphere *sp, t_ray *r, t_hit *h);
+void	hit_plane(t_plane *pl, t_ray *r, t_hit *h);
+void	hit_cylinder(t_cyl *cyl, t_ray *r, t_hit *h);
+void	print_hit(t_hit h);
+
+// math.c
+double	d_max(double a, double b);
+double	degrees_to_radians(double deg);
 
 //utils.c
 int		s_isneq(char *s1, char *s2, int n);

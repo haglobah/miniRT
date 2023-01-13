@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 12:34:46 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/12 14:23:37 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/13 10:28:13 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -342,6 +342,6 @@ t_mrt	*parse(char ***sens)
 		// printf("here\n");
 	}
 	free_sens(sens);
-	print_mrt(m);
+	// print_mrt(m);
 	return (m);
 }

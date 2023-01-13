@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:49:15 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/12 14:03:11 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/13 11:01:01 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,52 @@ uint32_t	rgba(u_int8_t r, u_int8_t g, u_int8_t b, u_int8_t a)
 uint32_t	rgb(u_int8_t r, u_int8_t g, u_int8_t b)
 {
 	return ((r << 24) | (g << 16) | (b << 8) | 255);
+}
+
+t_clr	*mk_clr(uint8_t r, uint8_t g, uint8_t b)
+{
+	t_clr	*new;
+
+	new = ft_calloc(1, sizeof(t_clr));
+	if (new == NULL)
+		return (NULL);
+	new->r = r;
+	new->g = g;
+	new->b = b;
+	new->a = 255;
+	// add_to_free_list(new);
+	return (new);
+}
+
+void	del_clr(t_clr *v)
+{
+	ft_free(v);
+}
+
+t_clr	*sum_clr(t_clr v, t_clr w)
+{
+	t_clr		*new;
+	uint16_t	r;
+	uint16_t	g;
+	uint16_t	b;
+
+	r = (uint16_t)v.r + (uint16_t)w.r;
+	if (r > 255)
+		r = 255;
+	g = (uint16_t)v.g + (uint16_t)w.g;
+	if (g > 255)
+		g = 255;
+	b = (uint16_t)v.b + (uint16_t)w.b;
+	if (b > 255)
+		b = 255;
+	new = mk_clr(r, g, b);
+	return (new);
+}
+
+t_clr	*mul_clr(double k, t_clr v)
+{
+	t_clr	*new;
+
+	new = mk_clr(k * v.r, k * v.g, k * v.b);
+	return (new);
 }

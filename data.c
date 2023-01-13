@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:12:49 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/12 14:10:58 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/13 11:15:34 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_ambient	*mk_amb(t_d ratio, t_clr *clr)
 	t_ambient	*ambient;
 
 	ambient = (t_ambient *)ft_calloc(1, sizeof(t_ambient));
-	ambient->range = ratio;
+	ambient->ratio = ratio;
 	ambient->color = *clr;
 	return (ambient);
 }
@@ -40,7 +40,7 @@ t_light	*mk_l(t_3d *pos, t_clr *clr, t_d brightness)
 	light = (t_light *)ft_calloc(1, sizeof(t_light));
 	light->pos = pos;
 	light->color = *clr;
-	light->range = brightness;
+	light->brightness = brightness;
 	return (light);
 }
 
@@ -69,7 +69,7 @@ void	fill_cyl(t_3d *pos, t_3d *normal, t_d diameter, t_d height, t_clr *clr, t_c
 
 void	print_amb(t_ambient *amb)
 {
-	printf("[A]:\nRange: %f\n", amb->range);
+	printf("[A]:\nRange: %f\n", amb->ratio);
 	print_clr(amb->color);
 }
 
@@ -85,7 +85,7 @@ void	print_l(t_light *l)
 {
 	printf("[L]:\n");
 	print3d("POS: ", *l->pos);
-	printf("Range: %f\n", l->range);
+	printf("Range: %f\n", l->brightness);
 	print_clr(l->color);
 }
 
