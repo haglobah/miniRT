@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/13 12:54:11 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/13 13:41:02 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,14 @@ typedef struct s_3d_vector
 
 }	t_3d;
 
+//3d.c
 t_3d	*mk_3d(double x, double y, double z);
 void	del_3d(t_3d *v);
 t_3d	*sum_3d(t_3d v, t_3d w);
 t_3d	*sum4_3d(t_3d v, t_3d w, t_3d u, t_3d z);
 t_3d	*mul(double k, t_3d v);
 t_3d	*sub_3d(t_3d v, t_3d w);
+t_3d	*sub4_3d(t_3d v, t_3d w, t_3d u, t_3d z);
 double	dot(t_3d v, t_3d w);
 t_3d	*cross(t_3d v, t_3d w);
 double	len_squared(t_3d v);
@@ -158,16 +160,30 @@ void	fill_pl(t_3d *pos, t_3d *normal, t_clr *clr, t_plane *plane);
 void	fill_cyl(t_3d *pos, t_3d *normal, t_d diameter, t_d height, t_clr *clr, t_cyl *cyl);
 void		print_mrt(t_mrt *m);
 
+typedef struct s_window
+{
+	double	aspect_ratio;
+	double	height;
+	double	width;
+} t_window;
+
 typedef struct s_camera
 {
 	t_3d	*pos;
 	t_3d	*dir;
 	t_3d	*vup;
+	t_3d	*w;
+	t_3d	*u;
+	t_3d	*v;
+	t_3d	*horizontal;
+	t_3d	*vertical;
+	t_3d	*llc;
 	t_d		vfov;
 } t_camera;
 
-//camera.c 
-t_camera	*mk_camera(t_mrt *m);
+//scene.c 
+void		fill_window(t_window *w, double width, double height);
+t_camera	*mk_camera(t_mrt *m, t_window *w, t_3d *vup);
 
 //minirt.c
 int		trace_ray(t_ray *r, t_mrt *m);

@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/12 15:50:46 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/13 13:50:00 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,38 +29,74 @@ void	put_pxl(mlx_image_t *img, int pxl_x, int pxl_y, int color)
 	mlx_put_pixel(img, pxl_x, pxl_y, color);
 }
 
-void	draw_pxl(mlx_image_t *img, t_mrt *m, int x, int y)
+t_camera	*mk_camera(t_mrt *m, t_window *w, t_3d *vup)
 {
-	double	aspect_ratio;
-	double	viewport_height;
+	double	theta;
+	double	h;
+	double	focal_length;
 	double	viewport_width;
+	double	viewport_height;
+	t_camera	*c;
+	
+	theta = degrees_to_radians(m->cam->fov);
+	h = tan(theta / 2);
+	viewport_height = 2.0 * h;
+	viewport_width = viewport_height * w->aspect_ratio;
+	
+	c->pos = m->cam->pos;
+	c->dir = m->cam->dir;
+	c->w = mk_unit(*c->dir);
+	c->u = mk_unit(*cross(*vup, *c->w));
+	c->v = cross(*c->w, *c->u);
+	c->horizontal = /* focus_dist */ mul(viewport_width, *c->u);
+	c->vertical = /* focus_dist */  mul(viewport_height, *c->v);
+	c->llc = sub4_3d(*c->pos,
+					 *mul(0.5, *c->horizontal),
+					 *mul(0.5, *c->vertical),
+					 /* focus_dist*/*c->w);
+	focal_length = 1.0;
+}
+
+void	draw_pxl(mlx_image_t *img, t_mrt *m, t_camera *c, int x, int y)
+{
 	t_3d	*direction;
 	t_ray	*r;
 	u_int32_t	pxl_clr;
-	
-	aspect_ratio = (double) WIDTH / (double) HEIGHT;
-	viewport_width = ((x / (double) WIDTH) - 0.5) * aspect_ratio;
-	viewport_height = (y / (double) HEIGHT) - 0.5;
-	direction = mk_unit(*sum_3d(
+
+
+	direction = mk_unit(
+	*sub_3d(
 		*mul(m->cam->fov, 
-			(t_3d){viewport_width, viewport_height, 0}),
-		*mul(-1, *m->cam->pos)));
+			*sum_3d(*c->horizontal, *c->vertical)),
+		*m->cam->pos));
 	r = mk_ray(*m->cam->pos, *direction);
 	pxl_clr = trace_ray(r, m);
 	put_pxl(img, x, y, pxl_clr);
 }
 
+void	fill_window(t_window *w, double width, double height)
+{
+	w->aspect_ratio =  width / height;
+	w->width = width;
+	w->width = height;
+}
+
 void	draw_scene(mlx_image_t *img, t_mrt *m)
 {
-	double	aspect_ratio = (double) WIDTH / (double) HEIGHT;
+	int			j;
+	int			i;
+	t_camera	*c;
+	t_window	w;
 
-	int j = HEIGHT - 1;
+	fill_window(&w, WIDTH, HEIGHT);
+	c = mk_camera(m, &w, mk_3d(0, 0, 1));
+	j = HEIGHT - 1;
 	while (--j >= 0)
 	{
-		int i = -1;
+		i = -1;
 		while (++i < WIDTH)
 		{
-			draw_pxl(img, m, i, j);
+			draw_pxl(img, m, c, i, j);
 		}
 	}
 	return ;

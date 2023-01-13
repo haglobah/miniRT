@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/12 16:12:27 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/13 13:40:38 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,16 @@ t_3d	*sub_3d(t_3d v, t_3d w)
 	t_3d	*new;
 
 	new = sum_3d(v, *mul(-1, w));
+	return (new);
+}
+
+t_3d	*sub4_3d(t_3d v, t_3d w, t_3d u, t_3d z)
+{
+	t_3d	*new;
+
+	new = mk_3d(v.x - w.x - u.x - z.x, 
+				v.y - w.y - u.y - z.y,
+				v.z - w.z - u.z - z.z);
 	return (new);
 }
 
