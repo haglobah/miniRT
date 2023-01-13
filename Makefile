@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+         #
+#    By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 12:24:11 by bhagenlo          #+#    #+#              #
-#    Updated: 2023/01/11 15:46:42 by mhedtman         ###   ########.fr        #
+#    Updated: 2023/01/13 10:20:24 by bhagenlo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,7 @@ run : all
 lsan : CFLAGS += -I../LeakSanitizer/include -L../LeakSanitizer -llsan -lc++
 lsan :
 	$(MAKE) all
-	./$(NAME)
+#	./$(NAME) test.rt
 
 test : $(TESTS) $(SRCS)
 	$(CC) $(TESTS) $(SRCS) $(LINK_FLAGS) -o $(TEST)
