@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:12:49 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/13 11:15:34 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/14 16:49:28 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,48 +69,53 @@ void	fill_cyl(t_3d *pos, t_3d *normal, t_d diameter, t_d height, t_clr *clr, t_c
 
 void	print_amb(t_ambient *amb)
 {
-	printf("[A]:\nRange: %f\n", amb->ratio);
+	printf("[A]:\n  Range: %f\n", amb->ratio);
+	printf("  ");
 	print_clr(amb->color);
 }
 
 void	print_cam(t_cam *cam)
 {
 	printf("[C]:\n");
-	print3d("POS: ", *cam->pos);
-	print3d("DIR: ", *cam->dir);
-	printf("FOV: %f\n", cam->fov);
+	print3d("  POS: ", *cam->pos);
+	print3d("  DIR: ", *cam->dir);
+	printf("  FOV: %f\n", cam->fov);
 }
 
 void	print_l(t_light *l)
 {
 	printf("[L]:\n");
-	print3d("POS: ", *l->pos);
-	printf("Range: %f\n", l->brightness);
+	print3d("  POS: ", *l->pos);
+	printf("  Range: %f\n", l->brightness);
+	printf("  ");
 	print_clr(l->color);
 }
 
 void	print_sp(t_sphere *s)
 {
 	printf("[S]:\n");
-	print3d("POS: ", *s->pos);
-	printf("Diameter: %f\n", s->diameter);
+	print3d("  POS: ", *s->pos);
+	printf("  Diameter: %f\n", s->diameter);
+	printf("  ");
 	print_clr(s->color);
 }
 
 void	print_pl(t_plane *p)
 {
 	printf("[P]:\n");
-	print3d("POS: ", *p->pos);
-	print3d("NORMAL: ", *p->normal);
+	print3d("  POS: ", *p->pos);
+	print3d("  NORMAL: ", *p->normal);
+	printf("  ");
 	print_clr(p->color);
 }
 
 void	print_cyl(t_cyl *c)
 {
 	printf("[CYL]:\n");
-	print3d("POS: ", *c->pos);
-	print3d("NORMAL: ", *c->normal);
-	printf("DIAMETER: %f\nHEIGHT: %f\n", c->diameter, c->height);
+	print3d("  POS: ", *c->pos);
+	print3d("  NORMAL: ", *c->normal);
+	printf("  DIAMETER: %f\n  HEIGHT: %f\n", c->diameter, c->height);
+	printf("  ");
 	print_clr(c->color);
 }
 
