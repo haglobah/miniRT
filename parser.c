@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 12:34:46 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 15:00:08 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/18 18:09:38 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_mrt	*mk_mrt(int *bodies)
 	m->sp = ft_calloc(bodies[0] + 1, sizeof(t_sphere));
 	m->pl = ft_calloc(bodies[1] + 1, sizeof(t_plane));
 	m->cyl = ft_calloc(bodies[2] + 1, sizeof(t_cyl));
-	m->save_lst = NULL; //mk_node(NULL, NULL);
+	m->save_lst = NULL; // mk_node(NULL, NULL, NULL);
 	m->sp_count = bodies[0];
 	m->pl_count = bodies[1];
 	m->cyl_count = bodies[2];
@@ -48,13 +48,14 @@ bool	parse_double(char *s, double *d)
 	parts = ft_split(s, '.');
 	// printns(parts);
 	if (strslen(parts) > 2)
-		return (ft_free(parts), false);
+		return (free_strs(parts), false);
 	if (ft_parse_int(parts[0], &pre_i) == false)
-		return (ft_free(parts), false);
+		return (free_strs(parts), false);
 	value = (double)pre_i;
 	if (strslen(parts) == 1)
 	{
 		*d = value;
+		free_strs(parts);
 		return (true);
 	}
 	factor = 1;
@@ -68,6 +69,7 @@ bool	parse_double(char *s, double *d)
 		i++;
 	}
 	*d = value * factor;
+	free_strs(parts);
 	return (true);
 }
 
@@ -106,14 +108,15 @@ bool	parse_rgb(char *s, t_clr *clr)
 
 	rgb = ft_split(s, ',');
 	if (strslen(rgb) != 3)
-		return (ft_free(rgb), false);
+		return (free_strs(rgb), false);
 	if (ft_parse_int_range(rgb[0], &r, 0, 255) == false)
-		return (ft_free(rgb), false);
+		return (free_strs(rgb), false);
 	if (ft_parse_int_range(rgb[1], &g, 0, 255) == false)
-		return (ft_free(rgb), false);
+		return (free_strs(rgb), false);
 	if (ft_parse_int_range(rgb[2], &b, 0, 255) == false)
-		return (ft_free(rgb), false);
+		return (free_strs(rgb), false);
 	*clr = (t_clr){(uint8_t)r, (uint8_t)g, (uint8_t)b};
+	free_strs(rgb);
 	return (true);
 }
 
@@ -126,14 +129,15 @@ bool	parse_point(t_lst *save_lst, char *s, t_3d **p)
 
 	xyz = ft_split(s, ',');
 	if (strslen(xyz) != 3)
-		return (ft_free(xyz), false);
+		return (free_strs(xyz), false);
 	if (parse_double(xyz[0], &x) == false)
-		return (ft_free(xyz), false);
+		return (free_strs(xyz), false);
 	if (parse_double(xyz[1], &y) == false)
-		return (ft_free(xyz), false);
+		return (free_strs(xyz), false);
 	if (parse_double(xyz[2], &z) == false)
-		return (ft_free(xyz), false);
+		return (free_strs(xyz), false);
 	*p = mk_3d(save_lst, x, y ,z);
+	free_strs(xyz);
 	return (true);
 }
 
@@ -146,14 +150,15 @@ bool	parse_normalized(t_lst *save_lst, char *s, t_3d **p)
 
 	xyz = ft_split(s, ',');
 	if (strslen(xyz) != 3)
-		return (ft_free(xyz), false);
+		return (free_strs(xyz), false);
 	if (parse_double_range(xyz[0], &x, -1, 1) == false)
-		return (ft_free(xyz), false);
+		return (free_strs(xyz), false);
 	if (parse_double_range(xyz[1], &y, -1, 1) == false)
-		return (ft_free(xyz), false);
+		return (free_strs(xyz), false);
 	if (parse_double_range(xyz[2], &z, -1, 1) == false)
-		return (ft_free(xyz), false);
+		return (free_strs(xyz), false);
 	*p = mk_3d(save_lst, x, y ,z);
+	free_strs(xyz);
 	return (true);
 }
 
@@ -356,13 +361,11 @@ t_mrt	*parse(char ***sens)
 	{
 		if (!parse_line(m, sens[i]))
 		{
-
-			// del_mrt(m);
+			free_all(m);
+			free_sens(sens);
 			return (NULL);
 		}
-		// printf("here\n");
 	}
 	free_sens(sens);
-	// print_mrt(m);
 	return (m);
 }

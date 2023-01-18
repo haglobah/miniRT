@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 14:57:44 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/18 18:08:48 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ uint32_t	compute_pxl_clr(t_mrt *m, t_camera *c, double x, double y)
 		// print3d("campos", *m->cam->pos);
 		// print3d("ray_dir", *direction);
 	}
-	r = mk_ray(*m->cam->pos, *direction);
+	r = mk_ray(m->save_lst, *m->cam->pos, *direction);
 	// printray("our_ray", *r);
 	pxl_clr = trace_ray(r, m);
 	// printf("%p\n", pxl_clr);
@@ -148,7 +148,9 @@ void	draw_scene(mlx_image_t *img, t_mrt *m)
 			put_pxl(img, i, j, clr);
 		}
 	}
-	free_from_list(m->save_lst);
+	free_all(m);
+	free(c);
+	// free_from_list(m->save_lst);
 	// print_list(m->save_lst);
 	return ;
 }

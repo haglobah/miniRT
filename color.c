@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:49:15 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 17:26:07 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/18 18:08:22 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_clr	*mk_clr(t_lst *save_lst, uint8_t r, uint8_t g, uint8_t b)
 	new->g = g;
 	new->b = b;
 	new->a = 255;
-	add_to_list(&save_lst, NULL, new);
+	add_to_list(&save_lst, NULL, new, NULL);
 	return (new);
 }
 

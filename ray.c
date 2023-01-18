@@ -6,13 +6,13 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:25:40 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 17:57:06 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/18 18:08:27 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_ray	*mk_ray(t_3d pos, t_3d dir)
+t_ray	*mk_ray(t_lst *save_lst, t_3d pos, t_3d dir)
 {
 	t_ray	*new;
 
@@ -21,7 +21,7 @@ t_ray	*mk_ray(t_3d pos, t_3d dir)
 		return (NULL);
 	new->pos = pos;
 	new->dir = dir;
-	// add_to_free_list(new);
+	add_to_list(&save_lst, NULL, NULL, new);
 	return (new);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:13:53 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 14:19:42 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/18 15:48:42 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,13 @@ void	printsens(char ***sentence_list)
 
 void	free_all(t_mrt *m)
 {
-	(void)m;
+	free_from_list(m->save_lst);
+	free(m->sp);
+	free(m->pl);
+	free(m->cyl);
+	free(m->amb);
+	free(m->cam);
+	free(m->l);
+	free(m);
 	return ;
 }

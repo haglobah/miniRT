@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 15:50:52 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/18 18:09:03 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include <stdio.h>
 # include <stdbool.h>
 
-# define WIDTH 1200
-# define HEIGHT 675
+# define WIDTH 120.0
+# define HEIGHT 67.5
 
 typedef double t_d;
 
@@ -43,10 +43,18 @@ typedef struct s_color
 
 }	t_clr;
 
+typedef struct s_ray
+{
+	t_3d	pos;
+	t_3d	dir;
+
+}	t_ray;
+
 typedef struct s_lst
 {
 	t_3d	*vec;
 	t_clr	*clr;
+	t_ray	*ray;
 	struct s_lst	*next;
 } t_lst;
 
@@ -69,16 +77,9 @@ t_3d	*mk_unit(t_lst *save_lst, t_3d v);
 void	print3d(char *s, t_3d v);
 t_3d	*normalize_vector(t_3d *vec);
 
-typedef struct s_ray
-{
-	t_3d	pos;
-	t_3d	dir;
-
-}	t_ray;
-
 //ray.c
 t_3d	*at(t_lst *save_lst, t_ray ray, double t);
-t_ray	*mk_ray(t_3d pos, t_3d dir);
+t_ray	*mk_ray(t_lst *save_lst, t_3d pos, t_3d dir);
 void	del_ray(t_ray *r);
 void	printray(char *s, t_ray v);
 
@@ -198,9 +199,9 @@ typedef struct s_camera
 } t_camera;
 
 //memory.c
-void		add_to_list(t_lst **lst, t_3d *v, t_clr *clr);
+void		add_to_list(t_lst **lst, t_3d *v, t_clr *clr, t_ray *ray);
 void		print_list(t_lst *list);
-t_lst		*mk_node(t_3d *v, t_clr *clr);
+t_lst		*mk_node(t_3d *v, t_clr *clr, t_ray *ray);
 void		free_from_list(t_lst *lst);
 
 //scene.c 
