@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 11:18:30 by mhedtman          #+#    #+#             */
-/*   Updated: 2023/01/18 14:11:05 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/18 14:53:54 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ void	add_clr(t_lst **lst, t_clr *clr)
 
 void	add_to_list(t_lst **lst, t_3d *v, t_clr *clr)
 {
+	if (*lst == NULL)
+		return ;
 	if ((*lst)->clr == NULL && (*lst)->vec == NULL)
 	{
 		(*lst)->vec = v;
