@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 13:23:19 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/18 14:20:00 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,8 +215,9 @@ void	ft_free(void *ptr);
 void	free_all(t_mrt *m);
 int		strslen(char **strs);
 int		free_strs(char **sp);
-void	printns(char **slist);
-void	prints(char **slist);
+void	printnstrs(char **slist);
+void	printstrs(char **slist);
+void	printstrs_n(char **slist);
 void	printsens(char ***sentence_list);
 
 #endif

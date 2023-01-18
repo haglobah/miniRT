@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:13:53 by bhagenlo          #+#    #+#             */
-/*   Updated: 2022/12/15 12:28:57 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/18 14:19:42 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	free_strs(char **sp)
 	return (0);
 }
 
-void	printns(char **slist)
+void	printnstrs(char **slist)
 {
 	int	i;
 
@@ -76,7 +76,7 @@ void	printns(char **slist)
 	}
 }
 
-void	prints(char **slist)
+void	printstrs_n(char **slist)
 {
 	int	i;
 
@@ -87,6 +87,17 @@ void	prints(char **slist)
 	}
 }
 
+void	printstrs(char **slist)
+{
+	int	i;
+
+	i = -1;
+	while (slist[++i])
+	{
+		ft_printf("%s ", slist[i]);
+	}
+}
+
 void	printsens(char ***sentence_list)
 {
 	int	i;
@@ -94,7 +105,7 @@ void	printsens(char ***sentence_list)
 	i = -1;
 	while (sentence_list[++i])
 	{
-		prints(sentence_list[i]);
+		printstrs(sentence_list[i]);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 12:34:46 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/13 10:28:13 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/18 14:21:04 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,13 @@ t_mrt	*mk_mrt(int *bodies)
 	m->pl_count = bodies[1];
 	m->cyl_count = bodies[2];
 	return (m);
+}
+
+void	parse_error(char **line)
+{
+	ft_printf("Error - this line is not in the specified format:\n");
+	printstrs(line);
+	ft_printf("\n");
 }
 
 bool	parse_double(char *s, double *d)
@@ -273,6 +280,13 @@ bool	parse_cylinder(t_mrt *m, char **line)
 	// printf("%s as double: %f\n", line[1], ratio);
 }
 
+bool	parse_comment(char **line)
+{
+	if (!s_iseq(line[0], "#"))
+		return (false);
+	return (true);
+}
+
 bool	parse_line(t_mrt *m, char **line)
 {
 	if (parse_ambient(m, line) == true)
@@ -287,7 +301,9 @@ bool	parse_line(t_mrt *m, char **line)
 		return (true);
 	else if (parse_cylinder(m, line) == true)
 		return (true);
-	return (false);
+	else if (parse_comment(line) == true)
+		return (true);
+	return (parse_error(line), false);
 }
 
 void	free_sens(char ***sens)
@@ -336,6 +352,7 @@ t_mrt	*parse(char ***sens)
 	{
 		if (!parse_line(m, sens[i]))
 		{
+
 			// del_mrt(m);
 			return (NULL);
 		}
