@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 13:32:38 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/18 14:33:03 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,9 @@ t_camera	*mk_camera(t_mrt *m, t_window *w, t_3d *vup)
 	
 	// print_mrt(m);
 	c->pos = m->cam->pos;
-	printf("here\n");
 	c->dir = m->cam->dir;
 	c->w = mk_unit(*mul(-1, *c->dir));
-	// CAUTION: vup & dir should not be the same.
+	// CAUTION vup & dir should not be the same.
 	c->u = mk_unit(*cross(*vup, *c->w));
 	c->v = cross(*c->w, *c->u);
 	c->horizontal = /* focus_dist */ mul(viewport_width, *c->u);
@@ -84,14 +83,18 @@ uint32_t	compute_pxl_clr(t_mrt *m, t_camera *c, double x, double y)
 
 	static	int times_called;
 
-	hvec = *mul(x, *c->horizontal);
-	vvec = *mul(y, *c->vertical);
-	wo_unit_dir = sum4_3d(*c->llc, 
+	hvec = *mul(m->save_lst, x, *c->horizontal);
+	vvec = *mul(m->save_lst, y, *c->vertical);
+	// print3d("llc", *c->llc);
+	// print3d("hvec", hvec);
+	// print3d("vvec", vvec);
+	// print3d("campos", *m->cam->pos);
+	wo_unit_dir = sum4_3d(m->save_lst, *c->llc, 
 		hvec,
 		vvec,
-		*mul(-1, *m->cam->pos));
+		*mul(m->save_lst, -1, *m->cam->pos));
 	old_dir = direction;
-	direction = mk_unit(*wo_unit_dir);
+	direction = mk_unit(m->save_lst, *wo_unit_dir);
 	if (times_called > 0 && !v_iseq(old_dir, direction))
 	{
 		// printf("times_called: %i\n", times_called);
@@ -131,8 +134,8 @@ void	draw_scene(mlx_image_t *img, t_mrt *m)
 	uint32_t	clr;
 
 	fill_window(&w, WIDTH, HEIGHT);
-	vup = mk_3d(0, 1, 0);
-	print3d("vup", *vup);
+	vup = mk_3d(m->save_lst, 0, 1, 0);
+	// t_clr *test = mk_clr(m->save_lst, 1, 2, 3);
 	c = mk_camera(m, &w, vup);
 	j = HEIGHT - 1;
 	while (--j >= 0)
@@ -148,5 +151,7 @@ void	draw_scene(mlx_image_t *img, t_mrt *m)
 			put_pxl(img, i, j, clr);
 		}
 	}
+	free_from_list(m->save_lst);
+	// print_list(m->save_lst);
 	return ;
 }

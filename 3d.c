@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   3d.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 11:49:26 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/18 14:34:48 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 # include <time.h>
 
-t_3d	*mk_3d(double x, double y, double z)
+t_3d	*mk_3d(t_lst *lst, double x, double y, double z)
 {
 	t_3d	*new;
+	static int	counter;
 
 	new = ft_calloc(1, sizeof(t_3d));
 	if (new == NULL)
@@ -23,7 +24,7 @@ t_3d	*mk_3d(double x, double y, double z)
 	new->x = x;
 	new->y = y;
 	new->z = z;
-	// add_to_free_list(new);
+	add_to_list(&lst, new, NULL);
 	return (new);
 }
 
@@ -32,45 +33,45 @@ void	del_3d(t_3d *v)
 	ft_free(v);
 }
 
-t_3d	*sum_3d(t_3d v, t_3d w)
+t_3d	*sum_3d(t_lst *save_lst, t_3d v, t_3d w)
 {
 	t_3d	*new;
 
-	new = mk_3d(v.x + w.x, v.y + w.y, v.z + w.z);
+	new = mk_3d(save_lst, v.x + w.x, v.y + w.y, v.z + w.z);
 	return (new);
 }
 
-t_3d	*sum4_3d(t_3d v, t_3d w, t_3d u, t_3d z)
+t_3d	*sum4_3d(t_lst *save_lst, t_3d v, t_3d w, t_3d u, t_3d z)
 {
 	t_3d	*new;
 
-	new = mk_3d(v.x + w.x + u.x + z.x, 
+	new = mk_3d(save_lst, v.x + w.x + u.x + z.x, 
 				v.y + w.y + u.y + z.y,
 				v.z + w.z + u.z + z.z);
 	return (new);
 }
 
-t_3d	*mul(double k, t_3d v)
+t_3d	*mul(t_lst *save_lst, double k, t_3d v)
 {
 	t_3d	*new;
 
-	new = mk_3d(k * v.x, k * v.y, k * v.z);
+	new = mk_3d(save_lst, k * v.x, k * v.y, k * v.z);
 	return (new);
 }
 
-t_3d	*sub_3d(t_3d v, t_3d w)
+t_3d	*sub_3d(t_lst *save_lst, t_3d v, t_3d w)
 {
 	t_3d	*new;
 
-	new = sum_3d(v, *mul(-1, w));
+	new = sum_3d(save_lst, v, *mul(save_lst, -1, w));
 	return (new);
 }
 
-t_3d	*sub4_3d(t_3d v, t_3d w, t_3d u, t_3d z)
+t_3d	*sub4_3d(t_lst *save_lst, t_3d v, t_3d w, t_3d u, t_3d z)
 {
 	t_3d	*new;
 
-	new = mk_3d(v.x - w.x - u.x - z.x, 
+	new = mk_3d(save_lst, v.x - w.x - u.x - z.x, 
 				v.y - w.y - u.y - z.y,
 				v.z - w.z - u.z - z.z);
 	return (new);
@@ -81,11 +82,11 @@ double	dot(t_3d v, t_3d w)
 	return (v.x * w.x + v.y * w.y + v.z * w.z);
 }
 
-t_3d	*cross(t_3d v, t_3d w)
+t_3d	*cross(t_lst *save_lst, t_3d v, t_3d w)
 {
 	t_3d	*new;
 
-	new = mk_3d(v.y * w.z - w.y * v.z,
+	new = mk_3d(save_lst, v.y * w.z - w.y * v.z,
 				v.z * w.x - w.z * v.x,
 				v.x * w.y - w.x * v.y);
 	return (new);
@@ -118,22 +119,22 @@ bool	v_iseq(t_3d *v, t_3d *w)
 	return (dist(*v, *w) == 0);
 }
 
-t_3d	*at(t_ray ray, double t)
+t_3d	*at(t_lst *save_lst, t_ray ray, double t)
 {
 	t_3d	*dir;
 	t_3d	*ret;
 
-	dir = mul(t, ray.dir);
-	ret = sum_3d(*dir, ray.pos); // cam position
+	dir = mul(save_lst, t, ray.dir);
+	ret = sum_3d(save_lst, *dir, ray.pos); // cam position
 	return (ret);
 }
 
-t_3d	*mk_unit(t_3d v)
+t_3d	*mk_unit(t_lst *save_lst, t_3d v)
 {
 	double vlen;
 
 	vlen = sqrt(len_squared(v));
-	return (mul(1.0 / vlen, v));
+	return (mul(save_lst, 1.0 / vlen, v));
 }
 
 void	print3d(char *s, t_3d v)

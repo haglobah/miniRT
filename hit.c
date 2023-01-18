@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   hit.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 10:31:04 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 13:20:53 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/18 14:31:07 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-double	hitpoint_sphere(t_3d center, double radius, t_ray r)
+double	hitpoint_sphere(t_lst *save_lst, t_3d center, double radius, t_ray r)
 {
 	t_3d	oc;
 	double	a;
@@ -20,7 +20,7 @@ double	hitpoint_sphere(t_3d center, double radius, t_ray r)
 	double	c;
     double	discriminant;
 
-	oc = *sum_3d(r.pos, *mul(-1, center));
+	oc = *sum_3d(save_lst, r.pos, *mul(save_lst, -1, center));
 	a = len_squared(r.dir);
 	half_b = dot(oc, r.dir);
 	c = len_squared(oc) - pow(radius, 2);
@@ -38,28 +38,28 @@ bool	did_hit(t_hit *h)
 	return (true);
 }
 
-void	update_hit(t_hit *h, t_sphere *sp, double t, t_ray *r, t_clr clr)
+void	update_hit(t_lst *save_lst, t_hit *h, t_sphere *sp, double t, t_ray *r, t_clr clr)
 {
-	h->pos = *at(*r, t);
-	h->normal = *mk_unit(*sub_3d(*at(*r, t), *sp->pos));
+	h->pos = *at(save_lst, *r, t);
+	h->normal = *mk_unit(save_lst, *sub_3d(save_lst, *at(save_lst, *r, t), *sp->pos));
 	h->t = t;
 	h->clr = clr;
 }
 
-void	hit_sphere(t_sphere *sp, t_ray *r, t_hit *h)
+void	hit_sphere(t_mrt *m, t_sphere *sp, t_ray *r, t_hit *h)
 {
 	double	lo;
 	double	hi;
 	double	t;
 
-	t = hitpoint_sphere(*sp->pos, sp->diameter, *r);
+	t = hitpoint_sphere(m->save_lst, *sp->pos, sp->diameter, *r);
 	if (t <= 0.0)
 		return ;
 	else
 	{
 		if (t < h->t)
 		{
-			update_hit(h, sp, t, r, sp->color);
+			update_hit(m->save_lst, h, sp, t, r, sp->color);
 			// print_hit(*h);
 		}
 	}

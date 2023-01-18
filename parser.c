@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 12:34:46 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 14:37:08 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/18 14:44:13 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_mrt	*mk_mrt(int *bodies)
 	m->sp = ft_calloc(bodies[0] + 1, sizeof(t_sphere));
 	m->pl = ft_calloc(bodies[1] + 1, sizeof(t_plane));
 	m->cyl = ft_calloc(bodies[2] + 1, sizeof(t_cyl));
+	m->save_lst = mk_node(NULL, NULL);
 	m->sp_count = bodies[0];
 	m->pl_count = bodies[1];
 	m->cyl_count = bodies[2];
@@ -116,7 +117,7 @@ bool	parse_rgb(char *s, t_clr *clr)
 	return (true);
 }
 
-bool	parse_point(char *s, t_3d **p)
+bool	parse_point(t_lst *save_lst, char *s, t_3d **p)
 {
 	char	**xyz;
 	double x;
@@ -132,11 +133,11 @@ bool	parse_point(char *s, t_3d **p)
 		return (ft_free(xyz), false);
 	if (parse_double(xyz[2], &z) == false)
 		return (ft_free(xyz), false);
-	*p = mk_3d(x, y ,z);
+	*p = mk_3d(save_lst, x, y ,z);
 	return (true);
 }
 
-bool	parse_normalized(char *s, t_3d **p)
+bool	parse_normalized(t_lst *save_lst, char *s, t_3d **p)
 {
 	char	**xyz;
 	double x;
@@ -152,7 +153,7 @@ bool	parse_normalized(char *s, t_3d **p)
 		return (ft_free(xyz), false);
 	if (parse_double_range(xyz[2], &z, -1, 1) == false)
 		return (ft_free(xyz), false);
-	*p = mk_3d(x, y ,z);
+	*p = mk_3d(save_lst, x, y ,z);
 	return (true);
 }
 
@@ -181,9 +182,9 @@ bool	parse_camera(t_mrt *m, char **line)
 
 	if (!s_iseq(line[0], "C"))
 		return (false);
-	if (parse_point(line[1], &pos) == false)
+	if (parse_point(m->save_lst, line[1], &pos) == false)
 		return (false);
-	if (parse_normalized(line[2], &dir) == false)
+	if (parse_normalized(m->save_lst, line[2], &dir) == false)
 		return (false);
 	if (parse_double_range(line[3], &fov, 0, 180) == false)
 		return (false);
@@ -201,7 +202,7 @@ bool	parse_light(t_mrt *m, char **line)
 
 	if (!s_iseq(line[0], "L"))
 		return (false);
-	if (parse_point(line[1], &pos) == false)
+	if (parse_point(m->save_lst, line[1], &pos) == false)
 		return (false);
 	if (parse_double_range(line[2], &brightness, 0, 1) == false)
 		return (false);
@@ -222,7 +223,7 @@ bool	parse_sphere(t_mrt *m, char **line)
 
 	if (!s_iseq(line[0], "sp"))
 		return (false);
-	if (parse_point(line[1], &pos) == false)
+	if (parse_point(m->save_lst, line[1], &pos) == false)
 		return (false);
 	if (parse_double_range(line[2], &diameter, 0, 1e10) == false)
 		return (false);
@@ -243,9 +244,9 @@ bool	parse_plane(t_mrt *m, char **line)
 
 	if (!s_iseq(line[0], "pl"))
 		return (false);
-	if (parse_point(line[1], &pos) == false)
+	if (parse_point(m->save_lst, line[1], &pos) == false)
 		return (false);
-	if (parse_normalized(line[2], &normal) == false)
+	if (parse_normalized(m->save_lst, line[2], &normal) == false)
 		return (false);
 	if (parse_rgb(line[3], &clr) == false)
 		return (false);
@@ -266,9 +267,9 @@ bool	parse_cylinder(t_mrt *m, char **line)
 
 	if (!s_iseq(line[0], "cy"))
 		return (false);
-	if (parse_point(line[1], &pos) == false)
+	if (parse_point(m->save_lst, line[1], &pos) == false)
 		return (false);
-	if (parse_normalized(line[2], &normal) == false)
+	if (parse_normalized(m->save_lst, line[2], &normal) == false)
 		return (false);
 	if (parse_double_range(line[3], &diameter, 0, 1e10) == false)
 		return (false);
