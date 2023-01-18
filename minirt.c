@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 13:11:26 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/18 13:32:38 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_camera	*mk_camera(t_mrt *m, t_window *w, t_3d *vup)
 	return (c);
 }
 
-void	draw_pxl(mlx_image_t *img, t_mrt *m, t_camera *c, double x, double y)
+uint32_t	compute_pxl_clr(t_mrt *m, t_camera *c, double x, double y)
 {
 	static t_3d	*direction;
 	t_3d	*wo_unit_dir;
@@ -103,15 +103,15 @@ void	draw_pxl(mlx_image_t *img, t_mrt *m, t_camera *c, double x, double y)
 		// printf("y: %f\n", y);
 		// print3d("vvec", vvec);
 		// print3d("campos", *m->cam->pos);
-		print3d("ray_dir", *direction);
+		// print3d("ray_dir", *direction);
 	}
 	r = mk_ray(*m->cam->pos, *direction);
 	// printray("our_ray", *r);
 	pxl_clr = trace_ray(r, m);
-	// printf("%x\n", pxl_clr);
-	put_pxl(img, x, y, pxl_clr);
+	// printf("%p\n", pxl_clr);
 	
 	times_called += 1;
+	return (pxl_clr);
 }
 
 void	fill_window(t_window *w, double width, double height)
@@ -128,6 +128,7 @@ void	draw_scene(mlx_image_t *img, t_mrt *m)
 	t_camera	*c;
 	t_window	w;
 	t_3d		*vup;
+	uint32_t	clr;
 
 	fill_window(&w, WIDTH, HEIGHT);
 	vup = mk_3d(0, 1, 0);
@@ -143,7 +144,8 @@ void	draw_scene(mlx_image_t *img, t_mrt *m)
 			double y = j / w.height;
 			// printf("x: %f\n", x);
 			// printf("y: %f\n", y);
-			draw_pxl(img, m, c, x, y);
+			clr = compute_pxl_clr(m, c, x, y);
+			put_pxl(img, i, j, clr);
 		}
 	}
 	return ;
