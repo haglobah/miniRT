@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/14 16:25:57 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/18 14:11:17 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,37 @@ typedef struct s_3d_vector
 
 }	t_3d;
 
+typedef struct s_color
+{
+	u_int8_t r;
+	u_int8_t g;
+	u_int8_t b;
+	u_int8_t a;
+
+}	t_clr;
+
+typedef struct s_lst
+{
+	t_3d	*vec;
+	t_clr	*clr;
+	struct s_lst	*next;
+} t_lst;
+
 //3d.c
-t_3d	*mk_3d(double x, double y, double z);
+t_3d	*mk_3d(t_lst *save_lst, double x, double y, double z);
 void	del_3d(t_3d *v);
-t_3d	*sum_3d(t_3d v, t_3d w);
-t_3d	*sum4_3d(t_3d v, t_3d w, t_3d u, t_3d z);
-t_3d	*mul(double k, t_3d v);
-t_3d	*sub_3d(t_3d v, t_3d w);
-t_3d	*sub4_3d(t_3d v, t_3d w, t_3d u, t_3d z);
+t_3d	*sum_3d(t_lst *save_lst, t_3d v, t_3d w);
+t_3d	*sum4_3d(t_lst *save_lst, t_3d v, t_3d w, t_3d u, t_3d z);
+t_3d	*mul(t_lst *save_lst, double k, t_3d v);
+t_3d	*sub_3d(t_lst *save_lst, t_3d v, t_3d w);
+t_3d	*sub4_3d(t_lst *save_lst, t_3d v, t_3d w, t_3d u, t_3d z);
 double	dot(t_3d v, t_3d w);
-t_3d	*cross(t_3d v, t_3d w);
+t_3d	*cross(t_lst *save_lst, t_3d v, t_3d w);
 double	len_squared(t_3d v);
 double	sq(double a);
 double	dist(t_3d v, t_3d w);
 double	len(t_3d v);
-t_3d	*mk_unit(t_3d v);
+t_3d	*mk_unit(t_lst *save_lst, t_3d v);
 void	print3d(char *s, t_3d v);
 t_3d	*normalize_vector(t_3d *vec);
 
@@ -60,19 +76,10 @@ typedef struct s_ray
 }	t_ray;
 
 //ray.c
-t_3d	*at(t_ray ray, double t);
+t_3d	*at(t_lst *save_lst, t_ray ray, double t);
 t_ray	*mk_ray(t_3d pos, t_3d dir);
 void	del_ray(t_ray *r);
 void	printray(char *s, t_ray v);
-
-typedef struct s_color
-{
-	u_int8_t r;
-	u_int8_t g;
-	u_int8_t b;
-	u_int8_t a;
-
-}	t_clr;
 
 //color.c
 int			color(t_clr s, t_clr e, double percent);
@@ -80,10 +87,10 @@ uint32_t	dcolor(double r, double g, double b);
 uint32_t	colora(u_int8_t r, u_int8_t g, u_int8_t b, u_int8_t a);
 uint32_t	rgb(u_int8_t r, u_int8_t g, u_int8_t b);
 void		print_clr(t_clr clr);
-t_clr	*mk_clr(uint8_t r, uint8_t g, uint8_t b);
+t_clr	*mk_clr(t_lst *save_lst, uint8_t r, uint8_t g, uint8_t b);
 void	del_clr(t_clr *v);
-t_clr	*sum_clr(t_clr v, t_clr w);
-t_clr	*mul_clr(double k, t_clr v);
+t_clr	*sum_clr(t_lst *save_lst, t_clr v, t_clr w);
+t_clr	*mul_clr(t_lst *save_lst, double k, t_clr v);
 
 typedef struct s_hit
 {
@@ -146,6 +153,7 @@ typedef struct s_minirt
 	t_sphere	*sp;
 	t_plane		*pl;
 	t_cyl		*cyl;
+	t_lst		*save_lst;
 	int			sp_count;
 	int			pl_count;
 	int			cyl_count;
@@ -181,6 +189,12 @@ typedef struct s_camera
 	t_d		vfov;
 } t_camera;
 
+//memory.c
+void		add_to_list(t_lst **lst, t_3d *v, t_clr *clr);
+void		print_list(t_lst *list);
+t_lst		*mk_node(t_3d *v, t_clr *clr);
+void		free_from_list(t_lst *lst);
+
 //scene.c 
 void		fill_window(t_window *w, double width, double height);
 t_camera	*mk_camera(t_mrt *m, t_window *w, t_3d *vup);
@@ -195,10 +209,10 @@ void	draw_scene(mlx_image_t *img, t_mrt *p);
 uint32_t	cons_sphere_clr(t_clr color, double coeff);
 
 //hit.c
-double	hitpoint_sphere(t_3d center, double radius, t_ray r);
-void	update_hit(t_hit *h, t_sphere *sp, double t, t_ray *r, t_clr clr);
+double	hitpoint_sphere(t_lst *save_lst, t_3d center, double radius, t_ray r);
+void	update_hit(t_lst *save_lst, t_hit *h, t_sphere *sp, double t, t_ray *r, t_clr clr);
 bool	did_hit(t_hit *h);
-void	hit_sphere(t_sphere *sp, t_ray *r, t_hit *h);
+void	hit_sphere(t_mrt *m, t_sphere *sp, t_ray *r, t_hit *h);
 void	hit_plane(t_plane *pl, t_ray *r, t_hit *h);
 void	hit_cylinder(t_cyl *cyl, t_ray *r, t_hit *h);
 void	print_hit(t_hit h);

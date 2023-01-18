@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/14 18:12:49 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/18 14:24:03 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,15 @@ t_camera	*mk_camera(t_mrt *m, t_window *w, t_3d *vup)
 	
 	// print_mrt(m);
 	c->pos = m->cam->pos;
-	printf("here\n");
 	c->dir = m->cam->dir;
-	c->w = mk_unit(*mul(-1, *c->dir));
-	// CAUTION vup & dir should not be the same.
-	c->u = mk_unit(*cross(*vup, *c->w));
-	c->v = cross(*c->w, *c->u);
-	c->horizontal = /* focus_dist */ mul(viewport_width, *c->u);
-	c->vertical = /* focus_dist */  mul(viewport_height, *c->v);
-	c->llc = sub4_3d(*c->pos,
-					 *mul(0.5, *c->horizontal),
-					 *mul(0.5, *c->vertical),
+	c->w = mk_unit(m->save_lst, *mul(m->save_lst, -1, *c->dir));
+	c->u = mk_unit(m->save_lst, *cross(m->save_lst, *vup, *c->w));
+	c->v = cross(m->save_lst, *c->w, *c->u);
+	c->horizontal = /* focus_dist */ mul(m->save_lst, viewport_width, *c->u);
+	c->vertical = /* focus_dist */  mul(m->save_lst, viewport_height, *c->v);
+	c->llc = sub4_3d(m->save_lst, *c->pos,
+					 *mul(m->save_lst, 0.5, *c->horizontal),
+					 *mul(m->save_lst, 0.5, *c->vertical),
 					 *c->w);
 	print3d("pos", *c->pos);
 	print3d("dir", *c->dir);
@@ -81,22 +79,21 @@ void	draw_pxl(mlx_image_t *img, t_mrt *m, t_camera *c, int x, int y)
 	t_3d	hvec;
 	t_3d	vvec;
 
-	hvec = *mul(x, *c->horizontal);
-	vvec = *mul(y, *c->vertical);
+	hvec = *mul(m->save_lst, x, *c->horizontal);
+	vvec = *mul(m->save_lst, y, *c->vertical);
 	// print3d("llc", *c->llc);
 	// print3d("hvec", hvec);
 	// print3d("vvec", vvec);
 	// print3d("campos", *m->cam->pos);
-	wo_unit_dir = sum4_3d(*c->llc, 
+	wo_unit_dir = sum4_3d(m->save_lst, *c->llc, 
 		hvec,
 		vvec,
-		*mul(-1, *m->cam->pos));
-	direction = mk_unit(*wo_unit_dir);
+		*mul(m->save_lst, -1, *m->cam->pos));
+	direction = mk_unit(m->save_lst, *wo_unit_dir);
 	// print3d("ray_dir", *wo_unit_dir);
-	r = mk_ray(*m->cam->pos, *direction);
-	printray("our_ray", *r);
-	pxl_clr = trace_ray(r, m);
-	put_pxl(img, x, y, pxl_clr);
+	// r = mk_ray(*m->cam->pos, *direction);
+	// pxl_clr = trace_ray(r, m);
+	// put_pxl(img, x, y, pxl_clr);
 }
 
 void	fill_window(t_window *w, double width, double height)
@@ -115,8 +112,8 @@ void	draw_scene(mlx_image_t *img, t_mrt *m)
 	t_3d		*vup;
 
 	fill_window(&w, WIDTH, HEIGHT);
-	vup = mk_3d(0, 1, 0);
-	print3d("vup", *vup);
+	vup = mk_3d(m->save_lst, 0, 1, 0);
+	// t_clr *test = mk_clr(m->save_lst, 1, 2, 3);
 	c = mk_camera(m, &w, vup);
 	j = HEIGHT - 1;
 	while (--j >= 0)
@@ -129,5 +126,7 @@ void	draw_scene(mlx_image_t *img, t_mrt *m)
 			draw_pxl(img, m, c, x, y);
 		}
 	}
+	free_from_list(m->save_lst);
+	// print_list(m->save_lst);
 	return ;
 }

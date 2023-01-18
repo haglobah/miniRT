@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:25:40 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/13 13:50:19 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/18 14:22:26 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ uint32_t	shade(t_mrt *m, t_clr clr, double coeff)
 {
 	t_clr	*res;
 	
-	res = sum_clr(
-		*mul_clr(m->amb->ratio, m->amb->color),
-		*mul_clr(m->l->brightness * d_max(coeff, 0.0),
+	res = sum_clr(m->save_lst,
+		*mul_clr(m->save_lst, m->amb->ratio, m->amb->color),
+		*mul_clr(m->save_lst, m->l->brightness * d_max(coeff, 0.0),
 				 clr));
 	// res = mul_clr(m->l->brightness * d_max(coeff, 0.0),
 	// 			 clr);
@@ -52,7 +52,7 @@ uint32_t	compute_clr(t_mrt *m, t_hit *h)
 	bool		hit_something;
 
 	hit_something = did_hit(h);
-	coeff = -dot(*mk_unit(*m->l->pos), h->normal);
+	coeff = -dot(*mk_unit(m->save_lst, *m->l->pos), h->normal);
 	if (hit_something)
 		clr = shade(m, h->clr, coeff);
 	else
@@ -72,7 +72,7 @@ int	trace_ray(t_ray *r, t_mrt *m)
 	i = -1;
 	while (++i < m->sp_count)
 	{
-		hit_sphere(&m->sp[i], r, &h);
+		hit_sphere(m, &m->sp[i], r, &h);
 	}
 	// i = -1;
 	// while (++i < m->pl_count)

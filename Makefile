@@ -3,16 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+         #
+#    By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 12:24:11 by bhagenlo          #+#    #+#              #
-#    Updated: 2023/01/13 11:15:11 by bhagenlo         ###   ########.fr        #
+#    Updated: 2023/01/18 14:19:31 by mhedtman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := miniRT
 
-SRCS := minirt.c lexer.c parser.c 3d.c ray.c color.c utils.c data.c hit.c math.c
+SRCS := minirt.c lexer.c parser.c 3d.c ray.c color.c utils.c data.c hit.c math.c \
+		memory.c
 MAIN = main.c
 OBJS = $(SRCS:.c=.o)
 MO = main.o
@@ -21,7 +22,7 @@ TOBJS = $(TESTS:.c=.o)
 TEST = $(NAME)_test
 
 CC := cc
-CFLAGS := -Wall -Wextra  #-Werror # -I../LeakSanitizer/include -L../LeakSanitizer -llsan -lc++
+CFLAGS := -Wall -Wextra -Wno-gnu-include-next -ILeakSanitizer -LLeakSanitizer -llsan -lc++ #-Werror
 
 LIBFT := libft
 LFT := $(LIBFT)/libft.a
@@ -41,6 +42,10 @@ $(LIBFT) :
 
 $(LFT) : $(LIBFT)
 	$(MAKE) -C $(LIBFT)
+
+$(LSAN) :
+	if [ ! -d "LeakSanitizer"]; then git clone https://github.com/mhahnFr/LeakSanitizer.git; fi
+	$(MAKE) -C LeakSanitizer
 
 $(BREW) : 
 	curl -fsSL https://rawgit.com/kube/42homebrew/master/install.sh | zsh
@@ -68,7 +73,7 @@ re : fclean
 run : all
 	./$(NAME) test.rt
 
-lsan : CFLAGS += -I../LeakSanitizer/include -L../LeakSanitizer -llsan -lc++
+lsan : $(LSAN)
 lsan :
 	$(MAKE) all
 #	./$(NAME) test.rt
