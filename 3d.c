@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/13 13:40:38 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/18 11:49:26 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,11 @@ double	dist(t_3d v, t_3d w)
 	if (res < 0.0)
 		return (-res);
 	return (res);
+}
+
+bool	v_iseq(t_3d *v, t_3d *w)
+{
+	return (dist(*v, *w) == 0);
 }
 
 t_3d	*at(t_ray ray, double t)

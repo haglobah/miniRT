@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/14 16:25:57 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/18 13:03:05 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <stdbool.h>
 
 # define WIDTH 120
-# define HEIGHT 67.5
+# define HEIGHT 67
 
 typedef double t_d;
 
@@ -47,6 +47,7 @@ t_3d	*cross(t_3d v, t_3d w);
 double	len_squared(t_3d v);
 double	sq(double a);
 double	dist(t_3d v, t_3d w);
+bool	v_iseq(t_3d *v, t_3d *w);
 double	len(t_3d v);
 t_3d	*mk_unit(t_3d v);
 void	print3d(char *s, t_3d v);
