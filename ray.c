@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:25:40 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 14:22:26 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/18 14:30:52 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,22 @@ uint32_t	compute_clr(t_mrt *m, t_hit *h)
 	double		coeff;
 	uint32_t	clr;
 	bool		hit_something;
+	static int	i;
 
 	hit_something = did_hit(h);
 	coeff = -dot(*mk_unit(m->save_lst, *m->l->pos), h->normal);
 	if (hit_something)
+	{
 		clr = shade(m, h->clr, coeff);
+		printf("hit: i = %i\n", i);
+		print_hit(*h);
+		i++;
+	}
 	else
+	{
 		clr = rgb(0, 0, 0);
+		// printf("didn't hit.\n");
+	}
 	return (clr);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 10:31:04 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 13:16:08 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/18 14:31:07 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,9 @@ void	hit_sphere(t_mrt *m, t_sphere *sp, t_ray *r, t_hit *h)
 
 void	print_hit(t_hit h)
 {
-	print3d("pos: ", h.pos);
-	print3d("normal: ", h.normal);
-	printf("t: %f\n", h.t);
+	print3d("  pos", h.pos);
+	print3d("  normal", h.normal);
+	printf("  t: %f\n", h.t);
+	printf("  ");
 	print_clr(h.clr);
 }

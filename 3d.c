@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 13:15:16 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/18 14:34:48 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,11 @@ double	dist(t_3d v, t_3d w)
 	if (res < 0.0)
 		return (-res);
 	return (res);
+}
+
+bool	v_iseq(t_3d *v, t_3d *w)
+{
+	return (dist(*v, *w) == 0);
 }
 
 t_3d	*at(t_lst *save_lst, t_ray ray, double t)

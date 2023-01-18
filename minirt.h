@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 14:11:17 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/18 14:31:16 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include <stdio.h>
 # include <stdbool.h>
 
-# define WIDTH 120
-# define HEIGHT 67.5
+# define WIDTH 1200
+# define HEIGHT 675
 
 typedef double t_d;
 
@@ -63,6 +63,7 @@ t_3d	*cross(t_lst *save_lst, t_3d v, t_3d w);
 double	len_squared(t_3d v);
 double	sq(double a);
 double	dist(t_3d v, t_3d w);
+bool	v_iseq(t_3d *v, t_3d *w);
 double	len(t_3d v);
 t_3d	*mk_unit(t_lst *save_lst, t_3d v);
 void	print3d(char *s, t_3d v);
@@ -228,8 +229,9 @@ void	ft_free(void *ptr);
 void	free_all(t_mrt *m);
 int		strslen(char **strs);
 int		free_strs(char **sp);
-void	printns(char **slist);
-void	prints(char **slist);
+void	printnstrs(char **slist);
+void	printstrs(char **slist);
+void	printstrs_n(char **slist);
 void	printsens(char ***sentence_list);
 
 #endif
