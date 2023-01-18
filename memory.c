@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 11:18:30 by mhedtman          #+#    #+#             */
-/*   Updated: 2023/01/18 15:16:51 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/18 16:45:39 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,8 @@ void	add_ray(t_lst **lst, t_ray *ray)
 
 void	add_to_list(t_lst **lst, t_3d *v, t_clr *clr, t_ray *ray)
 {
+	if (*lst == NULL)
+		return ;
 	if ((*lst)->clr == NULL && (*lst)->vec == NULL)
 	{
 		(*lst)->vec = v;
