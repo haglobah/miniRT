@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 12:34:46 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 14:44:13 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/18 15:00:08 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_mrt	*mk_mrt(int *bodies)
 	m->sp = ft_calloc(bodies[0] + 1, sizeof(t_sphere));
 	m->pl = ft_calloc(bodies[1] + 1, sizeof(t_plane));
 	m->cyl = ft_calloc(bodies[2] + 1, sizeof(t_cyl));
-	m->save_lst = mk_node(NULL, NULL);
+	m->save_lst = NULL; //mk_node(NULL, NULL);
 	m->sp_count = bodies[0];
 	m->pl_count = bodies[1];
 	m->cyl_count = bodies[2];

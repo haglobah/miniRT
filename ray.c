@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:25:40 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 14:30:52 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:57:06 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,20 @@ uint32_t	compute_clr(t_mrt *m, t_hit *h)
 	static int	i;
 
 	hit_something = did_hit(h);
-	coeff = -dot(*mk_unit(m->save_lst, *m->l->pos), h->normal);
 	if (hit_something)
 	{
+		// print3d("h->normal: ", h->normal);
+		t_3d light_hit = *mk_unit(m->save_lst, *sub_3d(m->save_lst,
+					*m->l->pos,
+					h->pos));
+		// print3d("LP", light_hit);
+		coeff = -dot(light_hit, // should that be + or - ?
+			*mk_unit(m->save_lst, h->normal));
+		// printf("coeff: %f\n", coeff);
+		// print_clr(h->clr);
 		clr = shade(m, h->clr, coeff);
-		printf("hit: i = %i\n", i);
-		print_hit(*h);
+		// printf("hit: i = %i\n", i);
+		// print_hit(*h);
 		i++;
 	}
 	else
@@ -83,11 +91,11 @@ int	trace_ray(t_ray *r, t_mrt *m)
 	{
 		hit_sphere(m, &m->sp[i], r, &h);
 	}
-	// i = -1;
-	// while (++i < m->pl_count)
-	// {
-	// 	hit_plane(&m->pl[i], r, &h);
-	// }
+	i = -1;
+	while (++i < m->pl_count)
+	{
+		hit_plane(m, &m->pl[i], r, &h);
+	}
 	// i = -1;
 	// while (++i < m->cyl_count)
 	// {

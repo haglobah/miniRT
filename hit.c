@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   hit.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 10:31:04 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 14:31:07 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:27:36 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+
+bool	did_hit(t_hit *h)
+{
+	if (h->t == 1e6)
+		return (false);
+	return (true);
+}
+
+void	update_hit(t_lst *save_lst, t_hit *h, t_3d *pos, double t, t_3d *normal, t_clr clr)
+{
+	h->pos = *pos;
+	h->normal = *normal;
+	h->t = t;
+	h->clr = clr;
+}
 
 double	hitpoint_sphere(t_lst *save_lst, t_3d center, double radius, t_ray r)
 {
@@ -31,26 +47,14 @@ double	hitpoint_sphere(t_lst *save_lst, t_3d center, double radius, t_ray r)
 		return ((-half_b - sqrt(discriminant)) / a);
 }
 
-bool	did_hit(t_hit *h)
-{
-	if (h->t == 1e6)
-		return (false);
-	return (true);
-}
-
-void	update_hit(t_lst *save_lst, t_hit *h, t_sphere *sp, double t, t_ray *r, t_clr clr)
-{
-	h->pos = *at(save_lst, *r, t);
-	h->normal = *mk_unit(save_lst, *sub_3d(save_lst, *at(save_lst, *r, t), *sp->pos));
-	h->t = t;
-	h->clr = clr;
-}
-
 void	hit_sphere(t_mrt *m, t_sphere *sp, t_ray *r, t_hit *h)
 {
-	double	lo;
-	double	hi;
+	// Wofuer waren die nochmal?
+	// double	lo;
+	// double	hi;
 	double	t;
+	t_3d	*hitpos;
+	t_3d	*hit_normal;
 
 	t = hitpoint_sphere(m->save_lst, *sp->pos, sp->diameter, *r);
 	if (t <= 0.0)
@@ -59,7 +63,58 @@ void	hit_sphere(t_mrt *m, t_sphere *sp, t_ray *r, t_hit *h)
 	{
 		if (t < h->t)
 		{
-			update_hit(m->save_lst, h, sp, t, r, sp->color);
+			hitpos = at(m->save_lst, *r, t);
+			hit_normal = mk_unit(m->save_lst, *sub_3d(m->save_lst, *at(m->save_lst, *r, t), *sp->pos));
+			update_hit(m->save_lst, h, hitpos, t, hit_normal, sp->color);
+			// print_hit(*h);
+		}
+	}
+}
+
+void	print_plane(t_coor_plane pl)
+{
+	printf("  a: %f\n", pl.a);
+	printf("  b: %f\n", pl.b);
+	printf("  c: %f\n", pl.c);
+	printf("  d: %f\n\n", pl.d);
+}
+
+double	hitpoint_plane(t_lst *save_lst, t_3d support, t_3d normal, t_ray r)
+{
+	t_coor_plane	pl;
+	double			t;
+	double			dividend;
+	double			divisor;
+
+	pl = (t_coor_plane){.a = normal.x, .b = normal.y, .c = normal.z,
+		  .d = dot(support, normal)};
+	t_3d abc = *mk_3d(save_lst, pl.a, pl.b, pl.c);
+	dividend = pl.d - dot(abc, r.pos);
+	// print_plane(pl);
+	// printf("dividend: %f\n", dividend);
+	// printf("          ---------------\n");
+	divisor = dot(abc, r.dir);
+	// printf("divisor:  %f\n", divisor);
+	t = dividend / divisor;
+	return (t);
+}
+
+void	hit_plane(t_mrt *m, t_plane *pl, t_ray *r, t_hit *h)
+{
+	double	t;
+	t_3d	*hitpos;
+
+	t = hitpoint_plane(m->save_lst, *pl->pos, *pl->normal, *r);
+	// printf("t: %f\n", t);
+	if (t <= 0.0)
+		return ;
+	else
+	{
+		if (t < h->t)
+		{
+			hitpos = at(m->save_lst, *r, t);
+			// print_clr(pl->color);
+			update_hit(m->save_lst, h, hitpos, t, pl->normal, pl->color);
 			// print_hit(*h);
 		}
 	}

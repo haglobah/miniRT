@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 14:31:16 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/18 15:50:52 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ typedef struct s_hit
 
 }	t_hit;
 
-
 typedef	struct s_ambient_light
 {
 	t_d		ratio;
@@ -136,6 +135,14 @@ typedef struct s_plane
 	t_3d	*normal;
 	t_clr	color;
 } t_plane;
+
+typedef struct s_coor_plane
+{
+	double	a;
+	double	b;
+	double	c;
+	double	d;
+} t_coor_plane;
 
 typedef struct s_cyl
 {
@@ -211,11 +218,11 @@ uint32_t	cons_sphere_clr(t_clr color, double coeff);
 
 //hit.c
 double	hitpoint_sphere(t_lst *save_lst, t_3d center, double radius, t_ray r);
-void	update_hit(t_lst *save_lst, t_hit *h, t_sphere *sp, double t, t_ray *r, t_clr clr);
+void	update_hit(t_lst *save_lst, t_hit *h, t_3d *pos, double t, t_3d *normal, t_clr clr);
 bool	did_hit(t_hit *h);
 void	hit_sphere(t_mrt *m, t_sphere *sp, t_ray *r, t_hit *h);
-void	hit_plane(t_plane *pl, t_ray *r, t_hit *h);
-void	hit_cylinder(t_cyl *cyl, t_ray *r, t_hit *h);
+void	hit_plane(t_mrt *m, t_plane *pl, t_ray *r, t_hit *h);
+void	hit_cylinder(t_mrt *m, t_cyl *cyl, t_ray *r, t_hit *h);
 void	print_hit(t_hit h);
 
 // math.c

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 14:33:03 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/18 14:57:44 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,32 +41,33 @@ t_camera	*mk_camera(t_mrt *m, t_window *w, t_3d *vup)
 	c = (t_camera *)ft_calloc(1, sizeof(t_camera));
 	theta = degrees_to_radians(m->cam->fov);
 	h = tan(theta / 2);
-	printf("h: %f\n", h);
+	// printf("h: %f\n", h);
 	viewport_height = 2.0 * h;
 	viewport_width = viewport_height * w->aspect_ratio;
 	
 	// print_mrt(m);
 	c->pos = m->cam->pos;
 	c->dir = m->cam->dir;
-	c->w = mk_unit(*mul(-1, *c->dir));
+	c->w = mk_unit(m->save_lst, *mul(m->save_lst, -1, *c->dir));
 	// CAUTION vup & dir should not be the same.
-	c->u = mk_unit(*cross(*vup, *c->w));
-	c->v = cross(*c->w, *c->u);
-	c->horizontal = /* focus_dist */ mul(viewport_width, *c->u);
-	c->vertical = /* focus_dist */  mul(viewport_height, *c->v);
-	c->llc = sub4_3d(*c->pos,
-					 *mul(0.5, *c->horizontal),
-					 *mul(0.5, *c->vertical),
+	c->u = mk_unit(m->save_lst, *cross(m->save_lst, *vup, *c->w));
+	c->v = cross(m->save_lst, *c->w, *c->u);
+	c->horizontal = /* focus_dist */ mul(m->save_lst, viewport_width, *c->u);
+	c->vertical = /* focus_dist */  mul(m->save_lst, viewport_height, *c->v);
+	c->llc = sub4_3d(m->save_lst, 
+					 *c->pos,
+					 *mul(m->save_lst, 0.5, *c->horizontal),
+					 *mul(m->save_lst, 0.5, *c->vertical),
 					 *c->w);
-	print3d("pos", *c->pos);
-	print3d("dir", *c->dir);
-	print3d("vup", *vup);
-	print3d("u", *c->u);
-	print3d("v", *c->v);
-	print3d("w", *c->w);
-	print3d("horizontal", *c->horizontal);
-	print3d("vertical", *c->vertical);
-	print3d("llc", *c->llc);
+	// print3d("pos", *c->pos);
+	// print3d("dir", *c->dir);
+	// print3d("vup", *vup);
+	// print3d("u", *c->u);
+	// print3d("v", *c->v);
+	// print3d("w", *c->w);
+	// print3d("horizontal", *c->horizontal);
+	// print3d("vertical", *c->vertical);
+	// print3d("llc", *c->llc);
 	focal_length = 1.0;
 	return (c);
 }
@@ -85,10 +86,6 @@ uint32_t	compute_pxl_clr(t_mrt *m, t_camera *c, double x, double y)
 
 	hvec = *mul(m->save_lst, x, *c->horizontal);
 	vvec = *mul(m->save_lst, y, *c->vertical);
-	// print3d("llc", *c->llc);
-	// print3d("hvec", hvec);
-	// print3d("vvec", vvec);
-	// print3d("campos", *m->cam->pos);
 	wo_unit_dir = sum4_3d(m->save_lst, *c->llc, 
 		hvec,
 		vvec,
