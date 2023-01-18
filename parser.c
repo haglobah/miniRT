@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 12:34:46 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 14:21:04 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/18 14:37:08 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ t_mrt	*mk_mrt(int *bodies)
 
 void	parse_error(char **line)
 {
-	ft_printf("Error - this line is not in the specified format:\n");
+	ft_printf("In this line:\n\n  ");
 	printstrs(line);
-	ft_printf("\n");
+	ft_printf("\n\n");
 }
 
 bool	parse_double(char *s, double *d)
@@ -77,7 +77,8 @@ bool	parse_double_range(char *s, double *d, double lo, double hi)
 		return (true);
 	else
 	{
-		printf("Sorry, %s is not in the specified range: [%.1f, %.1f]\n", s, lo, hi);
+		printf("Error\n");
+		printf("'%s' is not in the specified range [%.1f, %.1f]\n", s, lo, hi);
 		return (false);
 	}
 }
@@ -89,7 +90,8 @@ bool	ft_parse_int_range(char *s, int *n, int lo, int hi)
 		return (true);
 	else
 	{
-		printf("Sorry, %s is not in the specified range: [%i, %i]\n", s, lo, hi);
+		printf("Error\n");
+		printf("'%s' is not in the specified range [%i, %i]\n", s, lo, hi);
 		return (false);
 	}
 }
@@ -303,6 +305,7 @@ bool	parse_line(t_mrt *m, char **line)
 		return (true);
 	else if (parse_comment(line) == true)
 		return (true);
+	printf("Error\n");
 	return (parse_error(line), false);
 }
 
