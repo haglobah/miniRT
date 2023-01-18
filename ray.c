@@ -6,13 +6,13 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:25:40 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 14:30:52 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/18 15:20:03 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_ray	*mk_ray(t_3d pos, t_3d dir)
+t_ray	*mk_ray(t_lst *save_lst, t_3d pos, t_3d dir)
 {
 	t_ray	*new;
 
@@ -21,7 +21,7 @@ t_ray	*mk_ray(t_3d pos, t_3d dir)
 		return (NULL);
 	new->pos = pos;
 	new->dir = dir;
-	// add_to_free_list(new);
+	add_to_list(&save_lst, NULL, NULL, new);
 	return (new);
 }
 
@@ -57,8 +57,8 @@ uint32_t	compute_clr(t_mrt *m, t_hit *h)
 	if (hit_something)
 	{
 		clr = shade(m, h->clr, coeff);
-		printf("hit: i = %i\n", i);
-		print_hit(*h);
+		// printf("hit: i = %i\n", i);
+		// print_hit(*h);
 		i++;
 	}
 	else

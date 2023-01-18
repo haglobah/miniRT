@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 12:56:20 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/11 13:33:12 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/18 15:07:56 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ char	***file_to_sens(char *file)
 	{
 		sens[i] = ft_split(lines[i], ' ');
 	}
+	free(file);
 	free_strs(lines);
 	return (sens);
 }
@@ -48,6 +49,7 @@ char	***lex(int argc, char **argv)
 	int		fd;
 	char	*file;
 	char	*tmp;
+	char	*tmp_two;
 
 	if (argc != 2 || !open_file(argv[1], &fd))
 		return (NULL);
@@ -62,7 +64,9 @@ char	***lex(int argc, char **argv)
 		}
 		else
 		{
+			tmp_two = file;
 			file = ft_strjoin(file, tmp);
+			free(tmp_two);
 			free(tmp);
 		}
 		tmp = get_next_line(fd);

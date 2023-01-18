@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 14:33:03 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/18 15:48:48 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,15 @@ t_camera	*mk_camera(t_mrt *m, t_window *w, t_3d *vup)
 	// print_mrt(m);
 	c->pos = m->cam->pos;
 	c->dir = m->cam->dir;
-	c->w = mk_unit(*mul(-1, *c->dir));
+	c->w = mk_unit(m->save_lst, *mul(m->save_lst, -1, *c->dir));
 	// CAUTION vup & dir should not be the same.
-	c->u = mk_unit(*cross(*vup, *c->w));
-	c->v = cross(*c->w, *c->u);
-	c->horizontal = /* focus_dist */ mul(viewport_width, *c->u);
-	c->vertical = /* focus_dist */  mul(viewport_height, *c->v);
-	c->llc = sub4_3d(*c->pos,
-					 *mul(0.5, *c->horizontal),
-					 *mul(0.5, *c->vertical),
+	c->u = mk_unit(m->save_lst, *cross(m->save_lst, *vup, *c->w));
+	c->v = cross(m->save_lst, *c->w, *c->u);
+	c->horizontal = /* focus_dist */ mul(m->save_lst, viewport_width, *c->u);
+	c->vertical = /* focus_dist */  mul(m->save_lst, viewport_height, *c->v);
+	c->llc = sub4_3d(m->save_lst, *c->pos,
+					 *mul(m->save_lst, 0.5, *c->horizontal),
+					 *mul(m->save_lst, 0.5, *c->vertical),
 					 *c->w);
 	print3d("pos", *c->pos);
 	print3d("dir", *c->dir);
@@ -108,7 +108,7 @@ uint32_t	compute_pxl_clr(t_mrt *m, t_camera *c, double x, double y)
 		// print3d("campos", *m->cam->pos);
 		// print3d("ray_dir", *direction);
 	}
-	r = mk_ray(*m->cam->pos, *direction);
+	r = mk_ray(m->save_lst, *m->cam->pos, *direction);
 	// printray("our_ray", *r);
 	pxl_clr = trace_ray(r, m);
 	// printf("%p\n", pxl_clr);
@@ -151,7 +151,9 @@ void	draw_scene(mlx_image_t *img, t_mrt *m)
 			put_pxl(img, i, j, clr);
 		}
 	}
-	free_from_list(m->save_lst);
+	free_all(m);
+	free(c);
+	// free_from_list(m->save_lst);
 	// print_list(m->save_lst);
 	return ;
 }

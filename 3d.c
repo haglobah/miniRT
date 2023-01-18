@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 14:34:48 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/18 15:18:57 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_3d	*mk_3d(t_lst *lst, double x, double y, double z)
 	new->x = x;
 	new->y = y;
 	new->z = z;
-	add_to_list(&lst, new, NULL);
+	add_to_list(&lst, new, NULL, NULL);
 	return (new);
 }
 
