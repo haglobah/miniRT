@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/19 13:22:59 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/19 13:36:50 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,10 @@ t_3d	*cross(t_lst *save_lst, t_3d v, t_3d w)
 {
 	t_3d	*new;
 
-	print3d("V BEFORE CROSS", w);
+	print3d("W IN CROSS CROSS", w);
 	new = mk_3d(save_lst, v.y * w.z - w.y * v.z,
 				v.z * w.x - w.z * v.x,
 				v.x * w.y - w.x * v.y);
-	print3d("V AFTER CROSS", w);
 	return (new);
 }
 

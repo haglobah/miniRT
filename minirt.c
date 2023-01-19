@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/19 13:34:24 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/19 13:37:20 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,12 @@ t_camera	*mk_camera(t_mrt *m, t_window *w, t_3d *vup)
 	c->dir = m->cam->dir;
 	t_3d save = mul(m->save_lst, -1, *c->dir);
 	c->w = mk_unit(m->save_lst, save);
-	print3d("w", *c->w);
-	print3d("SAVE: ", save);
+	// print3d("SAVE: ", save);
+	print3d("w before cross", *c->w);
 	// CAUTION vup & dir should not be the same.
-	t_3d save_two = *cross(m->save_lst, *vup, *(c->w)); // -> Here changes the value of c->w for some odd reason
-	print3d("SAVE TWO: ", save_two);
+	t_3d save_two = *cross(m->save_lst, *vup, (*c->w)); // -> Here changes the value of c->w for some odd reason
+	print3d("w after cross", *c->w);
+	// print3d("SAVE TWO: ", save_two);
 	c->u = mk_unit(m->save_lst, save_two);
 	c->v = cross(m->save_lst, *c->w, *c->u);
 	c->horizontal = /* focus_dist */ mul(m->save_lst, viewport_width, *c->u);
@@ -64,14 +65,14 @@ t_camera	*mk_camera(t_mrt *m, t_window *w, t_3d *vup)
 					 mul(m->save_lst, 0.5, c->horizontal),
 					 mul(m->save_lst, 0.5, c->vertical),
 					 *c->w);
-	print3d("pos", *c->pos);
-	print3d("dir", *c->dir);
-	print3d("vup", *vup);
-	print3d("u", *c->u);
-	print3d("v", *c->v);
-	print3d("horizontal", c->horizontal);
-	print3d("vertical", c->vertical);
-	print3d("llc", *c->llc);
+	// print3d("pos", *c->pos);
+	// print3d("dir", *c->dir);
+	// print3d("vup", *vup);
+	// print3d("u", *c->u);
+	// print3d("v", *c->v);
+	// print3d("horizontal", c->horizontal);
+	// print3d("vertical", c->vertical);
+	// print3d("llc", *c->llc);
 	focal_length = 1.0;
 	return (c);
 }
