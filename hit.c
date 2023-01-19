@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 10:31:04 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 17:27:36 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/19 12:06:29 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ double	hitpoint_sphere(t_lst *save_lst, t_3d center, double radius, t_ray r)
 	double	c;
     double	discriminant;
 
-	oc = *sum_3d(save_lst, r.pos, *mul(save_lst, -1, center));
+	oc = *sum_3d(save_lst, r.pos, mul(save_lst, -1, center));
 	a = len_squared(r.dir);
 	half_b = dot(oc, r.dir);
 	c = len_squared(oc) - pow(radius, 2);

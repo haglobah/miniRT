@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 18:09:03 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/19 12:57:13 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include <stdio.h>
 # include <stdbool.h>
 
-# define WIDTH 120.0
-# define HEIGHT 67.5
+# define WIDTH 1200
+# define HEIGHT 675
 
 typedef double t_d;
 
@@ -63,7 +63,7 @@ t_3d	*mk_3d(t_lst *save_lst, double x, double y, double z);
 void	del_3d(t_3d *v);
 t_3d	*sum_3d(t_lst *save_lst, t_3d v, t_3d w);
 t_3d	*sum4_3d(t_lst *save_lst, t_3d v, t_3d w, t_3d u, t_3d z);
-t_3d	*mul(t_lst *save_lst, double k, t_3d v);
+t_3d	mul(t_lst *save_lst, double k, t_3d v);
 t_3d	*sub_3d(t_lst *save_lst, t_3d v, t_3d w);
 t_3d	*sub4_3d(t_lst *save_lst, t_3d v, t_3d w, t_3d u, t_3d z);
 double	dot(t_3d v, t_3d w);
@@ -192,8 +192,8 @@ typedef struct s_camera
 	t_3d	*w;
 	t_3d	*u;
 	t_3d	*v;
-	t_3d	*horizontal;
-	t_3d	*vertical;
+	t_3d	horizontal;
+	t_3d	vertical;
 	t_3d	*llc;
 	t_d		vfov;
 } t_camera;

@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 15:18:57 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/19 13:22:59 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,12 @@ t_3d	*sum4_3d(t_lst *save_lst, t_3d v, t_3d w, t_3d u, t_3d z)
 	return (new);
 }
 
-t_3d	*mul(t_lst *save_lst, double k, t_3d v)
+t_3d	mul(t_lst *save_lst, double k, t_3d v)
 {
-	t_3d	*new;
+	t_3d	new;
 
-	new = mk_3d(save_lst, k * v.x, k * v.y, k * v.z);
+	(void)save_lst;
+	new = (t_3d){k * v.x, k * v.y, k * v.z};
 	return (new);
 }
 
@@ -63,7 +64,7 @@ t_3d	*sub_3d(t_lst *save_lst, t_3d v, t_3d w)
 {
 	t_3d	*new;
 
-	new = sum_3d(save_lst, v, *mul(save_lst, -1, w));
+	new = sum_3d(save_lst, v, mul(save_lst, -1, w));
 	return (new);
 }
 
@@ -86,9 +87,11 @@ t_3d	*cross(t_lst *save_lst, t_3d v, t_3d w)
 {
 	t_3d	*new;
 
+	print3d("V BEFORE CROSS", w);
 	new = mk_3d(save_lst, v.y * w.z - w.y * v.z,
 				v.z * w.x - w.z * v.x,
 				v.x * w.y - w.x * v.y);
+	print3d("V AFTER CROSS", w);
 	return (new);
 }
 
@@ -121,20 +124,26 @@ bool	v_iseq(t_3d *v, t_3d *w)
 
 t_3d	*at(t_lst *save_lst, t_ray ray, double t)
 {
-	t_3d	*dir;
+	t_3d	dir;
 	t_3d	*ret;
 
 	dir = mul(save_lst, t, ray.dir);
-	ret = sum_3d(save_lst, *dir, ray.pos); // cam position
+	ret = sum_3d(save_lst, dir, ray.pos); // cam position
 	return (ret);
 }
 
 t_3d	*mk_unit(t_lst *save_lst, t_3d v)
 {
 	double vlen;
-
+	static int x;
+	
 	vlen = sqrt(len_squared(v));
-	return (mul(save_lst, 1.0 / vlen, v));
+	t_3d test = mul(save_lst, 1.0 / vlen, v);
+	t_3d *save = &test;
+	if (!x)
+		print3d("MK UNIT: ", *save);
+	x = 1;
+	return (save);
 }
 
 void	print3d(char *s, t_3d v)

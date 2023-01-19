@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+         #
+#    By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 12:24:11 by bhagenlo          #+#    #+#              #
-#    Updated: 2023/01/18 14:48:15 by bhagenlo         ###   ########.fr        #
+#    Updated: 2023/01/19 12:06:41 by mhedtman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := miniRT
 
-SRCS := minirt.c lexer.c parser.c 3d.c ray.c color.c utils.c data.c hit.c math.c \
+SRCS := hit.c minirt.c lexer.c parser.c 3d.c ray.c color.c utils.c data.c math.c \
 		memory.c
 MAIN = main.c
 OBJS = $(SRCS:.c=.o)
