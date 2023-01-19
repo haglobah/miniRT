@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/19 12:57:13 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/19 14:05:07 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,13 @@ t_3d	mul(t_lst *save_lst, double k, t_3d v);
 t_3d	*sub_3d(t_lst *save_lst, t_3d v, t_3d w);
 t_3d	*sub4_3d(t_lst *save_lst, t_3d v, t_3d w, t_3d u, t_3d z);
 double	dot(t_3d v, t_3d w);
-t_3d	*cross(t_lst *save_lst, t_3d v, t_3d w);
+t_3d	cross(t_lst *save_lst, t_3d v, t_3d w);
 double	len_squared(t_3d v);
 double	sq(double a);
 double	dist(t_3d v, t_3d w);
 bool	v_iseq(t_3d *v, t_3d *w);
 double	len(t_3d v);
-t_3d	*mk_unit(t_lst *save_lst, t_3d v);
+t_3d	mk_unit(t_lst *save_lst, t_3d v);
 void	print3d(char *s, t_3d v);
 t_3d	*normalize_vector(t_3d *vec);
 
@@ -189,9 +189,9 @@ typedef struct s_camera
 	t_3d	*pos;
 	t_3d	*dir;
 	t_3d	*vup;
-	t_3d	*w;
-	t_3d	*u;
-	t_3d	*v;
+	t_3d	w;
+	t_3d	u;
+	t_3d	v;
 	t_3d	horizontal;
 	t_3d	vertical;
 	t_3d	*llc;

@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/19 13:36:50 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/19 14:04:30 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,14 +83,13 @@ double	dot(t_3d v, t_3d w)
 	return (v.x * w.x + v.y * w.y + v.z * w.z);
 }
 
-t_3d	*cross(t_lst *save_lst, t_3d v, t_3d w)
+t_3d	cross(t_lst *save_lst, t_3d v, t_3d w)
 {
-	t_3d	*new;
+	t_3d	new;
 
-	print3d("W IN CROSS CROSS", w);
-	new = mk_3d(save_lst, v.y * w.z - w.y * v.z,
+	new = (t_3d){v.y * w.z - w.y * v.z,
 				v.z * w.x - w.z * v.x,
-				v.x * w.y - w.x * v.y);
+				v.x * w.y - w.x * v.y};
 	return (new);
 }
 
@@ -131,18 +130,13 @@ t_3d	*at(t_lst *save_lst, t_ray ray, double t)
 	return (ret);
 }
 
-t_3d	*mk_unit(t_lst *save_lst, t_3d v)
+t_3d	mk_unit(t_lst *save_lst, t_3d v)
 {
 	double vlen;
-	static int x;
 	
 	vlen = sqrt(len_squared(v));
 	t_3d test = mul(save_lst, 1.0 / vlen, v);
-	t_3d *save = &test;
-	if (!x)
-		print3d("MK UNIT: ", *save);
-	x = 1;
-	return (save);
+	return (test);
 }
 
 void	print3d(char *s, t_3d v)

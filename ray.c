@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:25:40 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 18:08:27 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/19 14:06:08 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ uint32_t	compute_clr(t_mrt *m, t_hit *h)
 	if (hit_something)
 	{
 		// print3d("h->normal: ", h->normal);
-		t_3d light_hit = *mk_unit(m->save_lst, *sub_3d(m->save_lst,
+		t_3d light_hit = mk_unit(m->save_lst, *sub_3d(m->save_lst,
 					*m->l->pos,
 					h->pos));
 		// print3d("LP", light_hit);
 		coeff = -dot(light_hit, // should that be + or - ?
-			*mk_unit(m->save_lst, h->normal));
+			mk_unit(m->save_lst, h->normal));
 		// printf("coeff: %f\n", coeff);
 		// print_clr(h->clr);
 		clr = shade(m, h->clr, coeff);

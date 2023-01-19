@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 10:31:04 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/19 12:06:29 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/19 14:03:58 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	hit_sphere(t_mrt *m, t_sphere *sp, t_ray *r, t_hit *h)
 	// double	hi;
 	double	t;
 	t_3d	*hitpos;
-	t_3d	*hit_normal;
+	t_3d	hit_normal;
 
 	t = hitpoint_sphere(m->save_lst, *sp->pos, sp->diameter, *r);
 	if (t <= 0.0)
@@ -65,7 +65,7 @@ void	hit_sphere(t_mrt *m, t_sphere *sp, t_ray *r, t_hit *h)
 		{
 			hitpos = at(m->save_lst, *r, t);
 			hit_normal = mk_unit(m->save_lst, *sub_3d(m->save_lst, *at(m->save_lst, *r, t), *sp->pos));
-			update_hit(m->save_lst, h, hitpos, t, hit_normal, sp->color);
+			update_hit(m->save_lst, h, hitpos, t, &hit_normal, sp->color);
 			// print_hit(*h);
 		}
 	}
@@ -144,8 +144,8 @@ void	hit_plane(t_mrt *m, t_plane *pl, t_ray *r, t_hit *h)
 
 void	print_hit(t_hit h)
 {
-	print3d("  pos", h.pos);
-	print3d("  normal", h.normal);
+	// print3d("  pos", h.pos);
+	// print3d("  normal", h.normal);
 	printf("  t: %f\n", h.t);
 	printf("  ");
 	print_clr(h.clr);
