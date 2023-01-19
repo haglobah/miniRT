@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 10:31:04 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 17:27:36 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/19 11:14:52 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ bool	did_hit(t_hit *h)
 	return (true);
 }
 
-void	update_hit(t_lst *save_lst, t_hit *h, t_3d *pos, double t, t_3d *normal, t_clr clr)
+void	update_hit(t_hit *h, t_3d *pos, double t, t_3d *normal, t_clr clr)
 {
 	h->pos = *pos;
 	h->normal = *normal;
@@ -65,7 +65,7 @@ void	hit_sphere(t_mrt *m, t_sphere *sp, t_ray *r, t_hit *h)
 		{
 			hitpos = at(m->save_lst, *r, t);
 			hit_normal = mk_unit(m->save_lst, *sub_3d(m->save_lst, *at(m->save_lst, *r, t), *sp->pos));
-			update_hit(m->save_lst, h, hitpos, t, hit_normal, sp->color);
+			update_hit(h, hitpos, t, hit_normal, sp->color);
 			// print_hit(*h);
 		}
 	}
@@ -114,7 +114,7 @@ void	hit_plane(t_mrt *m, t_plane *pl, t_ray *r, t_hit *h)
 		{
 			hitpos = at(m->save_lst, *r, t);
 			// print_clr(pl->color);
-			update_hit(m->save_lst, h, hitpos, t, pl->normal, pl->color);
+			update_hit(h, hitpos, t, pl->normal, pl->color);
 			// print_hit(*h);
 		}
 	}

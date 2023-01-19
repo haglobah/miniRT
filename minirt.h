@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 18:09:03 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/19 11:48:24 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include <stdio.h>
 # include <stdbool.h>
 
-# define WIDTH 120.0
-# define HEIGHT 67.5
+# define WIDTH 1200
+# define HEIGHT 675
 
 typedef double t_d;
 
@@ -209,7 +209,7 @@ void		fill_window(t_window *w, double width, double height);
 t_camera	*mk_camera(t_mrt *m, t_window *w, t_3d *vup);
 
 //minirt.c
-int		trace_ray(t_ray *r, t_mrt *m);
+uint32_t	trace_ray(t_ray *r, t_mrt *m);
 char	***lex(int argc,char **argv);
 t_mrt	*parse(char ***sens);
 void	draw_scene(mlx_image_t *img, t_mrt *p);
@@ -219,7 +219,7 @@ uint32_t	cons_sphere_clr(t_clr color, double coeff);
 
 //hit.c
 double	hitpoint_sphere(t_lst *save_lst, t_3d center, double radius, t_ray r);
-void	update_hit(t_lst *save_lst, t_hit *h, t_3d *pos, double t, t_3d *normal, t_clr clr);
+void	update_hit(t_hit *h, t_3d *pos, double t, t_3d *normal, t_clr clr);
 bool	did_hit(t_hit *h);
 void	hit_sphere(t_mrt *m, t_sphere *sp, t_ray *r, t_hit *h);
 void	hit_plane(t_mrt *m, t_plane *pl, t_ray *r, t_hit *h);
