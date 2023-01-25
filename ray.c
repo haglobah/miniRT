@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:25:40 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/25 12:58:37 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/25 13:10:26 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ bool	is_shaded(t_mrt *m, t_hit *h)
 	t_ray	light;
 
 	light = mk_ray(*m->l->pos,
-		mk_unit(sub_3d(h->pos,
+			mk_unit(sub_3d(h->pos,
 			*m->l->pos)));
 	return (in_shadow(light, m, &h->pos));
 }
@@ -96,15 +96,26 @@ uint32_t	compute_clr(t_mrt *m, t_hit *h)
 	if (hit_something)
 	{
 		// print3d("h->normal: ", h->normal);
-		t_3d light_hit = mk_unit(sub_3d(*m->l->pos, h->pos));
+		t_3d light_hit = sub_3d(
+					*m->l->pos,
+					h->pos);
 		// print3d("LP", light_hit);
-		coeff = -dot(light_hit, // should that be + or - ?
-			mk_unit(h->normal));
-		// printf("coeff: %f\n", coeff);
-		// print_clr(h->clr);
-		clr = shade(m, h->clr, coeff);
-		// printf("hit: i = %i\n", i);
-		// print_hit(*h);
+		shaded = is_shaded(m, h);
+		if (shaded)
+		{
+			clr = scattered_reflection(m, h->clr, 0.0);
+		}
+		else
+		{
+			coeff = -dot( // should that be + or - ?
+				mk_unit(light_hit),
+				mk_unit(h->normal));
+			clr = scattered_reflection(m, h->clr, coeff);
+			// printf("coeff: %f\n", coeff);
+			// print_clr(h->clr);
+			// printf("hit: i = %i\n", i);
+			// print_hit(*h);
+		}
 		i++;
 	}
 	else
