@@ -53,21 +53,21 @@ t_camera	*mk_camera(t_mrt *m, t_window *w, t_3d *vup)
 	t_3d save_two = cross(*vup, c->w);
 	c->u = mk_unit(save_two);
 	c->v = cross(c->w, c->u);
-	c->horizontal = /* focus_dist */ mul(viewport_width, c->u);
-	c->vertical = /* focus_dist */  mul(viewport_height, c->v);
+	c->horizontal = mul(viewport_width, c->u);
+	c->vertical = mul(viewport_height, c->v);
 	c->llc = sub4_3d(
-					 *c->pos,
-					 mul(0.5, c->horizontal),
-					 mul(0.5, c->vertical),
-					 c->w);
-	print3d("pos", *c->pos);
-	print3d("dir", *c->dir);
-	print3d("vup", *vup);
-	print3d("u", c->u);
-	print3d("v", c->v);
-	print3d("horizontal", c->horizontal);
-	print3d("vertical", c->vertical);
-	print3d("llc", c->llc);
+				*c->pos,
+				mul(0.5, c->horizontal),
+				mul(0.5, c->vertical),
+				c->w);
+	// print3d("pos", *c->pos);
+	// print3d("dir", *c->dir);
+	// print3d("vup", *vup);
+	// print3d("u", c->u);
+	// print3d("v", c->v);
+	// print3d("horizontal", c->horizontal);
+	// print3d("vertical", c->vertical);
+	// print3d("llc", c->llc);
 	focal_length = 1.0;
 	return (c);
 }
