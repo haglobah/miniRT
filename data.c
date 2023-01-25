@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:12:49 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/25 15:51:44 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/25 17:02:19 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	fill_pl(t_3d *pos, t_3d *normal, t_clr *clr, t_plane *plane)
 void	fill_cyl(t_tmp_cyl tmp_cyl, t_cyl *cyl)
 {
 	cyl->pos = tmp_cyl.pos;
-	cyl->normal = tmp_cyl.axis;
+	cyl->axis = tmp_cyl.axis;
 	cyl->diameter = tmp_cyl.diameter;
 	cyl->height = tmp_cyl.height;
 	cyl->color = tmp_cyl.clr;

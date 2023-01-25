@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:25:40 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/25 16:45:19 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/25 17:03:44 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ bool	is_shaded(t_mrt *m, t_hit *h)
 	t_ray	light;
 
 	light = mk_ray(*m->l->pos,
-			mk_unit(sub_3d(h->pos,
+			unit(sub_3d(h->pos,
 			*m->l->pos)));
 	return (in_shadow(light, m, &h->pos));
 }
@@ -96,15 +96,15 @@ uint32_t	compute_clr(t_mrt *m, t_hit *h)
 					h->pos);
 		// print3d("LP", light_hit);
 		shaded = is_shaded(m, h);
-		if (shaded)
+		if (false)
 		{
 			clr = scattered_reflection(m, h->clr, 0.0);
 		}
 		else
 		{
 			coeff = -dot( // should that be + or - ?
-				mk_unit(light_hit),
-				mk_unit(h->normal));
+				unit(light_hit),
+				unit(h->normal));
 			clr = scattered_reflection(m, h->clr, coeff);
 			// printf("coeff: %f\n", coeff);
 			// print_clr(h->clr);
@@ -139,11 +139,11 @@ int	trace_ray(t_ray r, t_mrt *m)
 	{
 		hit_plane(&m->pl[i], r, &h);
 	}
-	// i = -1;
-	// while (++i < m->cyl_count)
-	// {
-	// 	hit_cylinder(&m->cyl[i], r, &h);
-	// }
+	i = -1;
+	while (++i < m->cyl_count)
+	{
+		hit_cylinder(&m->cyl[i], r, &h);
+	}
 	clr = compute_clr(m, &h);
 	return (clr);
 }
