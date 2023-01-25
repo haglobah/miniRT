@@ -49,9 +49,9 @@ t_camera	*mk_camera(t_mrt *m, t_window *w, t_3d *vup)
 	c->pos = m->cam->pos;
 	c->dir = m->cam->dir;
 	t_3d save = mul(-1, *c->dir);
-	c->w = mk_unit(save);
+	c->w = unit(save);
 	t_3d save_two = cross(*vup, c->w);
-	c->u = mk_unit(save_two);
+	c->u = unit(save_two);
 	c->v = cross(c->w, c->u);
 	c->horizontal = mul(viewport_width, c->u);
 	c->vertical = mul(viewport_height, c->v);
@@ -91,7 +91,7 @@ uint32_t	compute_pxl_clr(t_mrt *m, t_camera *c, double x, double y)
 		vvec,
 		mul(-1, *m->cam->pos));
 	old_dir = &direction;
-	direction = mk_unit(wo_unit_dir);
+	direction = unit(wo_unit_dir);
 	if (times_called > 0 && !v_iseq(old_dir, &direction))
 	{
 		// printf("times_called: %i\n", times_called);

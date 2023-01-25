@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/25 12:55:32 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/25 15:48:27 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ double	sq(double a);
 double	dist(t_3d v, t_3d w);
 bool	v_iseq(t_3d *v, t_3d *w);
 double	len(t_3d v);
-t_3d	mk_unit(t_3d v);
+t_3d	unit(t_3d v);
 void	print3d(char *s, t_3d v);
 t_3d	*normalize_vector(t_3d *vec);
 
@@ -147,7 +147,7 @@ typedef struct s_coor_plane
 typedef struct s_cyl
 {
 	t_3d	*pos;
-	t_3d	*normal;
+	t_3d	*axis;
 	t_d		diameter;
 	t_d		height;
 	t_clr	color;
@@ -173,7 +173,7 @@ t_cam		*mk_cam(t_3d *pos, t_3d *dir, t_d fov);
 t_light		*mk_l(t_3d *pos, t_clr *clr, t_d brightness);
 void	fill_sp(t_3d *pos, t_d diameter, t_clr *clr, t_sphere *sphere);
 void	fill_pl(t_3d *pos, t_3d *normal, t_clr *clr, t_plane *plane);
-void	fill_cyl(t_3d *pos, t_3d *normal, t_d diameter, t_d height, t_clr *clr, t_cyl *cyl);
+void	fill_cyl(t_3d *pos, t_3d *axis, t_d diameter, t_d height, t_clr *clr, t_cyl *cyl);
 void		print_mrt(t_mrt *m);
 
 typedef struct s_window

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3d.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/25 12:38:45 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/25 15:49:44 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ t_3d	at(t_ray ray, double t)
 	return (ret);
 }
 
-t_3d	mk_unit(t_3d v)
+t_3d	unit(t_3d v)
 {
 	double	vlen;
 	t_3d	new;
