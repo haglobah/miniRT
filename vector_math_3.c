@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 16:22:42 by mhedtman          #+#    #+#             */
-/*   Updated: 2023/01/25 16:27:36 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/25 17:05:21 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_3d	at(t_ray ray, double t)
 	return (ret);
 }
 
-t_3d	mk_unit(t_3d v)
+t_3d	unit(t_3d v)
 {
 	double	vlen;
 	t_3d	new;

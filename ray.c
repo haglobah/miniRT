@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:25:40 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/25 17:03:44 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/25 17:05:55 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ bool	in_shadow(t_ray r, t_mrt *m, t_3d *hitpoint)
 		hit_sphere(&m->sp[i], r, &h);
 	}
 	i = -1;
-	print3d("H BEFORE PLANE: ", h.pos);
 	while (++i < m->pl_count)
 	{
 		hit_plane(&m->pl[i], r, &h);
@@ -59,7 +58,6 @@ bool	in_shadow(t_ray r, t_mrt *m, t_3d *hitpoint)
 	// }
 	if (dist(r.pos, at(r, h.t)) < dist(r.pos, *hitpoint))
 	{
-		print3d("H: ", h.pos);
 		in_shadow = true;
 	}
 	else

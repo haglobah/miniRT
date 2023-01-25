@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:23:00 by mhedtman          #+#    #+#             */
-/*   Updated: 2023/01/25 15:26:28 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/25 17:04:08 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ typedef struct s_coor_plane
 typedef struct s_cyl
 {
 	t_3d		*pos;
-	t_3d		*normal;
+	t_3d		*axis;
 	double		diameter;
 	double		height;
 	t_clr		color;

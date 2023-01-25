@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 16:12:44 by mhedtman          #+#    #+#             */
-/*   Updated: 2023/01/25 16:41:30 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/25 17:04:50 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ double	sq(double a);
 double	dist(t_3d v, t_3d w);
 bool	v_iseq(t_3d *v, t_3d *w);
 t_3d	at(t_ray ray, double t);
-t_3d	mk_unit(t_3d v);
+t_3d	unit(t_3d v);
 
 // VECTOR UTILS
 void	printray(char *s, t_ray v);
