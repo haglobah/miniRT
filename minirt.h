@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/25 12:55:32 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/25 16:42:09 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,66 +15,20 @@
 
 # include "libft/libft.h"
 # include "MLX42/include/MLX42/MLX42.h"
-
 # include <math.h>
-# include <fcntl.h> 
-# include <stdio.h>
+# include <fcntl.h>
 # include <stdbool.h>
+
+# include "parser.h"
+# include "vector_math.h"
+# include "objects.h"
 
 # define WIDTH 1200
 # define HEIGHT 675
 
 typedef double t_d;
 
-typedef struct s_3d_vector
-{
-	double x;
-	double y;
-	double z;
-
-}	t_3d;
-
-typedef struct s_color
-{
-	u_int8_t r;
-	u_int8_t g;
-	u_int8_t b;
-	u_int8_t a;
-
-}	t_clr;
-
-typedef struct s_ray
-{
-	t_3d	pos;
-	t_3d	dir;
-
-}	t_ray;
-
-typedef struct s_lst
-{
-	t_3d	*vec;
-	t_clr	*clr;
-	t_ray	*ray;
-	struct s_lst	*next;
-} t_lst;
-
 //3d.c
-t_3d	*mk_3d(t_lst *save_lst, double x, double y, double z);
-void	del_3d(t_3d *v);
-t_3d	sum_3d(t_3d v, t_3d w);
-t_3d	sum4_3d(t_3d v, t_3d w, t_3d u, t_3d z);
-t_3d	mul(double k, t_3d v);
-t_3d	sub_3d(t_3d v, t_3d w);
-t_3d	sub4_3d(t_3d v, t_3d w, t_3d u, t_3d z);
-double	dot(t_3d v, t_3d w);
-t_3d	cross(t_3d v, t_3d w);
-double	len_squared(t_3d v);
-double	sq(double a);
-double	dist(t_3d v, t_3d w);
-bool	v_iseq(t_3d *v, t_3d *w);
-double	len(t_3d v);
-t_3d	mk_unit(t_3d v);
-void	print3d(char *s, t_3d v);
 t_3d	*normalize_vector(t_3d *vec);
 
 //ray.c
@@ -93,109 +47,14 @@ void	del_clr(t_clr *v);
 t_clr	sum_clr(t_clr v, t_clr w);
 t_clr	mul_clr(double k, t_clr v);
 
-typedef struct s_hit
-{
-	t_3d	pos;
-	t_3d	normal;
-	t_d		t;
-	t_clr	clr;
-
-}	t_hit;
-
-typedef	struct s_ambient_light
-{
-	t_d		ratio;
-	t_clr	color;
-} t_ambient;
-
-typedef struct	s_cam
-{
-	t_3d	*pos;
-	t_3d	*dir;
-	t_d		fov;
-} t_cam;
-
-typedef struct s_light
-{
-	t_3d	*pos;
-	t_d		brightness;
-	t_clr	color;
-} t_light;
-
-typedef struct s_sphere
-{
-	t_3d	*pos;
-	t_d		diameter;
-	t_clr	color;
-} t_sphere;
-
-typedef struct s_plane
-{
-	t_3d	*pos;
-	t_3d	*normal;
-	t_clr	color;
-} t_plane;
-
-typedef struct s_coor_plane
-{
-	double	a;
-	double	b;
-	double	c;
-	double	d;
-} t_coor_plane;
-
-typedef struct s_cyl
-{
-	t_3d	*pos;
-	t_3d	*normal;
-	t_d		diameter;
-	t_d		height;
-	t_clr	color;
-} t_cyl;
-
-typedef struct s_minirt
-{
-	t_ambient	*amb;
-	t_cam		*cam;
-	t_light		*l;
-	t_sphere	*sp;
-	t_plane		*pl;
-	t_cyl		*cyl;
-	t_lst		*save_lst;
-	int			sp_count;
-	int			pl_count;
-	int			cyl_count;
-}	t_mrt;
-
 //data.c 
 t_ambient	*mk_amb(t_d ratio, t_clr *clr);
 t_cam		*mk_cam(t_3d *pos, t_3d *dir, t_d fov);
 t_light		*mk_l(t_3d *pos, t_clr *clr, t_d brightness);
-void	fill_sp(t_3d *pos, t_d diameter, t_clr *clr, t_sphere *sphere);
-void	fill_pl(t_3d *pos, t_3d *normal, t_clr *clr, t_plane *plane);
-void	fill_cyl(t_3d *pos, t_3d *normal, t_d diameter, t_d height, t_clr *clr, t_cyl *cyl);
+void		fill_sp(t_3d *pos, t_d diameter, t_clr *clr, t_sphere *sphere);
+void		fill_pl(t_3d *pos, t_3d *normal, t_clr *clr, t_plane *plane);
+void		fill_cyl(t_tmp_cyl tmp_cyl, t_cyl *cyl);
 void		print_mrt(t_mrt *m);
-
-typedef struct s_window
-{
-	double	aspect_ratio;
-	double	height;
-	double	width;
-} t_window;
-
-typedef struct s_camera
-{
-	t_3d	*pos;
-	t_3d	*dir;
-	t_3d	*vup;
-	t_3d	w;
-	t_3d	u;
-	t_3d	v;
-	t_3d	horizontal;
-	t_3d	vertical;
-	t_3d	llc;
-	t_d		vfov;
-} t_camera;
 
 //memory.c
 void		add_to_list(t_lst **lst, t_3d *v, t_clr *clr, t_ray *ray);
@@ -210,7 +69,6 @@ t_camera	*mk_camera(t_mrt *m, t_window *w, t_3d *vup);
 //minirt.c
 int		trace_ray(t_ray r, t_mrt *m);
 char	***lex(int argc,char **argv);
-t_mrt	*parse(char ***sens);
 void	draw_scene(mlx_image_t *img, t_mrt *p);
 
 // bool		hit_sphere(t_3d center, double radius, t_ray r, double t_min, double t_max, t_hrecord *rec);
@@ -240,5 +98,8 @@ void	printnstrs(char **slist);
 void	printstrs(char **slist);
 void	printstrs_n(char **slist);
 void	printsens(char ***sentence_list);
+
+// parser.c
+t_mrt	*parse(char ***sens);
 
 #endif

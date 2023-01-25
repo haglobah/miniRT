@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:25:40 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/25 13:10:26 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/25 16:45:19 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,6 @@ t_ray	mk_ray(t_3d pos, t_3d dir)
 
 	new = (t_ray){pos, dir};
 	return (new);
-}
-
-void	del_ray(t_ray *r)
-{
-	(void)r;
-	// ft_free(r->pos);
-	// ft_free(r->dir);
 }
 
 uint32_t	scattered_reflection(t_mrt *m, t_clr clr, double coeff)
@@ -40,9 +33,9 @@ uint32_t	scattered_reflection(t_mrt *m, t_clr clr, double coeff)
 
 bool	in_shadow(t_ray r, t_mrt *m, t_3d *hitpoint)
 {
-	uint32_t clr;
+	// uint32_t clr;
+	// double	t;
 	t_hit	h;
-	double	t;
 	int		i;
 	bool	in_shadow;
 
@@ -54,6 +47,7 @@ bool	in_shadow(t_ray r, t_mrt *m, t_3d *hitpoint)
 		hit_sphere(&m->sp[i], r, &h);
 	}
 	i = -1;
+	print3d("H BEFORE PLANE: ", h.pos);
 	while (++i < m->pl_count)
 	{
 		hit_plane(&m->pl[i], r, &h);
@@ -65,6 +59,7 @@ bool	in_shadow(t_ray r, t_mrt *m, t_3d *hitpoint)
 	// }
 	if (dist(r.pos, at(r, h.t)) < dist(r.pos, *hitpoint))
 	{
+		print3d("H: ", h.pos);
 		in_shadow = true;
 	}
 	else
