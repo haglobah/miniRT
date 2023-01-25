@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:49:15 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 18:08:22 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/25 12:40:42 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,29 +70,14 @@ uint32_t	rgb(u_int8_t r, u_int8_t g, u_int8_t b)
 	return ((r << 24) | (g << 16) | (b << 8) | 255);
 }
 
-t_clr	*mk_clr(t_lst *save_lst, uint8_t r, uint8_t g, uint8_t b)
-{
-	t_clr	*new;
-
-	new = ft_calloc(1, sizeof(t_clr));
-	if (new == NULL)
-		return (NULL);
-	new->r = r;
-	new->g = g;
-	new->b = b;
-	new->a = 255;
-	add_to_list(&save_lst, NULL, new, NULL);
-	return (new);
-}
-
 void	del_clr(t_clr *v)
 {
 	ft_free(v);
 }
 
-t_clr	*sum_clr(t_lst *save_lst, t_clr v, t_clr w)
+t_clr	sum_clr(t_clr v, t_clr w)
 {
-	t_clr		*new;
+	t_clr		new;
 	uint16_t	r;
 	uint16_t	g;
 	uint16_t	b;
@@ -106,14 +91,14 @@ t_clr	*sum_clr(t_lst *save_lst, t_clr v, t_clr w)
 	b = (uint16_t)v.b + (uint16_t)w.b;
 	if (b > 255)
 		b = 255;
-	new = mk_clr(save_lst, r, g, b);
+	new = (t_clr){r, g, b, 0};
 	return (new);
 }
 
-t_clr	*mul_clr(t_lst *save_lst, double k, t_clr v)
+t_clr	mul_clr(double k, t_clr v)
 {
-	t_clr	*new;
+	t_clr	new;
 
-	new = mk_clr(save_lst, k * v.r, k * v.g, k * v.b);
+	new = (t_clr){k * v.r, k * v.g, k * v.b, 0};
 	return (new);
 }

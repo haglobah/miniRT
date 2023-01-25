@@ -6,22 +6,17 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:25:40 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/19 14:06:08 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/25 12:40:14 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_ray	*mk_ray(t_lst *save_lst, t_3d pos, t_3d dir)
+t_ray	mk_ray(t_3d pos, t_3d dir)
 {
-	t_ray	*new;
+	t_ray	new;
 
-	new = ft_calloc(1, sizeof(t_ray));
-	if (new == NULL)
-		return (NULL);
-	new->pos = pos;
-	new->dir = dir;
-	add_to_list(&save_lst, NULL, NULL, new);
+	new = (t_ray){pos, dir};
 	return (new);
 }
 
@@ -34,15 +29,13 @@ void	del_ray(t_ray *r)
 
 uint32_t	shade(t_mrt *m, t_clr clr, double coeff)
 {
-	t_clr	*res;
+	t_clr	res;
 	
-	res = sum_clr(m->save_lst,
-		*mul_clr(m->save_lst, m->amb->ratio, m->amb->color),
-		*mul_clr(m->save_lst, m->l->brightness * d_max(coeff, 0.0),
-				 clr));
-	// res = mul_clr(m->l->brightness * d_max(coeff, 0.0),
-	// 			 clr);
-	return (rgb(res->r, res->g, res->b));
+	res = sum_clr(
+		mul_clr(m->amb->ratio, m->amb->color),
+		mul_clr(m->l->brightness * d_max(coeff, 0.0),
+		clr));
+	return (rgb(res.r, res.g, res.b));
 }
 
 uint32_t	compute_clr(t_mrt *m, t_hit *h)
@@ -56,12 +49,10 @@ uint32_t	compute_clr(t_mrt *m, t_hit *h)
 	if (hit_something)
 	{
 		// print3d("h->normal: ", h->normal);
-		t_3d light_hit = mk_unit(m->save_lst, *sub_3d(m->save_lst,
-					*m->l->pos,
-					h->pos));
+		t_3d light_hit = mk_unit(sub_3d(*m->l->pos, h->pos));
 		// print3d("LP", light_hit);
 		coeff = -dot(light_hit, // should that be + or - ?
-			mk_unit(m->save_lst, h->normal));
+			mk_unit(h->normal));
 		// printf("coeff: %f\n", coeff);
 		// print_clr(h->clr);
 		clr = shade(m, h->clr, coeff);
@@ -77,24 +68,23 @@ uint32_t	compute_clr(t_mrt *m, t_hit *h)
 	return (clr);
 }
 
-int	trace_ray(t_ray *r, t_mrt *m)
+int	trace_ray(t_ray r, t_mrt *m)
 {
 	uint32_t clr;
-	double	t;
 	t_hit	h;
 	int		i;
 	
 	h = (t_hit){(t_3d){0, 0, 0},
-				(t_3d){0, 0, 0}, 1e6, (t_clr){0, 0, 0}};
+				(t_3d){0, 0, 0}, 1e6, (t_clr){0, 0, 0, 0}};
 	i = -1;
 	while (++i < m->sp_count)
 	{
-		hit_sphere(m, &m->sp[i], r, &h);
+		hit_sphere(&m->sp[i], r, &h);
 	}
 	i = -1;
 	while (++i < m->pl_count)
 	{
-		hit_plane(m, &m->pl[i], r, &h);
+		hit_plane(&m->pl[i], r, &h);
 	}
 	// i = -1;
 	// while (++i < m->cyl_count)

@@ -6,7 +6,7 @@
 #    By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 12:24:11 by bhagenlo          #+#    #+#              #
-#    Updated: 2023/01/19 12:06:41 by mhedtman         ###   ########.fr        #
+#    Updated: 2023/01/25 12:32:45 by mhedtman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ TOBJS = $(TESTS:.c=.o)
 TEST = $(NAME)_test
 
 CC := cc
-CFLAGS := -Wall -Wextra # -Wno-gnu-include-next -ILeakSanitizer -LLeakSanitizer -llsan -lc++ #-Werror
+CFLAGS := -Wall -Wextra -Wno-gnu-include-next -ILeakSanitizer -LLeakSanitizer -llsan -lc++ #-Werror
 
 LIBFT := libft
 LFT := $(LIBFT)/libft.a

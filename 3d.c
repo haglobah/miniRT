@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/19 14:04:30 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/25 12:38:45 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 t_3d	*mk_3d(t_lst *lst, double x, double y, double z)
 {
 	t_3d	*new;
-	static int	counter;
 
 	new = ft_calloc(1, sizeof(t_3d));
 	if (new == NULL)
@@ -33,48 +32,47 @@ void	del_3d(t_3d *v)
 	ft_free(v);
 }
 
-t_3d	*sum_3d(t_lst *save_lst, t_3d v, t_3d w)
-{
-	t_3d	*new;
-
-	new = mk_3d(save_lst, v.x + w.x, v.y + w.y, v.z + w.z);
-	return (new);
-}
-
-t_3d	*sum4_3d(t_lst *save_lst, t_3d v, t_3d w, t_3d u, t_3d z)
-{
-	t_3d	*new;
-
-	new = mk_3d(save_lst, v.x + w.x + u.x + z.x, 
-				v.y + w.y + u.y + z.y,
-				v.z + w.z + u.z + z.z);
-	return (new);
-}
-
-t_3d	mul(t_lst *save_lst, double k, t_3d v)
+t_3d	sum_3d(t_3d v, t_3d w)
 {
 	t_3d	new;
 
-	(void)save_lst;
+	new = (t_3d){v.x + w.x, v.y + w.y, v.z + w.z};
+	return (new);
+}
+
+t_3d	sum4_3d(t_3d v, t_3d w, t_3d u, t_3d z)
+{
+	t_3d	new;
+
+	new = (t_3d){v.x + w.x + u.x + z.x, 
+				v.y + w.y + u.y + z.y,
+				v.z + w.z + u.z + z.z};
+	return (new);
+}
+
+t_3d	mul(double k, t_3d v)
+{
+	t_3d	new;
+
 	new = (t_3d){k * v.x, k * v.y, k * v.z};
 	return (new);
 }
 
-t_3d	*sub_3d(t_lst *save_lst, t_3d v, t_3d w)
+t_3d	sub_3d(t_3d v, t_3d w)
 {
-	t_3d	*new;
+	t_3d	new;
 
-	new = sum_3d(save_lst, v, mul(save_lst, -1, w));
+	new = sum_3d(v, mul(-1, w));
 	return (new);
 }
 
-t_3d	*sub4_3d(t_lst *save_lst, t_3d v, t_3d w, t_3d u, t_3d z)
+t_3d	sub4_3d(t_3d v, t_3d w, t_3d u, t_3d z)
 {
-	t_3d	*new;
+	t_3d	new;
 
-	new = mk_3d(save_lst, v.x - w.x - u.x - z.x, 
+	new = (t_3d){v.x - w.x - u.x - z.x, 
 				v.y - w.y - u.y - z.y,
-				v.z - w.z - u.z - z.z);
+				v.z - w.z - u.z - z.z};
 	return (new);
 }
 
@@ -83,7 +81,7 @@ double	dot(t_3d v, t_3d w)
 	return (v.x * w.x + v.y * w.y + v.z * w.z);
 }
 
-t_3d	cross(t_lst *save_lst, t_3d v, t_3d w)
+t_3d	cross(t_3d v, t_3d w)
 {
 	t_3d	new;
 
@@ -120,23 +118,24 @@ bool	v_iseq(t_3d *v, t_3d *w)
 	return (dist(*v, *w) == 0);
 }
 
-t_3d	*at(t_lst *save_lst, t_ray ray, double t)
+t_3d	at(t_ray ray, double t)
 {
 	t_3d	dir;
-	t_3d	*ret;
+	t_3d	ret;
 
-	dir = mul(save_lst, t, ray.dir);
-	ret = sum_3d(save_lst, dir, ray.pos); // cam position
+	dir = mul(t, ray.dir);
+	ret = sum_3d(dir, ray.pos); // cam position
 	return (ret);
 }
 
-t_3d	mk_unit(t_lst *save_lst, t_3d v)
+t_3d	mk_unit(t_3d v)
 {
-	double vlen;
+	double	vlen;
+	t_3d	new;
 	
 	vlen = sqrt(len_squared(v));
-	t_3d test = mul(save_lst, 1.0 / vlen, v);
-	return (test);
+	new = mul(1.0 / vlen, v);
+	return (new);
 }
 
 void	print3d(char *s, t_3d v)

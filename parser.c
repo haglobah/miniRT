@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 12:34:46 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 18:09:38 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/25 12:39:43 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_mrt	*mk_mrt(int *bodies)
 	m->sp = ft_calloc(bodies[0] + 1, sizeof(t_sphere));
 	m->pl = ft_calloc(bodies[1] + 1, sizeof(t_plane));
 	m->cyl = ft_calloc(bodies[2] + 1, sizeof(t_cyl));
-	m->save_lst = NULL; // mk_node(NULL, NULL, NULL);
+	m->save_lst = mk_node(NULL, NULL, NULL);
 	m->sp_count = bodies[0];
 	m->pl_count = bodies[1];
 	m->cyl_count = bodies[2];
@@ -115,7 +115,7 @@ bool	parse_rgb(char *s, t_clr *clr)
 		return (free_strs(rgb), false);
 	if (ft_parse_int_range(rgb[2], &b, 0, 255) == false)
 		return (free_strs(rgb), false);
-	*clr = (t_clr){(uint8_t)r, (uint8_t)g, (uint8_t)b};
+	*clr = (t_clr){(uint8_t)r, (uint8_t)g, (uint8_t)b, (uint8_t)0};
 	free_strs(rgb);
 	return (true);
 }
