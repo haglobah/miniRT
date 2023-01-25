@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:25:40 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/25 12:55:21 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/25 12:58:37 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ uint32_t	scattered_reflection(t_mrt *m, t_clr clr, double coeff)
 	return (rgb(res.r, res.g, res.b));
 }
 
-bool	in_shadow(t_ray *r, t_mrt *m, t_3d *hitpoint)
+bool	in_shadow(t_ray r, t_mrt *m, t_3d *hitpoint)
 {
 	uint32_t clr;
 	t_hit	h;
@@ -47,23 +47,23 @@ bool	in_shadow(t_ray *r, t_mrt *m, t_3d *hitpoint)
 	bool	in_shadow;
 
 	h = (t_hit){(t_3d){0, 0, 0},
-				(t_3d){0, 0, 0}, 1e6, (t_clr){0, 0, 0}};
+				(t_3d){0, 0, 0}, 1e6, (t_clr){0, 0, 0, 0}};
 	i = -1;
 	while (++i < m->sp_count)
 	{
-		hit_sphere(m, &m->sp[i], r, &h);
+		hit_sphere(&m->sp[i], r, &h);
 	}
 	i = -1;
 	while (++i < m->pl_count)
 	{
-		hit_plane(m, &m->pl[i], r, &h);
+		hit_plane(&m->pl[i], r, &h);
 	}
 	// i = -1;
 	// while (++i < m->cyl_count)
 	// {
 	// 	hit_cylinder(&m->cyl[i], r, &h);
 	// }
-	if (dist(r->pos, *at(m->save_lst, *r, h.t)) < dist(r->pos, *hitpoint))
+	if (dist(r.pos, at(r, h.t)) < dist(r.pos, *hitpoint))
 	{
 		in_shadow = true;
 	}
@@ -78,10 +78,10 @@ bool	is_shaded(t_mrt *m, t_hit *h)
 {
 	t_ray	light;
 
-	light = *mk_ray(m->save_lst, *m->l->pos,
-		*mk_unit(m->save_lst, *sub_3d(m->save_lst, h->pos,
+	light = mk_ray(*m->l->pos,
+		mk_unit(sub_3d(h->pos,
 			*m->l->pos)));
-	return (in_shadow(&light, m, &h->pos));
+	return (in_shadow(light, m, &h->pos));
 }
 
 uint32_t	compute_clr(t_mrt *m, t_hit *h)
