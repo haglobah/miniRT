@@ -43,11 +43,13 @@ t_camera	*mk_camera(t_mrt *m, t_window *w, t_3d *vup)
 	h = tan(theta / 2);
 	viewport_height = 2.0 * h;
 	viewport_width = viewport_height * w->aspect_ratio;
-
+	
 	c->pos = m->cam->pos;
 	c->dir = m->cam->dir;
-	c->w = unit(mul(-1, *c->dir));
-	c->u = unit(cross(*vup, c->w));
+	t_3d save = mul(-1, *c->dir);
+	c->w = unit(save);
+	t_3d save_two = cross(*vup, c->w);
+	c->u = cross((t_3d){0, 1, 0}, c->w);
 	c->v = cross(c->w, c->u);
 	c->horizontal = mul(viewport_width, c->u);
 	c->vertical = mul(viewport_height, c->v);

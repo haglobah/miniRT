@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/26 15:16:28 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/26 16:19:20 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	draw_scene(t_options *o, mlx_t *mlx, mlx_image_t *img, t_mrt *p);
 uint32_t	cons_sphere_clr(t_clr color, double coeff);
 
 //hit.c
-double	hitpoint_sphere(t_3d center, double radius, t_ray r);
+double	hitpoint_sphere(t_3d center, double radius, t_ray r, double *root);
 void	update_hit(t_hit *h, t_3d pos, double t, t_3d *normal, t_clr clr);
 bool	did_hit(t_hit *h);
 void	hit_sphere(t_sphere *sp, t_ray r, t_hit *h);

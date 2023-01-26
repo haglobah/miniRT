@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 10:31:04 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/25 17:02:41 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/26 16:20:19 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	update_hit(t_hit *h, t_3d pos, double t, t_3d *normal, t_clr clr)
 	h->clr = clr;
 }
 
-double	hitpoint_sphere(t_3d center, double radius, t_ray r)
+double	hitpoint_sphere(t_3d center, double radius, t_ray r, double *root)
 {
 	t_3d	oc;
 	double	a;
@@ -40,35 +40,45 @@ double	hitpoint_sphere(t_3d center, double radius, t_ray r)
 	a = len_squared(r.dir);
 	half_b = dot(oc, r.dir);
 	c = len_squared(oc) - pow(radius, 2);
-	discriminant = pow(half_b, 2) - (a * c);
-	if (discriminant < 0)
-		return (-1.0);
-	else 
-		return ((-half_b - sqrt(discriminant)) / a);
+	discriminant = sqrt(pow(half_b, 2) - (a * c));
+	root[0] = (-half_b + discriminant) / a;
+	root[1] = (-half_b - discriminant) / a;
+	return (0);
 }
 
 void	hit_sphere(t_sphere *sp, t_ray r, t_hit *h)
 {
 	// Wofuer waren die nochmal?
 	// double	lo;
-	// double	hi;
+	double	root[2];
+	int		i = 0;
 	double	t;
 	t_3d	hitpos;
 	t_3d	hit_normal;
 
-	t = hitpoint_sphere(*sp->pos, sp->diameter, r);
-	if (t <= 0.0)
-		return ;
-	else
+	t = hitpoint_sphere(*sp->pos, sp->diameter, r, root);
+	while (i < 2)
 	{
-		if (t < h->t)
+		if (root[i] < h->t && root[i] > 0)
 		{
-			hitpos = at(r, t);
-			hit_normal = unit(sub_3d(at(r, t), *sp->pos));
-			update_hit(h, hitpos, t, &hit_normal, sp->color);
-			// print_hit(*h);
+			hitpos = at(r, root[i]);
+			hit_normal = unit(sub_3d(at(r, root[i]), *sp->pos));
+			update_hit(h, hitpos, root[i], &hit_normal, sp->color);
 		}
+		i++;
 	}
+	// if (t <= 0.0)
+	// 	return ;
+	// else
+	// {
+	// 	if (t < h->t)
+	// 	{
+	// 		hitpos = at(r, t);
+	// 		hit_normal = unit(sub_3d(at(r, t), *sp->pos));
+	// 		update_hit(h, hitpos, t, &hit_normal, sp->color);
+	// 		// print_hit(*h);
+	// 	}
+	// }
 }
 
 void	print_plane(t_coor_plane pl)

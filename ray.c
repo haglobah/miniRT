@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:25:40 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/26 11:12:46 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/26 16:30:48 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,22 @@ t_ray	mk_ray(t_3d pos, t_3d dir)
 uint32_t	scattered_reflection(t_mrt *m, t_clr clr, double coeff)
 {
 	t_clr	res;
-	
-	res = sum_clr(
+
+	if (coeff < 0)
+	{
+		coeff *= -1;
+		res = sum_clr(
 		mul_clr(m->amb->ratio, m->amb->color),
-		mul_clr(m->l->brightness * d_max(coeff, 0.0),
+		mul_clr(m->l->brightness * coeff,
 		clr));
+	}
+	else
+	{
+	     	res = sum_clr(
+			mul_clr(m->amb->ratio, m->amb->color),
+			mul_clr(m->l->brightness * coeff,
+			clr));
+	}
 	return (rgb(res.r, res.g, res.b));
 }
 
