@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/25 17:03:33 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/26 13:11:19 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,14 @@
 # define HEIGHT 675
 
 typedef double t_d;
+
+typedef struct s_options
+{
+	mlx_t		*mlx;
+	mlx_image_t *g_img;
+	t_mrt		*m;
+	t_camera	*camera;
+}	t_options;
 
 //3d.c
 t_3d	*normalize_vector(t_3d *vec);
@@ -61,7 +69,8 @@ void		add_to_list(t_lst **lst, t_3d *v, t_clr *clr, t_ray *ray);
 void		print_list(t_lst *list);
 t_lst		*mk_node(t_3d *v, t_clr *clr, t_ray *ray);
 void		free_from_list(t_lst *lst);
-
+void		free_mrt(t_mrt *m);
+void		free_opt(t_options *o);
 //scene.c 
 void		fill_window(t_window *w, double width, double height);
 t_camera	*mk_camera(t_mrt *m, t_window *w, t_3d *vup);
@@ -69,7 +78,7 @@ t_camera	*mk_camera(t_mrt *m, t_window *w, t_3d *vup);
 //minirt.c
 int		trace_ray(t_ray r, t_mrt *m);
 char	***lex(int argc,char **argv);
-void	draw_scene(mlx_image_t *img, t_mrt *p);
+void	draw_scene(t_options *o, mlx_t *mlx, mlx_image_t *img, t_mrt *p);
 
 // bool		hit_sphere(t_3d center, double radius, t_ray r, double t_min, double t_max, t_hrecord *rec);
 uint32_t	cons_sphere_clr(t_clr color, double coeff);

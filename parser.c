@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 12:34:46 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/25 15:22:24 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/26 13:11:03 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_mrt	*parse(char ***sens)
 	{
 		if (!parse_line(m, sens[i]))
 		{
-			free_all(m);
+			free_mrt(m);
 			free_sens(sens);
 			return (NULL);
 		}

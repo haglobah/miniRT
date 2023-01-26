@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:13:53 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 15:48:42 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/26 13:09:58 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	printsens(char ***sentence_list)
 	}
 }
 
-void	free_all(t_mrt *m)
+void	free_mrt(t_mrt *m)
 {
 	free_from_list(m->save_lst);
 	free(m->sp);
@@ -120,4 +120,11 @@ void	free_all(t_mrt *m)
 	free(m->l);
 	free(m);
 	return ;
+}
+
+void	free_opt(t_options *o)
+{
+	free_mrt(o->m);
+	free(o->camera);
+	free(o);
 }

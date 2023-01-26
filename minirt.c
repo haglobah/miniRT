@@ -41,17 +41,13 @@ t_camera	*mk_camera(t_mrt *m, t_window *w, t_3d *vup)
 	c = (t_camera *)ft_calloc(1, sizeof(t_camera));
 	theta = degrees_to_radians(m->cam->fov);
 	h = tan(theta / 2);
-	// printf("h: %f\n", h);
 	viewport_height = 2.0 * h;
 	viewport_width = viewport_height * w->aspect_ratio;
-	
-	// print_mrt(m);
+
 	c->pos = m->cam->pos;
 	c->dir = m->cam->dir;
-	t_3d save = mul(-1, *c->dir);
-	c->w = unit(save);
-	t_3d save_two = cross(*vup, c->w);
-	c->u = unit(save_two);
+	c->w = unit(mul(-1, *c->dir));
+	c->u = unit(cross(*vup, c->w));
 	c->v = cross(c->w, c->u);
 	c->horizontal = mul(viewport_width, c->u);
 	c->vertical = mul(viewport_height, c->v);
@@ -121,7 +117,24 @@ void	fill_window(t_window *w, double width, double height)
 	w->height = height;
 }
 
-void	draw_scene(mlx_image_t *img, t_mrt *m)
+// void	move(mlx_key_data_t key, void *param)
+// {
+// 	t_mrt	*m;
+// 	t_3d	pos;
+
+// 	m = (t_mrt *)param;
+// 	printf("ADRESS OF M: %p\n", m);
+// 	print_mrt(m);
+// 	if (key.key == MLX_KEY_DOWN)
+// 	{
+// 		printf("TEST\n");
+// 		pos = sum_3d(*m->cam->pos, (t_3d){1, 1, 1});
+// 		free(m->cam->pos);
+// 		m->cam->pos = mk_3d(NULL, pos.x, pos.y, pos.z);
+// 	}
+// }
+
+void	draw_scene(t_options *o, mlx_t *mlx, mlx_image_t *img, t_mrt *m)
 {
 	int			j;
 	int			i;
@@ -131,8 +144,11 @@ void	draw_scene(mlx_image_t *img, t_mrt *m)
 	uint32_t	clr;
 
 	fill_window(&w, WIDTH, HEIGHT);
+	//hooks für change in m
+	// print3d("CAM POS: ", *m->cam->pos);
+	// mlx_loop_hook(mlx, &move, m);
 	vup = mk_3d(m->save_lst, 0, 1, 0);
-	c = mk_camera(m, &w, vup);
+	o->camera = mk_camera(m, &w, vup);
 	j = HEIGHT - 1;
 	while (--j >= 0)
 	{
@@ -143,11 +159,10 @@ void	draw_scene(mlx_image_t *img, t_mrt *m)
 			double y = j / w.height;
 			// printf("x: %f\n", x);
 			// printf("y: %f\n", y);
-			clr = compute_pxl_clr(m, c, x, y);
+			clr = compute_pxl_clr(m, o->camera, x, y);
 			put_pxl(img, i, j, clr);
 		}
 	}
-	free_all(m);
-	free(c);
+	// free(c);
 	return ;
 }

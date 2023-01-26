@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:57:19 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/19 12:57:04 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/26 15:13:55 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,67 @@
 
 void	key_hook(void *param)
 {
-	mlx_t	*mlx;
+	t_options	*o;
 
-	mlx = param;
-	if (mlx_is_key_down(param, MLX_KEY_ESCAPE))
-		mlx_close_window(param);
+	o = (t_options *)param;
+	if (mlx_is_key_down(o->mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(o->mlx);
+	else if (mlx_is_key_down(o->mlx, MLX_KEY_W))
+	{
+		*o->camera->pos = sub_3d(*o->camera->pos, (t_3d){0.05, 0, 0});
+		draw_scene(o, o->mlx, o->g_img, o->m);
+	}
+	else if (mlx_is_key_down(o->mlx, MLX_KEY_S))
+	{
+		*o->camera->pos = sum_3d(*o->camera->pos, (t_3d){0.05, 0, 0});
+		draw_scene(o, o->mlx, o->g_img, o->m);
+	}
+	else if (mlx_is_key_down(o->mlx, MLX_KEY_D))
+	{
+		*o->camera->pos = sub_3d(*o->camera->pos, (t_3d){0, 0.05, 0});
+		draw_scene(o, o->mlx, o->g_img, o->m);
+	}
+	else if (mlx_is_key_down(o->mlx, MLX_KEY_A))
+	{
+		*o->camera->pos = sum_3d(*o->camera->pos, (t_3d){0, 0.05, 0});
+		draw_scene(o, o->mlx, o->g_img, o->m);
+	}
+	else if (mlx_is_key_down(o->mlx, MLX_KEY_LEFT_SHIFT))
+	{
+		*o->camera->pos = sub_3d(*o->camera->pos, (t_3d){0, 0, 0.05});
+		draw_scene(o, o->mlx, o->g_img, o->m);
+	}
+	else if (mlx_is_key_down(o->mlx, MLX_KEY_SPACE))
+	{
+		*o->camera->pos = sum_3d(*o->camera->pos, (t_3d){0, 0, 0.05});
+		draw_scene(o, o->mlx, o->g_img, o->m);
+	}
+	else if (mlx_is_key_down(o->mlx, MLX_KEY_H))
+	{
+		*o->camera->dir = sub_3d(*o->m->l->pos, (t_3d){0, 0, 0.05});
+		draw_scene(o, o->mlx, o->g_img, o->m);
+	}
+	else if (mlx_is_key_down(o->mlx, MLX_KEY_J))
+	{
+		*o->m->l->pos = sum_3d(*o->m->l->pos, (t_3d){0, 0, 0.05});
+		draw_scene(o, o->mlx, o->g_img, o->m);
+	}
+	else if (mlx_is_key_down(o->mlx, MLX_KEY_LEFT))
+	{
+		*o->camera->dir = sub_3d(*o->camera->dir, (t_3d){0.05, 0., 0});
+		draw_scene(o, o->mlx, o->g_img, o->m);
+	}
+	else if (mlx_is_key_down(o->mlx, MLX_KEY_RIGHT))
+	{
+		*o->camera->dir = sum_3d(*o->camera->dir, (t_3d){0.05, 0, 0.0});
+		draw_scene(o, o->mlx, o->g_img, o->m);
+	}
+	// print3d("CAMER POS: ", *o->camera->pos);
 }
 
-int	minirt(int argc, char **argv, mlx_t *mlx, mlx_image_t *g_img)
+int	minirt(t_options *o, int argc, char **argv)
 {
-	t_mrt		*m;
 	char	***sens;
-	(void)	mlx;
 
 	sens = lex(argc, argv);
 	if (!sens)
@@ -33,35 +82,35 @@ int	minirt(int argc, char **argv, mlx_t *mlx, mlx_image_t *g_img)
 		ft_printf("Parsing failed. Did you supply a *.rt file?\n");
 		return (EXIT_FAILURE);
 	}
-	m = parse(sens);
-	if (!m)
+	o->m = parse(sens);
+	if (!o->m)
 		return (EXIT_FAILURE);
-	// g_img = mlx_new_image(mlx, WIDTH, HEIGHT);
-	draw_scene(g_img, m);
+	draw_scene(o, o->mlx, o->g_img, o->m);
 	return (0);
 }
 
 int32_t	main(int argc, char *argv[])
 {
-	mlx_t		*mlx;
-	mlx_image_t	*g_img;
+	t_options	*o;
 
-	mlx = mlx_init(WIDTH, HEIGHT, "miniRT", true);
-	g_img = NULL;
-	if (!mlx)
+	o = ft_calloc(1, sizeof(t_options));
+	o->mlx = mlx_init(WIDTH, HEIGHT, "miniRT", true);
+	o->g_img = NULL;
+	if (!o->mlx)
 		return (EXIT_FAILURE);
-	g_img = mlx_new_image(mlx, WIDTH, HEIGHT);
-	if (minirt(argc, argv, mlx, g_img) == EXIT_FAILURE)
+	o->g_img = mlx_new_image(o->mlx, WIDTH, HEIGHT);
+	if (minirt(o, argc, argv) == EXIT_FAILURE)
 	{
-		mlx_delete_image(mlx, g_img);
-		mlx_terminate(mlx);
+		mlx_delete_image(o->mlx, o->g_img);
+		mlx_terminate(o->mlx);
 		return (EXIT_FAILURE);
 	}
-	mlx_image_to_window(mlx, g_img, 0, 0);
-	mlx_loop_hook(mlx, &key_hook, mlx);
-	mlx_close_hook(mlx, (void (*)(void *))mlx_close_window, mlx);
-	mlx_loop(mlx);
-	mlx_delete_image(mlx, g_img);
-	mlx_terminate(mlx);
+	mlx_image_to_window(o->mlx, o->g_img, 0, 0);
+	mlx_loop_hook(o->mlx, &key_hook, o);
+	mlx_close_hook(o->mlx, (void (*)(void *))mlx_close_window, o->mlx);
+	mlx_loop(o->mlx);
+	mlx_delete_image(o->mlx, o->g_img);
+	mlx_terminate(o->mlx);
+	free_opt(o);
 	return (EXIT_SUCCESS);
 }
