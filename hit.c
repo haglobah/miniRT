@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 10:31:04 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/26 16:20:19 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/26 17:01:11 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@ bool	did_hit(t_hit *h)
 	return (true);
 }
 
-void	update_hit(t_hit *h, t_3d pos, double t, t_3d *normal, t_clr clr)
+void	update_hit(t_hit *h, t_3d pos, double t, t_3d *normal, bool from_plane, t_clr clr)
 {
 	h->pos = pos;
 	h->normal = *normal;
+	h->from_plane = from_plane;
 	h->t = t;
 	h->clr = clr;
 }
@@ -63,7 +64,7 @@ void	hit_sphere(t_sphere *sp, t_ray r, t_hit *h)
 		{
 			hitpos = at(r, root[i]);
 			hit_normal = unit(sub_3d(at(r, root[i]), *sp->pos));
-			update_hit(h, hitpos, root[i], &hit_normal, sp->color);
+			update_hit(h, hitpos, root[i], &hit_normal, false, sp->color);
 		}
 		i++;
 	}
@@ -124,7 +125,7 @@ void	hit_plane(t_plane *pl, t_ray r, t_hit *h)
 		{
 			hitpos = at(r, t);
 			// print_clr(pl->color);
-			update_hit(h, hitpos, t, pl->normal, pl->color);
+			update_hit(h, hitpos, t, pl->normal, true, pl->color);
 			// print_hit(*h);
 		}
 	}
@@ -166,13 +167,13 @@ void	hit_cylinder(t_cyl *cyl, t_ray ray, t_hit *hit)
 	{
 		hitpos = at(ray, d[0]);
 		hit_normal = unit(sub_3d(hitpos, sum_3d(mul(t[0], a), b)));
-		update_hit(hit, hitpos, d[0], &hit_normal, cyl->color);
+		update_hit(hit, hitpos, d[0], &hit_normal, false, cyl->color);
 	}
 	if (t[1] >= 0 && t[1] <= h)
 	{
 		hitpos = at(ray, d[1]);
 		hit_normal = unit(sub_3d(hitpos, sum_3d(mul(t[1], a), b)));
-		update_hit(hit, hitpos, d[1], &hit_normal, cyl->color);
+		update_hit(hit, hitpos, d[1], &hit_normal, false, cyl->color);
 	}
 
 	//caps
@@ -191,13 +192,13 @@ void	hit_cylinder(t_cyl *cyl, t_ray ray, t_hit *hit)
 	{
 		hitpos = at(ray, d[2]);
 		hit_normal = unit(mul(-1, *cyl->axis));
-		update_hit(hit, hitpos, d[2], &hit_normal, cyl->color);
+		update_hit(hit, hitpos, d[2], &hit_normal, true, cyl->color);
 	}
 	if (dot(ndoc[1], ndoc[1]) < sq(r))
 	{
 		hitpos = at(ray, d[3]);
 		hit_normal = unit(*cyl->axis);
-		update_hit(hit, hitpos, d[3], &hit_normal, cyl->color);
+		update_hit(hit, hitpos, d[3], &hit_normal, true, cyl->color);
 	}
 }
 

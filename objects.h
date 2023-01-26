@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   objects.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:23:00 by mhedtman          #+#    #+#             */
-/*   Updated: 2023/01/26 10:56:22 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/26 16:59:12 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_hit
 {
 	t_3d		pos;
 	t_3d		normal;
+	bool		from_plane;
 	double		t;
 	t_clr		clr;
 

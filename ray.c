@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:25:40 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/26 16:30:48 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/26 17:06:39 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,30 @@ t_ray	mk_ray(t_3d pos, t_3d dir)
 	return (new);
 }
 
-uint32_t	scattered_reflection(t_mrt *m, t_clr clr, double coeff)
+uint32_t	scattered_reflection(t_mrt *m, t_clr clr, bool from_plane, double coeff)
 {
 	t_clr	res;
 
 	if (coeff < 0)
 	{
-		coeff *= -1;
+		if (from_plane)
+		{
+			res = sum_clr(
+			mul_clr(m->amb->ratio, m->amb->color),
+			mul_clr(m->l->brightness * -coeff,
+			clr));
+		}
+		else
+		{
+			res = mul_clr(m->amb->ratio, m->amb->color);
+		}
+	}
+	else
+	{
 		res = sum_clr(
 		mul_clr(m->amb->ratio, m->amb->color),
 		mul_clr(m->l->brightness * coeff,
 		clr));
-	}
-	else
-	{
-	     	res = sum_clr(
-			mul_clr(m->amb->ratio, m->amb->color),
-			mul_clr(m->l->brightness * coeff,
-			clr));
 	}
 	return (rgb(res.r, res.g, res.b));
 }
@@ -51,7 +57,7 @@ bool	in_shadow(t_ray light_ray, t_mrt *m, t_3d *hitpoint)
 	bool	in_shadow;
 
 	light_hit = (t_hit){(t_3d){0, 0, 0},
-				(t_3d){0, 0, 0}, 1e6, (t_clr){0, 0, 0, 0}};
+				(t_3d){0, 0, 0}, false, 1e6, (t_clr){0, 0, 0, 0}};
 	i = -1;
 	while (++i < m->sp_count)
 	{
@@ -115,14 +121,14 @@ uint32_t	compute_clr(t_mrt *m, t_hit *h)
 		shaded = is_shaded(m, h);
 		if (false)
 		{
-			clr = scattered_reflection(m, h->clr, 0.0);
+			clr = scattered_reflection(m, h->clr, h->from_plane, 0.0);
 		}
 		else
 		{
-			coeff = -dot( // should that be + or - ?
+			coeff = dot( // should that be + or - ?
 				unit(light_hit),
 				unit(h->normal));
-			clr = scattered_reflection(m, h->clr, coeff);
+			clr = scattered_reflection(m, h->clr, h->from_plane, coeff);
 			// printf("coeff: %f\n", coeff);
 			// print_clr(h->clr);
 			// printf("hit: i = %i\n", i);
@@ -145,7 +151,7 @@ int	trace_ray(t_ray r, t_mrt *m)
 	int		i;
 	
 	h = (t_hit){(t_3d){0, 0, 0},
-				(t_3d){0, 0, 0}, 1e6, (t_clr){0, 0, 0, 0}};
+				(t_3d){0, 0, 0}, false, 1e6, (t_clr){0, 0, 0, 0}};
 	i = -1;
 	while (++i < m->sp_count)
 	{
