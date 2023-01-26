@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+         #
+#    By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 12:24:11 by bhagenlo          #+#    #+#              #
-#    Updated: 2023/01/26 13:08:38 by mhedtman         ###   ########.fr        #
+#    Updated: 2023/01/26 16:33:43 by bhagenlo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,6 +71,9 @@ re : fclean
 
 run : all
 	./$(NAME) test.rt
+
+ex : all
+	./$(NAME) ex2.rt
 
 lsan : $(LSAN)
 lsan :

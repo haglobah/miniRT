@@ -33,7 +33,7 @@ t_camera	*mk_camera(t_mrt *m, t_window *w, t_3d *vup)
 {
 	double	theta;
 	double	h;
-	double	focal_length;
+	// double	focal_length;
 	double	viewport_width;
 	double	viewport_height;
 	t_camera	*c;
@@ -58,15 +58,15 @@ t_camera	*mk_camera(t_mrt *m, t_window *w, t_3d *vup)
 				mul(0.5, c->horizontal),
 				mul(0.5, c->vertical),
 				c->w);
-	// print3d("pos", *c->pos);
-	// print3d("dir", *c->dir);
-	// print3d("vup", *vup);
-	// print3d("u", c->u);
-	// print3d("v", c->v);
-	// print3d("horizontal", c->horizontal);
-	// print3d("vertical", c->vertical);
-	// print3d("llc", c->llc);
-	focal_length = 1.0;
+	print3d("pos", *c->pos);
+	print3d("dir", *c->dir);
+	print3d("vup", *vup);
+	print3d("u", c->u);
+	print3d("v", c->v);
+	print3d("horizontal", c->horizontal);
+	print3d("vertical", c->vertical);
+	print3d("llc", c->llc);
+	// focal_length = 1.0;
 	return (c);
 }
 
