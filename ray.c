@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:25:40 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/25 17:05:55 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/26 11:12:46 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,32 +31,40 @@ uint32_t	scattered_reflection(t_mrt *m, t_clr clr, double coeff)
 	return (rgb(res.r, res.g, res.b));
 }
 
-bool	in_shadow(t_ray r, t_mrt *m, t_3d *hitpoint)
+bool	in_shadow(t_ray light_ray, t_mrt *m, t_3d *hitpoint)
 {
 	// uint32_t clr;
 	// double	t;
-	t_hit	h;
+	t_hit	light_hit;
 	int		i;
 	bool	in_shadow;
 
-	h = (t_hit){(t_3d){0, 0, 0},
+	light_hit = (t_hit){(t_3d){0, 0, 0},
 				(t_3d){0, 0, 0}, 1e6, (t_clr){0, 0, 0, 0}};
 	i = -1;
 	while (++i < m->sp_count)
 	{
-		hit_sphere(&m->sp[i], r, &h);
+		hit_sphere(&m->sp[i], light_ray, &light_hit);
 	}
 	i = -1;
-	while (++i < m->pl_count)
-	{
-		hit_plane(&m->pl[i], r, &h);
-	}
-	// i = -1;
-	// while (++i < m->cyl_count)
+	// while (++i < m->pl_count)
 	// {
-	// 	hit_cylinder(&m->cyl[i], r, &h);
+	// 	hit_plane(&m->pl[i], light_ray, &light_hit);
 	// }
-	if (dist(r.pos, at(r, h.t)) < dist(r.pos, *hitpoint))
+	// i = -1;
+	while (++i < m->cyl_count)
+	{
+		hit_cylinder(&m->cyl[i], light_ray, &light_hit);
+	}
+
+	double other_hit_dist;
+	double light_rayhit_dist;
+
+	other_hit_dist = dist(light_ray.pos, at(light_ray, light_hit.t));
+	light_rayhit_dist = dist(light_ray.pos, *hitpoint);
+	// print_hit(light_hit);
+	// printf("d(other_hit, light): %f\nd(orig_hit, light): %f\n", other_hit_dist, light_rayhit_dist);
+	if (other_hit_dist < light_rayhit_dist)
 	{
 		in_shadow = true;
 	}
