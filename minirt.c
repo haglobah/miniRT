@@ -46,10 +46,8 @@ t_camera	*mk_camera(t_mrt *m, t_window *w, t_3d *vup)
 	
 	c->pos = m->cam->pos;
 	c->dir = m->cam->dir;
-	t_3d save = mul(-1, *c->dir);
-	c->w = unit(save);
-	t_3d save_two = cross(*vup, c->w);
-	c->u = cross((t_3d){0, 1, 0}, c->w);
+	c->w = unit(mul(-1, *c->dir));
+	c->u = cross(*vup, c->w);
 	c->v = cross(c->w, c->u);
 	c->horizontal = mul(viewport_width, c->u);
 	c->vertical = mul(viewport_height, c->v);
@@ -149,7 +147,7 @@ void	draw_scene(t_options *o, mlx_t *mlx, mlx_image_t *img, t_mrt *m)
 	//hooks für change in m
 	// print3d("CAM POS: ", *m->cam->pos);
 	// mlx_loop_hook(mlx, &move, m);
-	vup = mk_3d(m->save_lst, 0, 1, 0);
+	vup = mk_3d(m->save_lst, 0, -1, 0);
 	o->camera = mk_camera(m, &w, vup);
 	j = HEIGHT - 1;
 	while (--j >= 0)
