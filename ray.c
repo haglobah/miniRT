@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:25:40 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/27 13:44:01 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/27 14:16:12 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,17 @@ bool	in_shadow(t_ray light_ray, t_mrt *m, t_3d *hitpoint)
 
 bool	is_shaded(t_mrt *m, t_hit *h)
 {
-	t_ray	light;
+	// return (in_shadow(light, m, &h->pos));
+	return (true);
+}
 
-	light = mk_ray(*m->l->pos,
-			unit(sub_3d(h->pos,
-			*m->l->pos)));
-	return (in_shadow(light, m, &h->pos));
+bool	trace_light(t_mrt *m, t_3d *light_to_hit)
+{
+	t_ray	light_ray;
+
+	light_ray = mk_ray(*m->l->pos,
+			unit(*light_to_hit));
+	
 }
 
 uint32_t	compute_hitpoint_clr(t_mrt *m, t_hit *h)
@@ -108,25 +113,26 @@ uint32_t	compute_hitpoint_clr(t_mrt *m, t_hit *h)
 	uint32_t	clr;
 	bool		hit_something;
 	bool		shaded;
+	t_3d 		light_dir;
 	static int	i;
 
 	hit_something = did_hit(h);
 	if (hit_something)
 	{
+		light_dir = sub_3d(
+					h->pos,
+					*m->l->pos);
 		// print_3d("h->normal: ", h->normal);
-		t_3d light_hit = sub_3d(
-					*m->l->pos,
-					h->pos);
-		// print_3d("LP", light_hit);
-		shaded = is_shaded(m, h);
+		// print_3d("LP", light_dir);
+		shaded = trace_light(m, h);
 		if (false)
 		{
 			clr = scattered_reflection(m, h->clr, h->from_plane, 0.0);
 		}
 		else
 		{
-			coeff = dot( // should that be + or - ?
-				unit(light_hit),
+			coeff = -dot(
+				unit(light_dir),
 				unit(h->normal));
 			clr = scattered_reflection(m, h->clr, h->from_plane, coeff);
 			// printf("coeff: %f\n", coeff);
@@ -137,10 +143,7 @@ uint32_t	compute_hitpoint_clr(t_mrt *m, t_hit *h)
 		i++;
 	}
 	else
-	{
 		clr = rgb(0, 0, 0);
-		// printf("didn't hit.\n");
-	}
 	return (clr);
 }
 
