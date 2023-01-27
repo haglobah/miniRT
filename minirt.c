@@ -59,40 +59,19 @@ t_camera	*mk_camera(t_mrt *m, t_window *w, t_3d *vup)
 
 uint32_t	compute_pxl_clr(t_mrt *m, t_camera *c, double x, double y)
 {
-	static t_3d	direction;
 	t_3d	wo_unit_dir;
 	t_ray	r;
 	u_int32_t	pxl_clr;
-	t_3d	hvec;
-	t_3d	vvec;
-	static t_3d	*old_dir;
 
-	static	int times_called;
+	static t_3d	direction;
 
-	hvec = mul(x, c->horizontal);
-	vvec = mul(y, c->vertical);
-	wo_unit_dir = sum4_3d(c->llc, 
-		hvec,
-		vvec,
-		mul(-1, *c->pos));
-	old_dir = &direction;
-	direction = unit(wo_unit_dir);
-	if (times_called > 0 && !v_iseq(old_dir, &direction))
-	{
-		// printf("times_called: %i\n", times_called);
-		// print_3d("llc", *c->llc);
-		// print_3d("horizontal", *c->horizontal);
-		// printf("x: %f\n", x);
-		// print_3d("hvec", hvec);
-		// print_3d("vertical", *c->vertical);
-		// printf("y: %f\n", y);
-		// print_3d("vvec", vvec);
-		// print_3d("campos", *m->cam->pos);
-		// print_3d("ray_dir", *direction);
-	}
+	direction = unit(
+		sum4_3d(c->llc, 
+			mul(x, c->horizontal),
+			mul(y, c->vertical),
+			mul(-1, *c->pos)));
 	r = mk_ray(*m->cam->pos, direction);
 	pxl_clr = trace_ray(r, m);	
-	times_called += 1;
 	return (pxl_clr);
 }
 
