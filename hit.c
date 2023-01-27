@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 10:31:04 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/27 13:23:16 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/27 16:49:38 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,38 @@ void	hit_plane(t_plane *pl, t_ray r, t_hit *h)
 	}
 }
 
+// void	hit_caps(t_cyl *cyl, t_ray ray, t_hit *hit)
+// {
+// 	//caps
+// 	t_3d	c[2];
+// 	t_3d	ndoc[2];
+	
+// 	c[0] = b;
+// 	c[1] = sum_3d(b, mul(h, a));
+// 	d[2] = (dot(a, sub_3d(ray.pos, c[0])))
+// 		/ dot(a, n);
+// 	d[3] = (dot(a, sub_3d(ray.pos, c[1])))
+// 		/ dot(a, n);
+// 	ndoc[0] = sum_3d(mul(d[2], n), sub_3d(ray.pos, c[0]));
+// 	ndoc[1] = sum_3d(mul(d[3], n), sub_3d(ray.pos, c[1]));
+// 	print_3d("ndoc[0]", ndoc[0]);
+// 	print_3d("ndoc[1]", ndoc[1]);
+// 	if (dot(ndoc[0], ndoc[0]) < sq(r))
+// 	{
+// 		hitpos = at(ray, d[2]);
+// 		hit_normal = unit(mul(-1, *cyl->axis));
+// 		update_hit(hit, hitpos, d[2], &hit_normal, true, cyl->color);
+// 		printf("here\n");
+// 	}
+// 	if (dot(ndoc[1], ndoc[1]) < sq(r))
+// 	{
+// 		hitpos = at(ray, d[3]);
+// 		hit_normal = unit(*cyl->axis);
+// 		update_hit(hit, hitpos, d[3], &hit_normal, true, cyl->color);
+// 		printf("here\n");
+// 	}
+// }
+
 void	hit_cylinder(t_cyl *cyl, t_ray ray, t_hit *hit)
 {
 	t_3d	a;
@@ -185,18 +217,32 @@ void	hit_cylinder(t_cyl *cyl, t_ray ray, t_hit *hit)
 		/ dot(a, n);
 	d[3] = (dot(a, sub_3d(ray.pos, c[1])))
 		/ dot(a, n);
-	ndoc[0] = sum_3d(mul(d[2], n), sub_3d(ray.pos, c[0]));
-	ndoc[1] = sum_3d(mul(d[3], n), sub_3d(ray.pos, c[1]));
-	if (dot(ndoc[0], ndoc[0]) < sq(r))
+	ndoc[0] = sub_3d(mul(d[2], n), c[0]);
+	ndoc[1] = sub_3d(mul(d[3], n), c[1]);
+	// print_3d("ndoc[0]", ndoc[0]);
+	// print_3d("ndoc[1]", ndoc[1]);
+
+	// if (dot(ndoc[0], ndoc[0]) < 20)
+	// {
+	// 	printf("sq(r): %f\n", sq(r));
+	// 	printf("ndoc^2: %f\n", dot(ndoc[0], ndoc[0]));
+	// 	hitpos = at(ray, d[2]);
+	// 	hit_normal = unit(mul(-1, *cyl->axis));
+	// 	update_hit(hit, hitpos, d[2], &hit_normal, true, cyl->color);
+	// }
+	bool is_in_disc = dot(ndoc[0], ndoc[0]) < sq(r);
+	if (is_in_disc)
 	{
 		hitpos = at(ray, d[2]);
 		hit_normal = unit(mul(-1, *cyl->axis));
 		update_hit(hit, hitpos, d[2], &hit_normal, true, cyl->color);
+		printf("here\n");
 	}
 	if (dot(ndoc[1], ndoc[1]) < sq(r))
 	{
 		hitpos = at(ray, d[3]);
 		hit_normal = unit(*cyl->axis);
 		update_hit(hit, hitpos, d[3], &hit_normal, true, cyl->color);
+		printf("here\n");
 	}
 }
