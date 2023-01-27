@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 10:31:04 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/26 17:01:11 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/27 12:12:49 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,14 @@ double	hitpoint_sphere(t_3d center, double radius, t_ray r, double *root)
 
 void	hit_sphere(t_sphere *sp, t_ray r, t_hit *h)
 {
-	// Wofuer waren die nochmal?
-	// double	lo;
 	double	root[2];
-	int		i = 0;
+	int		i;
 	double	t;
 	t_3d	hitpos;
 	t_3d	hit_normal;
 
-	t = hitpoint_sphere(*sp->pos, sp->diameter, r, root);
+	t = hitpoint_sphere(*sp->pos, sp->diameter / 2, r, root);
+	i = 0;
 	while (i < 2)
 	{
 		if (root[i] < h->t && root[i] > 0)
