@@ -6,14 +6,15 @@
 #    By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 12:24:11 by bhagenlo          #+#    #+#              #
-#    Updated: 2023/01/26 16:35:02 by bhagenlo         ###   ########.fr        #
+#    Updated: 2023/01/27 12:36:55 by bhagenlo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := miniRT
 
-SRCS := hit.c minirt.c lexer.c parser.c 3d.c ray.c color.c utils.c data.c math.c \
-		memory.c parser_utils.c parser_items_1.c parser_items_3.c parser_items_2.c \
+SRCS := hit.c minirt.c lexer.c parser.c 3d.c ray.c color.c utils.c data.c print.c \
+		math.c memory.c \
+		parser_utils.c parser_items_1.c parser_items_3.c parser_items_2.c \
 		vector_math_1.c vector_math_2.c vector_math_3.c vector_utils.c 
 MAIN = main.c
 OBJS = $(SRCS:.c=.o)
