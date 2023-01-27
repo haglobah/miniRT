@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:25:40 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/27 13:26:21 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/27 13:44:01 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ bool	is_shaded(t_mrt *m, t_hit *h)
 	return (in_shadow(light, m, &h->pos));
 }
 
-uint32_t	compute_clr(t_mrt *m, t_hit *h)
+uint32_t	compute_hitpoint_clr(t_mrt *m, t_hit *h)
 {
 	double		coeff;
 	uint32_t	clr;
@@ -144,29 +144,26 @@ uint32_t	compute_clr(t_mrt *m, t_hit *h)
 	return (clr);
 }
 
-int	trace_ray(t_ray r, t_mrt *m)
+void	trace_ray(t_mrt *m, t_ray r, t_hit *h)
 {
 	uint32_t clr;
-	t_hit	h;
 	int		i;
 	
-	h = (t_hit){(t_3d){0, 0, 0},
+	*h = (t_hit){(t_3d){0, 0, 0},
 				(t_3d){0, 0, 0}, false, 1e6, (t_clr){0, 0, 0, 0}};
 	i = -1;
 	while (++i < m->sp_count)
 	{
-		hit_sphere(&m->sp[i], r, &h);
+		hit_sphere(&m->sp[i], r, h);
 	}
 	i = -1;
 	while (++i < m->pl_count)
 	{
-		hit_plane(&m->pl[i], r, &h);
+		hit_plane(&m->pl[i], r, h);
 	}
 	i = -1;
 	while (++i < m->cyl_count)
 	{
-		hit_cylinder(&m->cyl[i], r, &h);
+		hit_cylinder(&m->cyl[i], r, h);
 	}
-	clr = compute_clr(m, &h);
-	return (clr);
 }

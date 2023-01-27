@@ -53,17 +53,15 @@ t_camera	*mk_camera(t_mrt *m, t_window *w, t_3d *vup)
 				mul(0.5, c->horizontal),
 				mul(0.5, c->vertical),
 				c->w);
-	print_camera(c);
 	return (c);
 }
 
 uint32_t	compute_pxl_clr(t_mrt *m, t_camera *c, double x, double y)
 {
-	t_3d	wo_unit_dir;
+	t_3d	direction;
 	t_ray	r;
+	t_hit	h;
 	u_int32_t	pxl_clr;
-
-	static t_3d	direction;
 
 	direction = unit(
 		sum4_3d(c->llc, 
@@ -71,7 +69,8 @@ uint32_t	compute_pxl_clr(t_mrt *m, t_camera *c, double x, double y)
 			mul(y, c->vertical),
 			mul(-1, *c->pos)));
 	r = mk_ray(*m->cam->pos, direction);
-	pxl_clr = trace_ray(r, m);	
+	trace_ray(m, r, &h);
+	pxl_clr = compute_hitpoint_clr(m, &h);
 	return (pxl_clr);
 }
 
@@ -87,6 +86,7 @@ void	draw_scene(t_options *o, mlx_t *mlx, mlx_image_t *img, t_mrt *m)
 	fill_window(&w, WIDTH, HEIGHT);
 	vup = (t_3d){0, -1, 0};
 	o->camera = mk_camera(m, &w, &vup);
+	print_camera(o->camera);
 	j = HEIGHT - 1;
 	while (--j >= 0)
 	{
