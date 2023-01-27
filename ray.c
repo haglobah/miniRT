@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:25:40 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/27 14:42:30 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/27 15:22:03 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ uint32_t	compute_hitpoint_clr(t_mrt *m, t_hit *h)
 
 void	trace_ray(t_mrt *m, t_ray r, t_hit *h)
 {
-	uint32_t clr;
 	int		i;
 	
 	*h = (t_hit){(t_3d){0, 0, 0},
