@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:25:40 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/27 14:16:12 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/27 14:42:30 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,63 +48,32 @@ uint32_t	scattered_reflection(t_mrt *m, t_clr clr, bool from_plane, double coeff
 	return (rgb(res.r, res.g, res.b));
 }
 
-bool	in_shadow(t_ray light_ray, t_mrt *m, t_3d *hitpoint)
+bool	trace_light(t_mrt *m, t_3d *light_dir, t_hit *ray_hit)
 {
-	// uint32_t clr;
-	// double	t;
+	t_ray	light;
 	t_hit	light_hit;
-	int		i;
-	bool	in_shadow;
+	double	d_light_blocking;
+	double	d_light_ray;
+	bool	shaded;
 
-	light_hit = (t_hit){(t_3d){0, 0, 0},
-				(t_3d){0, 0, 0}, false, 1e6, (t_clr){0, 0, 0, 0}};
-	i = -1;
-	while (++i < m->sp_count)
-	{
-		hit_sphere(&m->sp[i], light_ray, &light_hit);
-	}
-	i = -1;
-	// while (++i < m->pl_count)
-	// {
-	// 	hit_plane(&m->pl[i], light_ray, &light_hit);
-	// }
-	// i = -1;
-	while (++i < m->cyl_count)
-	{
-		hit_cylinder(&m->cyl[i], light_ray, &light_hit);
-	}
+	light = mk_ray(*m->l->pos,
+			unit(*light_dir));
+	trace_ray(m, light, &light_hit);
 
-	double other_hit_dist;
-	double light_rayhit_dist;
 
-	other_hit_dist = dist(light_ray.pos, at(light_ray, light_hit.t));
-	light_rayhit_dist = dist(light_ray.pos, *hitpoint);
+	d_light_blocking = dist(light.pos, at(light, light_hit.t));
+	d_light_ray = dist(light.pos, ray_hit->pos);
 	// print_hit(light_hit);
 	// printf("d(other_hit, light): %f\nd(orig_hit, light): %f\n", other_hit_dist, light_rayhit_dist);
-	if (other_hit_dist < light_rayhit_dist)
+	if (d_light_blocking + EPSILON < d_light_ray)
 	{
-		in_shadow = true;
+		shaded = true;
 	}
 	else
 	{
-		in_shadow = false;
+		shaded = false;
 	}
-	return (in_shadow);
-}
-
-bool	is_shaded(t_mrt *m, t_hit *h)
-{
-	// return (in_shadow(light, m, &h->pos));
-	return (true);
-}
-
-bool	trace_light(t_mrt *m, t_3d *light_to_hit)
-{
-	t_ray	light_ray;
-
-	light_ray = mk_ray(*m->l->pos,
-			unit(*light_to_hit));
-	
+	return (shaded);
 }
 
 uint32_t	compute_hitpoint_clr(t_mrt *m, t_hit *h)
@@ -122,10 +91,9 @@ uint32_t	compute_hitpoint_clr(t_mrt *m, t_hit *h)
 		light_dir = sub_3d(
 					h->pos,
 					*m->l->pos);
-		// print_3d("h->normal: ", h->normal);
-		// print_3d("LP", light_dir);
-		shaded = trace_light(m, h);
-		if (false)
+		shaded = trace_light(m, &light_dir, h);
+		// printf("shaded? %s\n", shaded ? "yes!" : "no");
+		if (shaded)
 		{
 			clr = scattered_reflection(m, h->clr, h->from_plane, 0.0);
 		}

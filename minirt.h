@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/27 13:44:08 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/27 14:42:04 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 
 # define WIDTH 1200
 # define HEIGHT 675
+# define EPSILON 0.001
 
 typedef double t_d;
 
