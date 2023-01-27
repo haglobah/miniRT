@@ -6,18 +6,18 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 12:34:26 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/27 13:07:36 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/27 13:26:23 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	print3d(char *s, t_3d v)
+void	print_3d(char *s, t_3d v)
 {
 	printf("%s: (%.1f %.1f %.1f)\n", s, v.x, v.y, v.z);
 }
 
-void	printray(char *s, t_ray v)
+void	print_ray(char *s, t_ray v)
 {
 	printf("%s DIR: (%.1f %.1f %.1f)\n", s, v.dir.x, v.dir.y, v.dir.z);
 	printf("%s POS: (%.1f %.1f %.1f)\n", s, v.pos.x, v.pos.y, v.pos.z);
@@ -33,15 +33,15 @@ void	print_amb(t_ambient *amb)
 void	print_cam(t_cam *cam)
 {
 	printf("[C]:\n");
-	print3d("  POS: ", *cam->pos);
-	print3d("  DIR: ", *cam->dir);
+	print_3d("  POS: ", *cam->pos);
+	print_3d("  DIR: ", *cam->dir);
 	printf("  FOV: %.1f\n", cam->fov);
 }
 
 void	print_l(t_light *l)
 {
 	printf("[L]:\n");
-	print3d("  POS: ", *l->pos);
+	print_3d("  POS: ", *l->pos);
 	printf("  Range: %.1f\n", l->brightness);
 	printf("  ");
 	print_clr(l->color);
@@ -52,7 +52,7 @@ void	print_sp(t_sphere *s)
 	if (s->pos == NULL)
 		return ;
 	printf("[S]:\n");
-	print3d("  POS: ", *s->pos);
+	print_3d("  POS: ", *s->pos);
 	printf("  Diameter: %.1f\n", s->diameter);
 	printf("  ");
 	print_clr(s->color);
@@ -63,8 +63,8 @@ void	print_pl(t_plane *p)
 	if (p->pos == NULL)
 		return ;
 	printf("[P]:\n");
-	print3d("  POS: ", *p->pos);
-	print3d("  NORMAL: ", *p->normal);
+	print_3d("  POS: ", *p->pos);
+	print_3d("  NORMAL: ", *p->normal);
 	printf("  ");
 	print_clr(p->color);
 }
@@ -74,8 +74,8 @@ void	print_cyl(t_cyl *c)
 	if (c->pos == NULL)
 		return ;
 	printf("[CYL]:\n");
-	print3d("  POS: ", *c->pos);
-	print3d("  NORMAL: ", *c->axis);
+	print_3d("  POS: ", *c->pos);
+	print_3d("  NORMAL: ", *c->axis);
 	printf("  DIAMETER: %.1f\n  HEIGHT: %.1f\n", c->diameter, c->height);
 	printf("  ");
 	print_clr(c->color);
@@ -103,4 +103,25 @@ void	print_mrt(t_mrt *m)
 	if (m->cyl)
 		while (++i < m->cyl_count)
 			print_cyl(m->cyl + i);
+}
+
+void	print_camera(t_camera *c)
+{
+	print_3d("pos", *c->pos);
+	print_3d("dir", *c->dir);
+	print_3d("vup", *c->vup);
+	print_3d("u", c->u);
+	print_3d("v", c->v);
+	print_3d("horizontal", c->horizontal);
+	print_3d("vertical", c->vertical);
+	print_3d("llc", c->llc);
+}
+
+void	print_hit(t_hit h)
+{
+	// print_3d("  pos", h.pos);
+	// print_3d("  normal", h.normal);
+	printf("  t: %f\n", h.t);
+	printf("  ");
+	print_clr(h.clr);
 }

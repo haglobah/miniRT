@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 10:31:04 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/27 12:12:49 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/27 13:23:16 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,13 +199,4 @@ void	hit_cylinder(t_cyl *cyl, t_ray ray, t_hit *hit)
 		hit_normal = unit(*cyl->axis);
 		update_hit(hit, hitpos, d[3], &hit_normal, true, cyl->color);
 	}
-}
-
-void	print_hit(t_hit h)
-{
-	// print3d("  pos", h.pos);
-	// print3d("  normal", h.normal);
-	printf("  t: %f\n", h.t);
-	printf("  ");
-	print_clr(h.clr);
 }

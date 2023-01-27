@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/26 16:59:37 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/27 13:26:21 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,9 @@ typedef struct s_options
 	t_camera	*camera;
 }	t_options;
 
-//3d.c
-t_3d	*normalize_vector(t_3d *vec);
-
 //ray.c
 t_3d	at(t_ray ray, double t);
 t_ray	mk_ray(t_3d pos, t_3d dir);
-void	del_ray(t_ray *r);
-void	printray(char *s, t_ray v);
 
 //color.c
 int			color(t_clr s, t_clr e, double percent);
@@ -62,7 +57,6 @@ t_light		*mk_l(t_3d *pos, t_clr *clr, t_d brightness);
 void		fill_sp(t_3d *pos, t_d diameter, t_clr *clr, t_sphere *sphere);
 void		fill_pl(t_3d *pos, t_3d *normal, t_clr *clr, t_plane *plane);
 void		fill_cyl(t_tmp_cyl tmp_cyl, t_cyl *cyl);
-void		print_mrt(t_mrt *m);
 
 //memory.c
 void		add_to_list(t_lst **lst, t_3d *v, t_clr *clr, t_ray *ray);
@@ -71,6 +65,7 @@ t_lst		*mk_node(t_3d *v, t_clr *clr, t_ray *ray);
 void		free_from_list(t_lst *lst);
 void		free_mrt(t_mrt *m);
 void		free_opt(t_options *o);
+
 //scene.c 
 void		fill_window(t_window *w, double width, double height);
 t_camera	*mk_camera(t_mrt *m, t_window *w, t_3d *vup);
@@ -90,11 +85,17 @@ bool	did_hit(t_hit *h);
 void	hit_sphere(t_sphere *sp, t_ray r, t_hit *h);
 void	hit_plane(t_plane *pl, t_ray r, t_hit *h);
 void	hit_cylinder(t_cyl *cyl, t_ray r, t_hit *h);
-void	print_hit(t_hit h);
 
 // math.c
 double	d_max(double a, double b);
 double	degrees_to_radians(double deg);
+
+//print.c
+void	print_mrt(t_mrt *m);
+void	print_camera(t_camera *c);
+void	print_ray(char *s, t_ray v);
+void	print_hit(t_hit h);
+void	print_3d(char *s, t_3d v);
 
 //utils.c
 int		s_isneq(char *s1, char *s2, int n);

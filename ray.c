@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:25:40 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/26 17:06:39 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/27 13:26:21 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,11 +113,11 @@ uint32_t	compute_clr(t_mrt *m, t_hit *h)
 	hit_something = did_hit(h);
 	if (hit_something)
 	{
-		// print3d("h->normal: ", h->normal);
+		// print_3d("h->normal: ", h->normal);
 		t_3d light_hit = sub_3d(
 					*m->l->pos,
 					h->pos);
-		// print3d("LP", light_hit);
+		// print_3d("LP", light_hit);
 		shaded = is_shaded(m, h);
 		if (false)
 		{

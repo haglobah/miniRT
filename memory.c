@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 11:18:30 by mhedtman          #+#    #+#             */
-/*   Updated: 2023/01/19 13:50:04 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/27 13:26:21 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	print_list(t_lst *list)
 	while (list)
 	{
 		printf("[%d] ", x);
-		// print3d("VECTOR IN LIST: ", *list->vec);
+		// print_3d("VECTOR IN LIST: ", *list->vec);
 		// printf("HALO");
 		// print_clr(*list->clr);
 		x++;
