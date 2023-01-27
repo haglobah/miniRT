@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:23:00 by mhedtman          #+#    #+#             */
-/*   Updated: 2023/01/26 16:59:12 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/27 13:20:18 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ typedef struct s_ray
 
 }	t_ray;
 
-typedef struct s_lst
+typedef struct s_free_list
 {
-	t_3d			*vec;
-	t_clr			*clr;
-	t_ray			*ray;
-	struct s_lst	*next;
+	t_3d				*vec;
+	t_clr				*clr;
+	t_ray				*ray;
+	struct s_free_list	*next;
 } t_lst;
 
 typedef struct s_hit
