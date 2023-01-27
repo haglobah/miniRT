@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:57:19 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/26 15:13:55 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/01/27 12:57:23 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	minirt(t_options *o, int argc, char **argv)
 	sens = lex(argc, argv);
 	if (!sens)
 	{
-		ft_printf("Parsing failed. Did you supply a *.rt file?\n");
+		ft_printf("Error\nParsing failed. Did you supply a *.rt file?\n");
 		return (EXIT_FAILURE);
 	}
 	o->m = parse(sens);
