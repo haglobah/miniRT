@@ -86,7 +86,7 @@ void	draw_scene(t_options *o, mlx_t *mlx, mlx_image_t *img, t_mrt *m)
 	fill_window(&w, WIDTH, HEIGHT);
 	vup = (t_3d){0, -1, 0};
 	o->camera = mk_camera(m, &w, &vup);
-	print_camera(o->camera);
+	// print_camera(o->camera);
 	j = HEIGHT - 1;
 	while (--j >= 0)
 	{

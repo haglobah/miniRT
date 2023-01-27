@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:57:19 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/27 13:26:21 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/01/27 14:08:09 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	minirt(t_options *o, int argc, char **argv)
 		return (EXIT_FAILURE);
 	}
 	o->m = parse(sens);
-	print_mrt(o->m);
+	// print_mrt(o->m);
 	if (!o->m)
 		return (EXIT_FAILURE);
 	draw_scene(o, o->mlx, o->g_img, o->m);
