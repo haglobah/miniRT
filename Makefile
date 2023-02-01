@@ -6,7 +6,7 @@
 #    By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 12:24:11 by bhagenlo          #+#    #+#              #
-#    Updated: 2023/02/01 13:23:51 by mhedtman         ###   ########.fr        #
+#    Updated: 2023/02/01 14:01:13 by mhedtman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,6 +76,9 @@ run : all
 
 ex : all
 	./$(NAME) ex1.rt
+
+c : all
+	./$(NAME) cyl.rt
 
 lsan : $(LSAN)
 lsan :
