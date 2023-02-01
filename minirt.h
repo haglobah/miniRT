@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/02/01 14:34:33 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/02/01 15:18:24 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,18 @@
 # include "parser.h"
 # include "vector_math.h"
 # include "objects.h"
+# include "hit.h"
 
 # define WIDTH 1200
 # define HEIGHT 675
 # define EPSILON 0.001
 
-typedef double t_d;
+typedef double	t_d;
 
 typedef struct s_options
 {
 	mlx_t		*mlx;
-	mlx_image_t *g_img;
+	mlx_image_t	*g_img;
 	t_mrt		*m;
 	t_camera	*camera;
 }	t_options;
@@ -70,19 +71,10 @@ t_camera	*mk_camera(t_mrt *m, t_window *w, t_3d *vup);
 
 //minirt.c
 void		trace_ray(t_mrt *m, t_ray r, t_hit *h);
-char		***lex(int argc,char **argv);
-void		draw_scene(t_options *o, mlx_t *mlx, mlx_image_t *img, t_mrt *p);
+char		***lex(int argc, char **argv);
+void		draw_scene(t_options *o, mlx_image_t *img, t_mrt *p);
 
-// bool		hit_sphere(t_3d center, double radius, t_ray r, double t_min, double t_max, t_hrecord *rec);
 uint32_t	cons_sphere_clr(t_clr color, double coeff);
-
-//hit.c
-double		hitpoint_sphere(t_3d center, double radius, t_ray r, double *root);
-void		update_hit(t_hit *h, t_uhit uh);
-bool		did_hit(t_hit *h);
-void		hit_sphere(t_sphere *sp, t_ray r, t_hit *h);
-void		hit_plane(t_plane *pl, t_ray r, t_hit *h);
-void		hit_cylinder(t_cyl *cyl, t_ray r, t_hit *h);
 
 // math.c
 double		d_max(double a, double b);

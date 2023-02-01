@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 19:08:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/02/01 13:40:28 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/02/01 15:05:30 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	*free_split(char **str, int words_created_so_far)
 	return (NULL);
 }
 
-char	**split_whitespace(char const *s, char c)
+char	**split_whitespace(char const *s)
 {
 	char	**res;
 	int		words;

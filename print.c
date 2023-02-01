@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 12:34:26 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/27 13:26:23 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/02/01 15:03:40 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,4 +124,12 @@ void	print_hit(t_hit h)
 	printf("  t: %f\n", h.t);
 	printf("  ");
 	print_clr(h.clr);
+}
+
+void	print_plane(t_coor_plane pl)
+{
+	printf("  a: %f\n", pl.a);
+	printf("  b: %f\n", pl.b);
+	printf("  c: %f\n", pl.c);
+	printf("  d: %f\n\n", pl.d);
 }

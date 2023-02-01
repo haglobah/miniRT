@@ -3,32 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   objects.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:23:00 by mhedtman          #+#    #+#             */
-/*   Updated: 2023/02/01 14:30:41 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/02/01 14:59:37 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef OBJECTS_H
-#define OBJECTS_H
+# define OBJECTS_H
 
 # include <stdio.h>
 
 typedef struct s_3d_vector
 {
-	double x;
-	double y;
-	double z;
+	double	x;
+	double	y;
+	double	z;
 
 }	t_3d;
 
 typedef struct s_color
 {
-	u_int8_t r;
-	u_int8_t g;
-	u_int8_t b;
-	u_int8_t a;
+	u_int8_t	r;
+	u_int8_t	g;
+	u_int8_t	b;
+	u_int8_t	a;
 
 }	t_clr;
 
@@ -44,7 +44,7 @@ typedef struct s_free_list
 	t_3d				*vec;
 	t_clr				*clr;
 	struct s_free_list	*next;
-} t_lst;
+}	t_lst;
 
 typedef struct s_hit
 {
@@ -56,39 +56,39 @@ typedef struct s_hit
 
 }	t_hit;
 
-typedef	struct s_ambient_light
+typedef struct s_ambient_light
 {
 	double		ratio;
 	t_clr		color;
-} t_ambient;
+}	t_ambient;
 
-typedef struct	s_cam
+typedef struct s_cam
 {
 	t_3d		*pos;
 	t_3d		*dir;
 	double		fov;
-} t_cam;
+}	t_cam;
 
 typedef struct s_light
 {
 	t_3d	*pos;
-	double		brightness;
+	double	brightness;
 	t_clr	color;
-} t_light;
+}	t_light;
 
 typedef struct s_sphere
 {
 	t_3d		*pos;
 	double		diameter;
 	t_clr		color;
-} t_sphere;
+}	t_sphere;
 
 typedef struct s_plane
 {
 	t_3d	*pos;
 	t_3d	*normal;
 	t_clr	color;
-} t_plane;
+}	t_plane;
 
 typedef struct s_coor_plane
 {
@@ -96,7 +96,7 @@ typedef struct s_coor_plane
 	double	b;
 	double	c;
 	double	d;
-} t_coor_plane;
+}	t_coor_plane;
 
 typedef struct s_cyl
 {
@@ -105,14 +105,14 @@ typedef struct s_cyl
 	double		diameter;
 	double		height;
 	t_clr		color;
-} t_cyl;
+}	t_cyl;
 
 typedef struct s_window
 {
 	double	aspect_ratio;
 	double	height;
 	double	width;
-} t_window;
+}	t_window;
 
 typedef struct s_camera
 {
@@ -125,8 +125,8 @@ typedef struct s_camera
 	t_3d	horizontal;
 	t_3d	vertical;
 	t_3d	llc;
-	double		vfov;
-} t_camera;
+	double	vfov;
+}	t_camera;
 
 typedef struct s_tube_calculation
 {
@@ -139,7 +139,7 @@ typedef struct s_tube_calculation
 	t_3d	nxa;
 	double	d[2];
 	double	t[2];
-} t_tube;
+}	t_tube;
 
 typedef struct s_tube_hit
 {
@@ -151,14 +151,14 @@ typedef struct s_tube_hit
 	t_cyl	*cyl;
 	t_ray	ray;
 	t_hit	*hit;
-} t_tube_hit;
+}	t_tube_hit;
 
 typedef struct s_cyl_ray_hit
 {
 	t_hit	*hit;
 	t_cyl	*cyl;
 	t_ray	ray;
-} t_crh;
+}	t_crh;
 
 typedef struct s_update_hit
 {
@@ -167,6 +167,6 @@ typedef struct s_update_hit
 	t_3d	normal;
 	bool	from_plane;
 	t_clr	clr;
-} t_uhit;
+}	t_uhit;
 
 #endif
