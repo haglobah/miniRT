@@ -6,11 +6,20 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:57:19 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/02/01 15:44:23 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/02/01 15:47:26 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+void	key_hook(void *param)
+{
+	t_options	*o;
+
+	o = (t_options *)param;
+	if (mlx_is_key_down(o->mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(o->mlx);
+}
 
 int	minirt(t_options *o, int argc, char **argv)
 {
