@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:11:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2023/02/01 13:44:03 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/02/01 14:17:02 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,13 @@ bool	check_one_strslen(char **parts, double *d, double value, double factor)
 
 void	get_negative(char **parts, double *factor)
 {
+	char		*save;
+
 	if (parts[0][0] == '-')
 	{
+		save = parts[0];
 		parts[0] = ft_strtrim(parts[0], "-");
+		free(save);
 		*factor = -1;
 	}
 	else
@@ -50,7 +54,9 @@ bool	parse_double(char *s, double *d)
 		return (free_strs(parts), false);
 	value = (double)pre_i;
 	if (check_one_strslen(parts, d, value, factor))
+	{
 		return (true);
+	}
 	i = 0;
 	while (parts[1][i] >= '0' && parts[1][i] <= '9')
 	{
