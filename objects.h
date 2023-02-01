@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:23:00 by mhedtman          #+#    #+#             */
-/*   Updated: 2023/02/01 14:19:16 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/02/01 14:30:41 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,5 +159,14 @@ typedef struct s_cyl_ray_hit
 	t_cyl	*cyl;
 	t_ray	ray;
 } t_crh;
+
+typedef struct s_update_hit
+{
+	t_3d	pos;
+	double	t;
+	t_3d	normal;
+	bool	from_plane;
+	t_clr	clr;
+} t_uhit;
 
 #endif

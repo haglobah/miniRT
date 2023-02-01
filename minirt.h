@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/02/01 13:48:52 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/02/01 14:31:31 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ uint32_t	cons_sphere_clr(t_clr color, double coeff);
 
 //hit.c
 double		hitpoint_sphere(t_3d center, double radius, t_ray r, double *root);
-void		update_hit(t_hit *h, t_3d pos, double t, t_3d *normal, bool from_plane, t_clr clr);
+void		update_hit(t_hit *h, t_uhit uh);
 bool		did_hit(t_hit *h);
 void		hit_sphere(t_sphere *sp, t_ray r, t_hit *h);
 void		hit_plane(t_plane *pl, t_ray r, t_hit *h);

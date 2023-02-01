@@ -6,12 +6,11 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 10:31:04 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/02/01 14:19:45 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/02/01 14:33:00 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
 
 bool	did_hit(t_hit *h)
 {
@@ -20,13 +19,13 @@ bool	did_hit(t_hit *h)
 	return (true);
 }
 
-void	update_hit(t_hit *h, t_3d pos, double t, t_3d *normal, bool from_plane, t_clr clr)
+void	update_hit(t_hit *h, t_uhit uh)
 {
-	h->pos = pos;
-	h->normal = *normal;
-	h->from_plane = from_plane;
-	h->t = t;
-	h->clr = clr;
+	h->pos = uh.pos;
+	h->normal = uh.normal;
+	h->from_plane = uh.from_plane;
+	h->t = uh.t;
+	h->clr = uh.clr;
 }
 
 double	hitpoint_sphere(t_3d center, double radius, t_ray r, double *root)
@@ -35,7 +34,7 @@ double	hitpoint_sphere(t_3d center, double radius, t_ray r, double *root)
 	double	a;
 	double	half_b;
 	double	c;
-    double	discriminant;
+	double	discriminant;
 
 	oc = sum_3d(r.pos, mul(-1, center));
 	a = len_squared(r.dir);
@@ -63,7 +62,8 @@ void	hit_sphere(t_sphere *sp, t_ray r, t_hit *h)
 		{
 			hitpos = at(r, root[i]);
 			hit_normal = unit(sub_3d(at(r, root[i]), *sp->pos));
-			update_hit(h, hitpos, root[i], &hit_normal, false, sp->color);
+			update_hit(h,
+				(t_uhit){hitpos, root[i], hit_normal, false, sp->color});
 		}
 		i++;
 	}
@@ -83,16 +83,13 @@ double	hitpoint_plane(t_3d support, t_3d normal, t_ray r)
 	double			t;
 	double			dividend;
 	double			divisor;
+	t_3d			abc;
 
 	pl = (t_coor_plane){.a = normal.x, .b = normal.y, .c = normal.z,
-		  .d = dot(support, normal)};
-	t_3d abc = (t_3d){pl.a, pl.b, pl.c};
+		.d = dot(support, normal)};
+	abc = (t_3d){pl.a, pl.b, pl.c};
 	dividend = pl.d - dot(abc, r.pos);
-	// print_plane(pl);
-	// printf("dividend: %f\n", dividend);
-	// printf("          ---------------\n");
 	divisor = dot(abc, r.dir);
-	// printf("divisor:  %f\n", divisor);
 	t = dividend / divisor;
 	return (t);
 }
@@ -103,7 +100,6 @@ void	hit_plane(t_plane *pl, t_ray r, t_hit *h)
 	t_3d	hitpos;
 
 	t = hitpoint_plane(*pl->pos, *pl->normal, r);
-	// printf("t: %f\n", t);
 	if (t <= 0.0)
 		return ;
 	else
@@ -111,9 +107,7 @@ void	hit_plane(t_plane *pl, t_ray r, t_hit *h)
 		if (t < h->t)
 		{
 			hitpos = at(r, t);
-			// print_clr(pl->color);
-			update_hit(h, hitpos, t, pl->normal, true, pl->color);
-			// print_hit(*h);
+			update_hit(h, (t_uhit){hitpos, t, *pl->normal, true, pl->color});
 		}
 	}
 }
@@ -127,7 +121,8 @@ void	update_tube_hit(t_tube_hit th)
 	{
 		hitpos = at(th.ray, th.d);
 		hit_normal = unit(sub_3d(hitpos, sum_3d(mul(th.t, th.a), th.b)));
-		update_hit(th.hit, hitpos, th.d, &hit_normal, false, th.cyl->color);
+		update_hit(th.hit,
+			(t_uhit){hitpos, th.d, hit_normal, false, th.cyl->color});
 	}
 }
 
@@ -141,15 +136,15 @@ void	hit_tube(t_cyl *cyl, t_ray ray, t_hit *hit)
 	t.f = sub_3d(t.b, ray.pos);
 	t.r = cyl->diameter / 2.0;
 	t.h = cyl->height;
-
-	//tube
 	t.nxa = cross(t.n, t.a);
 	t.d[0] = (dot(t.nxa, cross(t.f, t.a))
-		 + sqrt(dot(t.nxa, t.nxa) * sq(t.r) - dot(t.a, t.a) * sq(dot(t.f, t.nxa))))
-		 / dot(t.nxa, t.nxa);
+			+ sqrt(dot(t.nxa, t.nxa) * sq(t.r)
+				- dot(t.a, t.a) * sq(dot(t.f, t.nxa))))
+		/ dot(t.nxa, t.nxa);
 	t.d[1] = (dot(t.nxa, cross(t.f, t.a))
-		 - sqrt(dot(t.nxa, t.nxa) * sq(t.r) - dot(t.a, t.a) * sq(dot(t.f, t.nxa))))
-		 / dot(t.nxa, t.nxa);
+			- sqrt(dot(t.nxa, t.nxa) * sq(t.r)
+				- dot(t.a, t.a) * sq(dot(t.f, t.nxa))))
+		/ dot(t.nxa, t.nxa);
 	t.t[0] = dot(t.a, sub_3d(mul(t.d[0], t.n), t.f));
 	t.t[1] = dot(t.a, sub_3d(mul(t.d[1], t.n), t.f));
 	update_tube_hit((t_tube_hit){t.t[0], t.h, t.d[0], t.a, t.b, cyl, ray, hit});
@@ -165,7 +160,8 @@ void	update_disk_hit(double d, t_3d center, double r, t_crh crh)
 	{
 		hitpos = at(crh.ray, d);
 		hit_normal = unit(mul(-1, *crh.cyl->axis));
-		update_hit(crh.hit, hitpos, d, &hit_normal, true, crh.cyl->color);
+		update_hit(crh.hit,
+			(t_uhit){hitpos, d, hit_normal, true, crh.cyl->color});
 	}
 }
 
@@ -180,7 +176,6 @@ void	hit_disk(t_cyl *cyl, t_ray ray, t_hit *hit)
 	a = unit(*cyl->axis);
 	b = *cyl->pos;
 	r = cyl->diameter / 2.0;
-	
 	c[0] = b;
 	c[1] = sum_3d(b, mul(cyl->height, a));
 	d[0] = hitpoint_plane(c[0], a, ray);
