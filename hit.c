@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 10:31:04 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/02/01 13:27:59 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/02/01 14:19:45 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,18 +67,6 @@ void	hit_sphere(t_sphere *sp, t_ray r, t_hit *h)
 		}
 		i++;
 	}
-	// if (t <= 0.0)
-	// 	return ;
-	// else
-	// {
-	// 	if (t < h->t)
-	// 	{
-	// 		hitpos = at(r, t);
-	// 		hit_normal = unit(sub_3d(at(r, t), *sp->pos));
-	// 		update_hit(h, hitpos, t, &hit_normal, sp->color);
-	// 		// print_hit(*h);
-	// 	}
-	// }
 }
 
 void	print_plane(t_coor_plane pl)
@@ -130,77 +118,54 @@ void	hit_plane(t_plane *pl, t_ray r, t_hit *h)
 	}
 }
 
-bool	is_in_plane(t_3d p, t_coor_plane e)
+void	update_tube_hit(t_tube_hit th)
 {
-	return (dot(p, (t_3d){e.a, e.b, e.c}) == e.d);
-}
+	t_3d	hitpos;
+	t_3d	hit_normal;
 
-// bool	is_in_disc(t_3d p, t_3d *c, double r, t_coor_plane *e, int index)
-// {
-// 	if (is_in_plane(p, e[index]))
-// 	{
-// 		print_3d("hitpoint:", p);
-// 		printf("dist: %f <=? r = %f\n", dist(p, c[index]), r);
-// 	}
-// 	return (/* dist(p, c[index]) <= r && */ is_in_plane(p, e[index]));
-// }
+	if (th.t >= 0 && th.t <= th.h)
+	{
+		hitpos = at(th.ray, th.d);
+		hit_normal = unit(sub_3d(hitpos, sum_3d(mul(th.t, th.a), th.b)));
+		update_hit(th.hit, hitpos, th.d, &hit_normal, false, th.cyl->color);
+	}
+}
 
 void	hit_tube(t_cyl *cyl, t_ray ray, t_hit *hit)
 {
-	t_3d	a;
-	double	r;
-	double	h;
-	t_3d	n;
-	t_3d	b;
-	t_3d	f;
-	t_3d	nxa;
-	double	d[4];
-	double	t[2];
+	t_tube	t;
 
-	t_3d	hitpos;
-	t_3d	hit_normal;
-
-	a = unit(*cyl->axis);
-	n = unit(ray.dir);
-	b = *cyl->pos;
-	f = sub_3d(b, ray.pos);
-	r = cyl->diameter / 2.0;
-	h = cyl->height;
+	t.a = unit(*cyl->axis);
+	t.n = unit(ray.dir);
+	t.b = *cyl->pos;
+	t.f = sub_3d(t.b, ray.pos);
+	t.r = cyl->diameter / 2.0;
+	t.h = cyl->height;
 
 	//tube
-	nxa = cross(n, a);
-	d[0] = (dot(nxa, cross(f, a))
-		 + sqrt(dot(nxa, nxa) * sq(r) - dot(a, a) * sq(dot(f, nxa))))
-		 / dot(nxa, nxa);
-	d[1] = (dot(nxa, cross(f, a))
-		 - sqrt(dot(nxa, nxa) * sq(r) - dot(a, a) * sq(dot(f, nxa))))
-		 / dot(nxa, nxa);
-	t[0] = dot(a, sub_3d(mul(d[0], n), f));
-	t[1] = dot(a, sub_3d(mul(d[1], n), f));
-	if (t[0] >= 0 && t[0] <= h)
-	{
-		hitpos = at(ray, d[0]);
-		hit_normal = unit(sub_3d(hitpos, sum_3d(mul(t[0], a), b)));
-		update_hit(hit, hitpos, d[0], &hit_normal, false, cyl->color);
-	}
-	if (t[1] >= 0 && t[1] <= h)
-	{
-		hitpos = at(ray, d[1]);
-		hit_normal = unit(sub_3d(hitpos, sum_3d(mul(t[1], a), b)));
-		update_hit(hit, hitpos, d[1], &hit_normal, false, cyl->color);
-	}
+	t.nxa = cross(t.n, t.a);
+	t.d[0] = (dot(t.nxa, cross(t.f, t.a))
+		 + sqrt(dot(t.nxa, t.nxa) * sq(t.r) - dot(t.a, t.a) * sq(dot(t.f, t.nxa))))
+		 / dot(t.nxa, t.nxa);
+	t.d[1] = (dot(t.nxa, cross(t.f, t.a))
+		 - sqrt(dot(t.nxa, t.nxa) * sq(t.r) - dot(t.a, t.a) * sq(dot(t.f, t.nxa))))
+		 / dot(t.nxa, t.nxa);
+	t.t[0] = dot(t.a, sub_3d(mul(t.d[0], t.n), t.f));
+	t.t[1] = dot(t.a, sub_3d(mul(t.d[1], t.n), t.f));
+	update_tube_hit((t_tube_hit){t.t[0], t.h, t.d[0], t.a, t.b, cyl, ray, hit});
+	update_tube_hit((t_tube_hit){t.t[1], t.h, t.d[1], t.a, t.b, cyl, ray, hit});
 }
 
-void	update_disk_hit(double d, t_3d center, double r, t_hit *hit, t_cyl *cyl, t_ray ray)
+void	update_disk_hit(double d, t_3d center, double r, t_crh crh)
 {
 	t_3d	hitpos;
 	t_3d	hit_normal;
 
-	if (d < hit->t && dist(center, at(ray, d)) < r)
+	if (d < crh.hit->t && dist(center, at(crh.ray, d)) < r)
 	{
-		hitpos = at(ray, d);
-		hit_normal = unit(mul(-1, *cyl->axis));
-		update_hit(hit, hitpos, d, &hit_normal, true, cyl->color);
+		hitpos = at(crh.ray, d);
+		hit_normal = unit(mul(-1, *crh.cyl->axis));
+		update_hit(crh.hit, hitpos, d, &hit_normal, true, crh.cyl->color);
 	}
 }
 
@@ -208,30 +173,20 @@ void	hit_disk(t_cyl *cyl, t_ray ray, t_hit *hit)
 {
 	t_3d	a;
 	double	r;
-	double	h;
-	t_3d	n;
 	t_3d	b;
-	t_3d	f;
-	double	d[4];
-
-	t_3d	hitpos;
-	t_3d	hit_normal;
+	double	d[2];
+	t_3d	c[2];
 
 	a = unit(*cyl->axis);
-	n = unit(ray.dir);
 	b = *cyl->pos;
-	f = sub_3d(b, ray.pos);
 	r = cyl->diameter / 2.0;
-	h = cyl->height;
-	
-	t_3d	c[2];
 	
 	c[0] = b;
-	c[1] = sum_3d(b, mul(h, a));
-	d[2] = hitpoint_plane(c[0], a, ray);
-	d[3] = hitpoint_plane(c[1], a, ray);
-	update_disk_hit(d[2], c[0], r, hit, cyl, ray);
-	update_disk_hit(d[3], c[1], r, hit, cyl, ray);
+	c[1] = sum_3d(b, mul(cyl->height, a));
+	d[0] = hitpoint_plane(c[0], a, ray);
+	d[1] = hitpoint_plane(c[1], a, ray);
+	update_disk_hit(d[0], c[0], r, (t_crh){hit, cyl, ray});
+	update_disk_hit(d[1], c[1], r, (t_crh){hit, cyl, ray});
 }
 
 void	hit_cylinder(t_cyl *cyl, t_ray ray, t_hit *hit)

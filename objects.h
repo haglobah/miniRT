@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   objects.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:23:00 by mhedtman          #+#    #+#             */
-/*   Updated: 2023/02/01 10:03:14 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/02/01 14:19:16 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,20 +107,6 @@ typedef struct s_cyl
 	t_clr		color;
 } t_cyl;
 
-typedef struct s_minirt
-{
-	t_ambient	*amb;
-	t_cam		*cam;
-	t_light		*l;
-	t_sphere	*sp;
-	t_plane		*pl;
-	t_cyl		*cyl;
-	t_lst		*save_lst;
-	int			sp_count;
-	int			pl_count;
-	int			cyl_count;
-}	t_mrt;
-
 typedef struct s_window
 {
 	double	aspect_ratio;
@@ -141,5 +127,37 @@ typedef struct s_camera
 	t_3d	llc;
 	double		vfov;
 } t_camera;
+
+typedef struct s_tube_calculation
+{
+	t_3d	a;
+	double	r;
+	double	h;
+	t_3d	n;
+	t_3d	b;
+	t_3d	f;
+	t_3d	nxa;
+	double	d[2];
+	double	t[2];
+} t_tube;
+
+typedef struct s_tube_hit
+{
+	double	t;
+	double	h;
+	double	d;
+	t_3d	a;
+	t_3d	b;
+	t_cyl	*cyl;
+	t_ray	ray;
+	t_hit	*hit;
+} t_tube_hit;
+
+typedef struct s_cyl_ray_hit
+{
+	t_hit	*hit;
+	t_cyl	*cyl;
+	t_ray	ray;
+} t_crh;
 
 #endif

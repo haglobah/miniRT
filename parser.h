@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:15:27 by mhedtman          #+#    #+#             */
-/*   Updated: 2023/01/27 12:49:53 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/02/01 13:50:18 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,20 @@
 # define PARSER_H
 
 # include "objects.h"
+
+typedef struct s_minirt
+{
+	t_ambient	*amb;
+	t_cam		*cam;
+	t_light		*l;
+	t_sphere	*sp;
+	t_plane		*pl;
+	t_cyl		*cyl;
+	t_lst		*save_lst;
+	int			sp_count;
+	int			pl_count;
+	int			cyl_count;
+}	t_mrt;
 
 typedef struct s_tmp_cyl
 {

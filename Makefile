@@ -6,7 +6,7 @@
 #    By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 12:24:11 by bhagenlo          #+#    #+#              #
-#    Updated: 2023/02/01 13:29:16 by bhagenlo         ###   ########.fr        #
+#    Updated: 2023/02/01 14:17:29 by bhagenlo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ TOBJS = $(TESTS:.c=.o)
 TEST = $(NAME)_test
 
 CC := cc
-CFLAGS := -Wall -Wextra -Wno-gnu-include-next -ILeakSanitizer -LLeakSanitizer -llsan -lc++ #-Werror
+CFLAGS := -Wall -Wextra # -Wno-gnu-include-next -ILeakSanitizer -LLeakSanitizer -llsan -lc++ #-Werror
 
 LIBFT := libft
 LFT := $(LIBFT)/libft.a
@@ -85,9 +85,12 @@ lsan :
 	$(MAKE) all
 #	./$(NAME) test.rt
 
-test : $(TESTS) $(SRCS)
-	$(CC) $(TESTS) $(SRCS) $(LINK_FLAGS) -o $(TEST)
-	./$(TEST)
+test : 
+	$(MAKE) run &
+	sleep 0.1
+	$(MAKE) ex &
+	sleep 0.1
+	$(MAKE) c
 
 checkup :
 	echo "Testing..."
