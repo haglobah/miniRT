@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit_1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 10:31:04 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/02/01 15:32:37 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/02/01 15:42:25 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,18 @@ void	hit_tube(t_cyl *cyl, t_ray ray, t_hit *hit)
 	t.nxa = cross(t.n, t.a);
 	t.d[0] = (dot(t.nxa, cross(t.f, t.a))
 			+ sqrt(dot(t.nxa, t.nxa) * sq(t.r)
-				- dot(t.a, t.a) * sq(dot(t.f, t.nxa))))
-		/ dot(t.nxa, t.nxa);
+				- dot(t.a, t.a) * sq(dot(t.f, t.nxa)))) / dot(t.nxa, t.nxa);
 	t.d[1] = (dot(t.nxa, cross(t.f, t.a))
 			- sqrt(dot(t.nxa, t.nxa) * sq(t.r)
-				- dot(t.a, t.a) * sq(dot(t.f, t.nxa))))
-		/ dot(t.nxa, t.nxa);
+				- dot(t.a, t.a) * sq(dot(t.f, t.nxa)))) / dot(t.nxa, t.nxa);
 	t.t[0] = dot(t.a, sub_3d(mul(t.d[0], t.n), t.f));
 	t.t[1] = dot(t.a, sub_3d(mul(t.d[1], t.n), t.f));
 	if (t.d[0] < hit->t || t.d[1] < hit->t)
 	{
-		update_tube_hit((t_tube_hit){t.t[0], t.h, t.d[0], t.a, t.b, cyl, ray, hit});
-		update_tube_hit((t_tube_hit){t.t[1], t.h, t.d[1], t.a, t.b, cyl, ray, hit});
+		update_tube_hit(
+			(t_tube_hit){t.t[0], t.h, t.d[0], t.a, t.b, cyl, ray, hit});
+		update_tube_hit(
+			(t_tube_hit){t.t[1], t.h, t.d[1], t.a, t.b, cyl, ray, hit});
 	}
 }
 
