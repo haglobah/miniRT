@@ -6,7 +6,7 @@
 #    By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 12:24:11 by bhagenlo          #+#    #+#              #
-#    Updated: 2023/01/27 15:16:24 by bhagenlo         ###   ########.fr        #
+#    Updated: 2023/02/01 12:36:12 by bhagenlo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,6 +75,9 @@ run : all
 
 ex : all
 	./$(NAME) ex1.rt
+
+c : all
+	./$(NAME) cyl.rt
 
 lsan : $(LSAN)
 lsan :
