@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/02/01 09:45:24 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/02/01 15:17:18 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	draw_scene(t_options *o, mlx_t *mlx, mlx_image_t *img, t_mrt *m)
 	uint32_t	clr;
 
 	fill_window(&w, WIDTH, HEIGHT);
-	vup = (t_3d){0, -1, 0};
+	vup = (t_3d){0, -1, 0.1};
 	o->camera = mk_camera(m, &w, &vup);
 	counter[0] = HEIGHT - 1;
 	while (--counter[0] >= 0)

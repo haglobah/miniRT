@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 10:31:04 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/02/01 14:33:00 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/02/01 15:23:34 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,8 +147,11 @@ void	hit_tube(t_cyl *cyl, t_ray ray, t_hit *hit)
 		/ dot(t.nxa, t.nxa);
 	t.t[0] = dot(t.a, sub_3d(mul(t.d[0], t.n), t.f));
 	t.t[1] = dot(t.a, sub_3d(mul(t.d[1], t.n), t.f));
-	update_tube_hit((t_tube_hit){t.t[0], t.h, t.d[0], t.a, t.b, cyl, ray, hit});
-	update_tube_hit((t_tube_hit){t.t[1], t.h, t.d[1], t.a, t.b, cyl, ray, hit});
+	if (t.d[0] < hit->t || t.d[1] < hit->t)
+	{
+		update_tube_hit((t_tube_hit){t.t[0], t.h, t.d[0], t.a, t.b, cyl, ray, hit});
+		update_tube_hit((t_tube_hit){t.t[1], t.h, t.d[1], t.a, t.b, cyl, ray, hit});
+	}
 }
 
 void	update_disk_hit(double d, t_3d center, double r, t_crh crh)
