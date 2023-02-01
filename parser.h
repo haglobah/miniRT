@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:15:27 by mhedtman          #+#    #+#             */
-/*   Updated: 2023/01/27 12:49:53 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/02/01 13:23:30 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ bool	parse_double(char *s, double *d);
 bool	parse_double_range(char *s, double *d, double lo, double hi);
 bool	ft_parse_int_range(char *s, int *n, int lo, int hi);
 
+char	**split_whitespace(char const *s, char c);
 void	count_bodies(int *bodies, char ***sens);
 void	parse_error(char **line);
 void	free_sens(char ***sens);

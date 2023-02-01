@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 12:56:20 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/02/01 09:38:34 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/02/01 13:40:38 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	***file_to_sens(char *file)
 	i = -1;
 	while (lines[++i])
 	{
-		sens[i] = ft_split(lines[i], ' ');
+		sens[i] = split_whitespace(lines[i], ' ');
 	}
 	free(file);
 	free_strs(lines);
