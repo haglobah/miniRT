@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_items_3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:11:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2023/01/27 12:55:35 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/02/01 12:15:48 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,17 @@ bool	check_one_strslen(char **parts, double *d, double value, double factor)
 	return (false);
 }
 
+void	get_negative(char **parts, double *factor)
+{
+	if (parts[0][0] == '-')
+	{
+		parts[0] = ft_strtrim(parts[0], "-");
+		*factor = -1;
+	}
+	else
+		*factor = 1;
+}
+
 bool	parse_double(char *s, double *d)
 {
 	char	**parts;
@@ -34,13 +45,7 @@ bool	parse_double(char *s, double *d)
 	parts = ft_split(s, '.');
 	if (strslen(parts) > 2)
 		return (free_strs(parts), false);
-	if (parts[0][0] == '-')
-	{
-		parts[0] = ft_strtrim(parts[0], "-");
-		factor = -1;
-	}
-	else
-		factor = 1;
+	get_negative(parts, &factor);
 	if (ft_parse_int(parts[0], &pre_i) == false)
 		return (free_strs(parts), false);
 	value = (double)pre_i;

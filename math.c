@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   math.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 11:14:17 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/13 12:24:26 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/02/01 10:09:18 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 double	d_max(double a, double b)
 {
 	if (a > b)
-		return a;
+		return (a);
 	return (b);
 }
 

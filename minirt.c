@@ -1,4 +1,4 @@
-//* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minirt.c                                           :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/19 14:09:03 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/02/01 09:45:24 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	fill_window(t_window *w, double width, double height)
 {
-	w->aspect_ratio =  width / height;
+	w->aspect_ratio = width / height;
 	w->width = width;
 	w->height = height;
 }
@@ -28,18 +28,15 @@ void	put_pxl(mlx_image_t *img, int pxl_x, int pxl_y, int color)
 
 t_camera	*mk_camera(t_mrt *m, t_window *w, t_3d *vup)
 {
-	double	theta;
-	double	h;
-	double	viewport_width;
-	double	viewport_height;
+	double		theta;
+	double		viewport_width;
+	double		viewport_height;
 	t_camera	*c;
-	
+
 	c = (t_camera *)ft_calloc(1, sizeof(t_camera));
 	theta = degrees_to_radians(m->cam->fov);
-	h = tan(theta / 2);
-	viewport_height = 2.0 * h;
+	viewport_height = 2.0 * (tan(theta / 2));
 	viewport_width = viewport_height * w->aspect_ratio;
-	
 	c->pos = m->cam->pos;
 	c->dir = m->cam->dir;
 	c->vup = vup;
@@ -49,36 +46,35 @@ t_camera	*mk_camera(t_mrt *m, t_window *w, t_3d *vup)
 	c->horizontal = mul(viewport_width, c->u);
 	c->vertical = mul(viewport_height, c->v);
 	c->llc = sub4_3d(
-				*c->pos,
-				mul(0.5, c->horizontal),
-				mul(0.5, c->vertical),
-				c->w);
+			*c->pos,
+			mul(0.5, c->horizontal),
+			mul(0.5, c->vertical),
+			c->w);
 	return (c);
 }
 
 uint32_t	compute_pxl_clr(t_mrt *m, t_camera *c, double x, double y)
 {
-	t_3d	direction;
-	t_ray	r;
-	t_hit	h;
+	t_3d		direction;
+	t_ray		r;
+	t_hit		h;
 	u_int32_t	pxl_clr;
 
 	direction = unit(
-		sum4_3d(c->llc, 
-			mul(x, c->horizontal),
-			mul(y, c->vertical),
-			mul(-1, *c->pos)));
+			sum4_3d(c->llc,
+				mul(x, c->horizontal),
+				mul(y, c->vertical),
+				mul(-1, *c->pos)));
 	r = mk_ray(*m->cam->pos, direction);
 	trace_ray(m, r, &h);
 	pxl_clr = compute_hitpoint_clr(m, &h);
 	return (pxl_clr);
 }
 
-
 void	draw_scene(t_options *o, mlx_t *mlx, mlx_image_t *img, t_mrt *m)
 {
-	int			j;
-	int			i;
+	int			counter[2];
+	double		x_y[2];
 	t_window	w;
 	t_3d		vup;
 	uint32_t	clr;
@@ -86,21 +82,17 @@ void	draw_scene(t_options *o, mlx_t *mlx, mlx_image_t *img, t_mrt *m)
 	fill_window(&w, WIDTH, HEIGHT);
 	vup = (t_3d){0, -1, 0};
 	o->camera = mk_camera(m, &w, &vup);
-	// print_camera(o->camera);
-	j = HEIGHT - 1;
-	while (--j >= 0)
+	counter[0] = HEIGHT - 1;
+	while (--counter[0] >= 0)
 	{
-		i = -1;
-		while (++i < WIDTH)
+		counter[1] = -1;
+		while (++counter[1] < WIDTH)
 		{
-			double x = i / w.width;
-			double y = j / w.height;
-			// printf("x: %f\n", x);
-			// printf("y: %f\n", y);
-			clr = compute_pxl_clr(m, o->camera, x, y);
-			put_pxl(img, i, j, clr);
+			x_y[0] = counter[1] / w.width;
+			x_y[1] = counter[0] / w.height;
+			clr = compute_pxl_clr(m, o->camera, x_y[0], x_y[1]);
+			put_pxl(img, counter[1], counter[0], clr);
 		}
 	}
-	// free(c);
 	return ;
 }

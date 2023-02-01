@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:57:19 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/27 15:31:56 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/02/01 10:09:39 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ int	minirt(t_options *o, int argc, char **argv)
 		return (EXIT_FAILURE);
 	}
 	o->m = parse(sens);
-	// print_mrt(o->m);
 	if (!o->m)
 		return (EXIT_FAILURE);
 	draw_scene(o, o->mlx, o->g_img, o->m);

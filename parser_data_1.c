@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   data.c                                             :+:      :+:    :+:   */
+/*   parser_data_1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/11 14:12:49 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/27 12:34:48 by bhagenlo         ###   ########.fr       */
+/*   Created: 2023/02/01 12:20:31 by mhedtman          #+#    #+#             */
+/*   Updated: 2023/02/01 12:21:00 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,27 +42,4 @@ t_light	*mk_l(t_3d *pos, t_clr *clr, t_d brightness)
 	light->color = *clr;
 	light->brightness = brightness;
 	return (light);
-}
-
-void	fill_sp(t_3d *pos, t_d diameter, t_clr *clr, t_sphere *sphere)
-{
-	sphere->pos = pos;
-	sphere->color = *clr;
-	sphere->diameter = diameter;
-}
-
-void	fill_pl(t_3d *pos, t_3d *normal, t_clr *clr, t_plane *plane)
-{
-	plane->pos = pos;
-	plane->normal = normal;
-	plane->color = *clr;
-}
-
-void	fill_cyl(t_tmp_cyl tmp_cyl, t_cyl *cyl)
-{
-	cyl->pos = tmp_cyl.pos;
-	cyl->axis = tmp_cyl.axis;
-	cyl->diameter = tmp_cyl.diameter;
-	cyl->height = tmp_cyl.height;
-	cyl->color = tmp_cyl.clr;
 }

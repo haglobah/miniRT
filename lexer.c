@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 12:56:20 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/18 15:07:56 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/02/01 09:38:34 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,6 @@ bool	open_file(char *infile, int *fd)
 	*fd = open(infile, O_RDONLY);
 	return (*fd >= 0);
 }
-
-// t_mrt	*parse_line(char *line)
-// {
-// 	(void)line;
-// 	return (NULL);
-// }
 
 char	***file_to_sens(char *file)
 {
@@ -44,6 +38,15 @@ char	***file_to_sens(char *file)
 	return (sens);
 }
 
+char	*get_first_line(char *tmp)
+{
+	char	*file;
+
+	file = ft_strdup(tmp);
+	free(tmp);
+	return (file);
+}
+
 char	***lex(int argc, char **argv)
 {
 	int		fd;
@@ -58,10 +61,7 @@ char	***lex(int argc, char **argv)
 	while (tmp)
 	{
 		if (!file)
-		{
-			file = ft_strdup(tmp);
-			free(tmp);
-		}
+			file = get_first_line(tmp);
 		else
 		{
 			tmp_two = file;
