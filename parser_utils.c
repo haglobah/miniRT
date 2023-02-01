@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_utils.c                                      :+:      :+:    :+:   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:06:27 by mhedtman          #+#    #+#             */
-/*   Updated: 2023/01/25 15:22:35 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/02/01 10:08:39 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_mrt	*mk_mrt(int *bodies)
 	m->sp = ft_calloc(bodies[0] + 1, sizeof(t_sphere));
 	m->pl = ft_calloc(bodies[1] + 1, sizeof(t_plane));
 	m->cyl = ft_calloc(bodies[2] + 1, sizeof(t_cyl));
-	m->save_lst = mk_node(NULL, NULL, NULL);
+	m->save_lst = mk_node(NULL, NULL);
 	m->sp_count = bodies[0];
 	m->pl_count = bodies[1];
 	m->cyl_count = bodies[2];
@@ -42,7 +42,7 @@ void	free_sens(char ***sens)
 	int	i;
 
 	i = -1;
-	while(sens[++i])
+	while (sens[++i])
 	{
 		free_strs(sens[i]);
 	}

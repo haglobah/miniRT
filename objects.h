@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   objects.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:23:00 by mhedtman          #+#    #+#             */
-/*   Updated: 2023/01/27 13:20:18 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/02/01 10:03:14 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ typedef struct s_free_list
 {
 	t_3d				*vec;
 	t_clr				*clr;
-	t_ray				*ray;
 	struct s_free_list	*next;
 } t_lst;
 

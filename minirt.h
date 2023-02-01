@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/01/27 16:42:19 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/02/01 10:04:53 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,8 @@ t_ray		mk_ray(t_3d pos, t_3d dir);
 uint32_t	compute_hitpoint_clr(t_mrt *m, t_hit *h);
 
 //color.c
-int			color(t_clr s, t_clr e, double percent);
-uint32_t	dcolor(double r, double g, double b);
-uint32_t	colora(u_int8_t r, u_int8_t g, u_int8_t b, u_int8_t a);
 uint32_t	rgb(u_int8_t r, u_int8_t g, u_int8_t b);
 void		print_clr(t_clr clr);
-void		del_clr(t_clr *v);
 t_clr		sum_clr(t_clr v, t_clr w);
 t_clr		mul_clr(double k, t_clr v);
 
@@ -61,9 +57,9 @@ void		fill_pl(t_3d *pos, t_3d *normal, t_clr *clr, t_plane *plane);
 void		fill_cyl(t_tmp_cyl tmp_cyl, t_cyl *cyl);
 
 //memory.c
-void		add_to_list(t_lst **lst, t_3d *v, t_clr *clr, t_ray *ray);
+void		add_to_list(t_lst **lst, t_3d *v, t_clr *clr);
 void		print_list(t_lst *list);
-t_lst		*mk_node(t_3d *v, t_clr *clr, t_ray *ray);
+t_lst		*mk_node(t_3d *v, t_clr *clr);
 void		free_from_list(t_lst *lst);
 void		free_mrt(t_mrt *m);
 void		free_opt(t_options *o);
