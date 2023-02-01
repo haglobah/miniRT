@@ -6,7 +6,7 @@
 /*   By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/02/01 14:31:31 by bhagenlo         ###   ########.fr       */
+/*   Updated: 2023/02/01 14:34:33 by bhagenlo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void		fill_cyl(t_tmp_cyl tmp_cyl, t_cyl *cyl);
 
 //memory.c
 void		add_to_list(t_lst **lst, t_3d *v, t_clr *clr);
-void		print_list(t_lst *list);
+// void		print_list(t_lst *list);
 t_lst		*mk_node(t_3d *v, t_clr *clr);
 void		free_from_list(t_lst *lst);
 void		free_mrt(t_mrt *m);

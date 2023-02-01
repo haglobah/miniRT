@@ -6,7 +6,7 @@
 #    By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 12:24:11 by bhagenlo          #+#    #+#              #
-#    Updated: 2023/02/01 14:17:29 by bhagenlo         ###   ########.fr        #
+#    Updated: 2023/02/01 14:34:45 by bhagenlo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRCS := hit.c minirt.c lexer.c parser.c ray.c color.c utils.c print.c \
 		math.c memory.c utils_2.c\
 		parser_utils.c parser_items_1.c parser_items_3.c parser_items_2.c \
 		vector_math_1.c vector_math_2.c vector_math_3.c  parser_data_1.c \
-		parser_data_2.c
+		parser_data_2.c parser_whitespace_split.c
 MAIN = main.c
 OBJS = $(SRCS:.c=.o)
 MO = main.o

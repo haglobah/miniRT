@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:57:19 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/02/01 10:09:39 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/02/01 14:22:57 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int32_t	main(int argc, char *argv[])
 	{
 		mlx_delete_image(o->mlx, o->g_img);
 		mlx_terminate(o->mlx);
+		free(o);
 		return (EXIT_FAILURE);
 	}
 	mlx_image_to_window(o->mlx, o->g_img, 0, 0);

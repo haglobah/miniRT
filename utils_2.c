@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 09:47:13 by mhedtman          #+#    #+#             */
-/*   Updated: 2023/02/01 09:49:01 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/02/01 13:29:50 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	printstrs(char **slist)
 	i = -1;
 	while (slist[++i])
 	{
-		ft_printf("%s ", slist[i]);
+		ft_printf("%s\n", slist[i]);
 	}
 }
 
