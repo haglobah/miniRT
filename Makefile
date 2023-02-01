@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+         #
+#    By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 12:24:11 by bhagenlo          #+#    #+#              #
-#    Updated: 2023/02/01 15:32:08 by bhagenlo         ###   ########.fr        #
+#    Updated: 2023/02/01 15:54:04 by mhedtman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ TOBJS = $(TESTS:.c=.o)
 TEST = $(NAME)_test
 
 CC := cc
-CFLAGS := -Wall -Wextra -Wno-gnu-include-next -ILeakSanitizer -LLeakSanitizer -llsan -lc++ -Werror
+CFLAGS := -Wall -Wextra -Werror # -Wno-gnu-include-next -ILeakSanitizer -LLeakSanitizer -llsan -lc++
 
 LIBFT := libft
 LFT := $(LIBFT)/libft.a
