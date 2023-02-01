@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:11:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2023/02/01 14:17:02 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/02/01 15:00:30 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,7 @@ bool	parse_double(char *s, double *d)
 		return (free_strs(parts), false);
 	value = (double)pre_i;
 	if (check_one_strslen(parts, d, value, factor))
-	{
 		return (true);
-	}
 	i = 0;
 	while (parts[1][i] >= '0' && parts[1][i] <= '9')
 	{
