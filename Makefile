@@ -6,7 +6,7 @@
 #    By: bhagenlo <bhagenlo@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 12:24:11 by bhagenlo          #+#    #+#              #
-#    Updated: 2023/02/01 14:34:45 by bhagenlo         ###   ########.fr        #
+#    Updated: 2023/02/01 14:57:08 by bhagenlo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,13 +72,13 @@ re : fclean
 	@$(MAKE) all
 
 run : all
-	./$(NAME) test.rt
+	./$(NAME) scenes/example.rt
 
 ex : all
-	./$(NAME) ex1.rt
+	./$(NAME) scenes/ex1.rt
 
 c : all
-	./$(NAME) cyl.rt
+	./$(NAME) scenes/cyl.rt
 
 lsan : $(LSAN)
 lsan :
