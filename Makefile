@@ -6,14 +6,14 @@
 #    By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 12:24:11 by bhagenlo          #+#    #+#              #
-#    Updated: 2023/02/01 15:04:18 by mhedtman         ###   ########.fr        #
+#    Updated: 2023/02/01 15:19:14 by mhedtman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := miniRT
 
 SRCS := minirt.c lexer.c parser.c ray.c color.c utils.c print.c \
-		math.c memory.c utils_2.c hit_1.c hit_2.c \
+		math.c memory.c utils_2.c hit_1.c hit_2.c hit_3.c\
 		parser_utils.c parser_items_1.c parser_items_3.c parser_items_2.c \
 		vector_math_1.c vector_math_2.c vector_math_3.c  parser_data_1.c \
 		parser_data_2.c parser_whitespace_split.c
@@ -25,7 +25,7 @@ TOBJS = $(TESTS:.c=.o)
 TEST = $(NAME)_test
 
 CC := cc
-CFLAGS := -Wall -Wextra # -Wno-gnu-include-next -ILeakSanitizer -LLeakSanitizer -llsan -lc++ #-Werror
+CFLAGS := -Wall -Wextra -Wno-gnu-include-next -ILeakSanitizer -LLeakSanitizer -llsan -lc++ -Werror
 
 LIBFT := libft
 LFT := $(LIBFT)/libft.a

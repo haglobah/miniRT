@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:50:29 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/02/01 15:06:23 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/02/01 15:18:24 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_camera	*mk_camera(t_mrt *m, t_window *w, t_3d *vup);
 //minirt.c
 void		trace_ray(t_mrt *m, t_ray r, t_hit *h);
 char		***lex(int argc, char **argv);
-void		draw_scene(t_options *o, mlx_t *mlx, mlx_image_t *img, t_mrt *p);
+void		draw_scene(t_options *o, mlx_image_t *img, t_mrt *p);
 
 uint32_t	cons_sphere_clr(t_clr color, double coeff);
 

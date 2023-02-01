@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:59:43 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/02/01 09:45:24 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/02/01 15:18:12 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ uint32_t	compute_pxl_clr(t_mrt *m, t_camera *c, double x, double y)
 	return (pxl_clr);
 }
 
-void	draw_scene(t_options *o, mlx_t *mlx, mlx_image_t *img, t_mrt *m)
+void	draw_scene(t_options *o, mlx_image_t *img, t_mrt *m)
 {
 	int			counter[2];
 	double		x_y[2];

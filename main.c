@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:57:19 by bhagenlo          #+#    #+#             */
-/*   Updated: 2023/02/01 14:22:57 by mhedtman         ###   ########.fr       */
+/*   Updated: 2023/02/01 15:18:57 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,52 +22,52 @@ void	key_hook(void *param)
 	else if (mlx_is_key_down(o->mlx, MLX_KEY_W))
 	{
 		*o->camera->pos = sub_3d(*o->camera->pos, (t_3d){0.05, 0, 0});
-		draw_scene(o, o->mlx, o->g_img, o->m);
+		draw_scene(o, o->g_img, o->m);
 	}
 	else if (mlx_is_key_down(o->mlx, MLX_KEY_S))
 	{
 		*o->camera->pos = sum_3d(*o->camera->pos, (t_3d){0.05, 0, 0});
-		draw_scene(o, o->mlx, o->g_img, o->m);
+		draw_scene(o, o->g_img, o->m);
 	}
 	else if (mlx_is_key_down(o->mlx, MLX_KEY_D))
 	{
 		*o->camera->pos = sub_3d(*o->camera->pos, (t_3d){0, 0.05, 0});
-		draw_scene(o, o->mlx, o->g_img, o->m);
+		draw_scene(o, o->g_img, o->m);
 	}
 	else if (mlx_is_key_down(o->mlx, MLX_KEY_A))
 	{
 		*o->camera->pos = sum_3d(*o->camera->pos, (t_3d){0, 0.05, 0});
-		draw_scene(o, o->mlx, o->g_img, o->m);
+		draw_scene(o, o->g_img, o->m);
 	}
 	else if (mlx_is_key_down(o->mlx, MLX_KEY_LEFT_SHIFT))
 	{
 		*o->camera->pos = sub_3d(*o->camera->pos, (t_3d){0, 0, 0.05});
-		draw_scene(o, o->mlx, o->g_img, o->m);
+		draw_scene(o, o->g_img, o->m);
 	}
 	else if (mlx_is_key_down(o->mlx, MLX_KEY_SPACE))
 	{
 		*o->camera->pos = sum_3d(*o->camera->pos, (t_3d){0, 0, 0.05});
-		draw_scene(o, o->mlx, o->g_img, o->m);
+		draw_scene(o, o->g_img, o->m);
 	}
 	else if (mlx_is_key_down(o->mlx, MLX_KEY_H))
 	{
 		*o->camera->dir = sub_3d(*o->m->l->pos, (t_3d){0, 0, 0.05});
-		draw_scene(o, o->mlx, o->g_img, o->m);
+		draw_scene(o, o->g_img, o->m);
 	}
 	else if (mlx_is_key_down(o->mlx, MLX_KEY_J))
 	{
 		*o->m->l->pos = sum_3d(*o->m->l->pos, (t_3d){0, 0, 0.05});
-		draw_scene(o, o->mlx, o->g_img, o->m);
+		draw_scene(o, o->g_img, o->m);
 	}
 	else if (mlx_is_key_down(o->mlx, MLX_KEY_LEFT))
 	{
 		*o->camera->dir = sub_3d(*o->camera->dir, (t_3d){0.05, 0., 0});
-		draw_scene(o, o->mlx, o->g_img, o->m);
+		draw_scene(o, o->g_img, o->m);
 	}
 	else if (mlx_is_key_down(o->mlx, MLX_KEY_RIGHT))
 	{
 		*o->camera->dir = sum_3d(*o->camera->dir, (t_3d){0.05, 0, 0.0});
-		draw_scene(o, o->mlx, o->g_img, o->m);
+		draw_scene(o, o->g_img, o->m);
 	}
 	// print_3d("CAMER POS: ", *o->camera->pos);
 }
@@ -85,7 +85,7 @@ int	minirt(t_options *o, int argc, char **argv)
 	o->m = parse(sens);
 	if (!o->m)
 		return (EXIT_FAILURE);
-	draw_scene(o, o->mlx, o->g_img, o->m);
+	draw_scene(o, o->g_img, o->m);
 	return (0);
 }
 
